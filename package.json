@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",

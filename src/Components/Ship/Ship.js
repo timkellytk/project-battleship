@@ -1,16 +1,14 @@
-const hit = (position, array) => {
+export const hit = (array) => {
   const hitArray = [...array];
-  hitArray[position] = 'HIT';
+  hitArray.push('HIT');
   return hitArray;
 };
-const isSunk = (hitArray) => {
-  const shipLength = hitArray.length;
-  const hitLength = hitArray.filter((item) => item === 'HIT').length;
-  return shipLength === hitLength;
+export const isSunk = (hitArray, shipLength) => {
+  return shipLength === hitArray.length;
 };
 
-const shipFactory = (length) => {
-  const hitArray = new Array(length);
+export const shipFactory = (length) => {
+  const hitArray = [];
   const sunk = false;
 
   return {
@@ -21,9 +19,3 @@ const shipFactory = (length) => {
     isSunk,
   };
 };
-
-export default shipFactory;
-
-module.exports.shipFactory = shipFactory;
-module.exports.hit = hit;
-module.exports.isSunk = isSunk;

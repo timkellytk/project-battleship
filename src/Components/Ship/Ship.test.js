@@ -1,40 +1,34 @@
-const ship = require('./Ship');
+import { hit, isSunk, shipFactory } from './Ship';
 
 describe('hit()', () => {
-  test('hit(0, new Array(1)) will return a new array with [HIT]', () => {
-    const array = new Array(1);
-    expect(ship.hit(0, array)).toEqual(['HIT']);
+  test('returns a new array ["HIT"]', () => {
+    expect(hit([])).toEqual(['HIT']);
   });
-  test('hit(3, new Array(4)) will return a new array with [undefined, undefined, undefined, HIT]', () => {
-    const array = new Array(4);
-    expect(ship.hit(3, array)).toEqual([
-      undefined,
-      undefined,
-      undefined,
-      'HIT',
-    ]);
+  test('returns an existing array with an extra "HIT"', () => {
+    const array = ['HIT', 'HIT', 'HIT'];
+    expect(hit(array)).toEqual(['HIT', 'HIT', 'HIT', 'HIT']);
   });
 });
 
 describe('isSunk()', () => {
-  test('isSunk(["HIT"])', () => {
+  test('returns true for ["HIT"] array and shipLength 1', () => {
     const array = ['HIT'];
-    expect(ship.isSunk(array)).toEqual(true);
+    expect(isSunk(array, 1)).toEqual(true);
   });
-  test('isSunk(["HIT", undefined])', () => {
-    const array = ['HIT', undefined];
-    expect(ship.isSunk(array)).toEqual(false);
+  test('returns false for ["HIT"] array and shipLength 2', () => {
+    const array = ['HIT'];
+    expect(isSunk(array, 2)).toEqual(false);
   });
 });
 
 describe('shipFactory()', () => {
-  test('shipFactory(2) will return object with length = 2, hitArray = [undefined, undefined], sunk = false, isSunk and hit methods', () => {
-    expect(ship.shipFactory(2)).toEqual({
+  test('returns the expected object with length equal to 2', () => {
+    expect(shipFactory(2)).toEqual({
       length: 2,
-      hitArray: [undefined, undefined],
+      hitArray: [],
       sunk: false,
-      hit: ship.hit,
-      isSunk: ship.isSunk,
+      hit,
+      isSunk,
     });
   });
 });
