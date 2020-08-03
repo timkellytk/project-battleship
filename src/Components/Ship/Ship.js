@@ -3,11 +3,12 @@ export const hit = (array) => {
   hitArray.push('HIT');
   return hitArray;
 };
-export const isSunk = (hitArray, shipLength) => {
-  return shipLength === hitArray.length;
+export const isSunk = (hitArray, length) => {
+  return length === hitArray.length;
 };
 
-export const shipFactory = (length) => {
+export const shipFactory = (shipLength) => {
+  const length = shipLength;
   const hitArray = [];
   const sunk = false;
 
