@@ -1,12 +1,15 @@
-import { hit, isSunk, shipFactory } from './Ship';
+import { hitShip, isSunk, shipFactory } from './Ship';
 
-describe('hit()', () => {
-  test('returns a new array ["HIT"]', () => {
-    expect(hit([])).toEqual(['HIT']);
+describe('hitShip()', () => {
+  test('adds "HIT" to an empty array', () => {
+    const testArray = [];
+    hitShip(testArray);
+    expect(testArray).toEqual(['HIT']);
   });
-  test('returns an existing array with an extra "HIT"', () => {
-    const array = ['HIT', 'HIT', 'HIT'];
-    expect(hit(array)).toEqual(['HIT', 'HIT', 'HIT', 'HIT']);
+  test('adds "HIT" an existing array', () => {
+    const testArray = ['HIT', 'HIT', 'HIT'];
+    hitShip(testArray);
+    expect(testArray).toEqual(['HIT', 'HIT', 'HIT', 'HIT']);
   });
 });
 
@@ -22,13 +25,19 @@ describe('isSunk()', () => {
 });
 
 describe('shipFactory()', () => {
-  test('returns the expected object with length equal to 2', () => {
-    expect(shipFactory(2)).toEqual({
-      length: 2,
-      hitArray: [],
-      sunk: false,
-      hit,
-      isSunk,
-    });
+  test('returns the expected length property', () => {
+    expect(shipFactory(2).length).toEqual(2);
+  });
+  test('returns the expected hitArray property', () => {
+    expect(shipFactory(2).hitArray).toEqual([]);
+  });
+  test('returns the expected sunk property', () => {
+    expect(shipFactory(2).sunk).toEqual(false);
+  });
+  test('returns a hit() method', () => {
+    expect(shipFactory(2)).toHaveProperty('hit');
+  });
+  test('returns the expected isSunk property', () => {
+    expect(shipFactory(2).isSunk).toEqual(isSunk);
   });
 });

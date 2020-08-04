@@ -131,7 +131,7 @@ describe('checkGameover()', () => {
     Object.keys(testShips).forEach((key) => {
       const ship = testShips[key];
       for (let i = 0; i < ship.length; i += 1) {
-        ship.hitArray = ship.hit(ship.hitArray);
+        ship.hit();
       }
       ship.sunk = ship.isSunk(ship.hitArray, ship.length);
     });
@@ -149,7 +149,7 @@ describe('checkGameover()', () => {
     sunkShips.forEach((key) => {
       const ship = testShips[key];
       for (let i = 0; i < ship.length; i += 1) {
-        ship.hitArray = ship.hit(ship.hitArray);
+        ship.hit();
       }
       ship.sunk = ship.isSunk(ship.hitArray, ship.length);
     });
@@ -158,15 +158,21 @@ describe('checkGameover()', () => {
 });
 
 describe('gameboard()', () => {
-  test('returns the expected object', () => {
-    const board = createBoard();
-    const ships = {
-      carrier: shipFactory(5),
-      battleship: shipFactory(4),
-      cruiser: shipFactory(3),
-      submarine: shipFactory(3),
-      destroyer: shipFactory(2),
-    };
-    expect(gameboard()).toEqual({ board, ships, placeShip, receiveAttack });
+  test('returns the expected board property', () => {
+    const testBoard = createBoard();
+    expect(gameboard().board).toEqual(testBoard);
+  });
+  test('returns the expected ship object with correct properties', () => {
+    expect(gameboard().ships).toHaveProperty('carrier');
+    expect(gameboard().ships).toHaveProperty('battleship');
+    expect(gameboard().ships).toHaveProperty('cruiser');
+    expect(gameboard().ships).toHaveProperty('submarine');
+    expect(gameboard().ships).toHaveProperty('destroyer');
+  });
+  test('returns the expected placeShip() method', () => {
+    expect(gameboard().placeShip).toEqual(placeShip);
+  });
+  test('returns the expected receiveAttack() method', () => {
+    expect(gameboard().receiveAttack).toEqual(receiveAttack);
   });
 });
