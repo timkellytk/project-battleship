@@ -133,7 +133,6 @@ describe('checkGameover()', () => {
       for (let i = 0; i < ship.length; i += 1) {
         ship.hit();
       }
-      ship.sunk = ship.isSunk(ship.hitArray, ship.length);
     });
     expect(checkGameover(testShips)).toEqual(true);
   });
@@ -151,7 +150,6 @@ describe('checkGameover()', () => {
       for (let i = 0; i < ship.length; i += 1) {
         ship.hit();
       }
-      ship.sunk = ship.isSunk(ship.hitArray, ship.length);
     });
     expect(checkGameover(testShips)).toEqual(false);
   });

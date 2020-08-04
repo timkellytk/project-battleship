@@ -73,7 +73,7 @@ export const checkGameover = (ships) => {
   const sunkArray = Object.keys(ships).map((key) => {
     const ship = ships[key];
     const { sunk } = ship;
-    return sunk;
+    return sunk();
   });
   const isGameover = sunkArray.reduce((cur, prev) => prev && cur);
   return isGameover;
