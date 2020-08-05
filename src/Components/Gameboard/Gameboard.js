@@ -33,8 +33,17 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
     return columnExist && rowExist;
   };
 
+  const noShip = (colInput, rowInput) => {
+    const shipCell = updatedGameboard.board[colInput][rowInput];
+    return shipCell.ship !== null;
+  };
+
+  const cellCheck = (colInput, rowInput) => {
+    cellExists(colInput, rowInput && noShip(colInput, rowInput));
+  };
+
   for (let i = 0; i < ship.length; i += 1) {
-    if (cellExists(activeCol, activeRow)) {
+    if (cellCheck(activeCol, activeRow)) {
       const updatedRow = {
         ...updatedGameboard.board[activeCol][activeRow],
         ship,
