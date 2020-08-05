@@ -69,23 +69,32 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
 };
 
 export const receiveAttack = (col, row, shipBoard) => {
-  const updatedRow = {
-    ...shipBoard.board[col][row],
-    hit: true,
-  };
-  const updatedCol = {
-    ...shipBoard.board[col],
-    [row]: updatedRow,
-  };
-  const updatedBoard = {
-    ...shipBoard.board,
-    [col]: updatedCol,
-  };
-  const updatedGameboard = {
-    ...shipBoard,
-    board: updatedBoard,
-  };
-  return updatedGameboard;
+  const relevantHit = shipBoard.board[col][row].hit;
+  const relevantShip = shipBoard.board[col][row].ship;
+
+  if (relevantHit === null) {
+    if (relevantShip) {
+      relevantShip.hit();
+    }
+    const updatedRow = {
+      ...shipBoard.board[col][row],
+      hit: true,
+    };
+    const updatedCol = {
+      ...shipBoard.board[col],
+      [row]: updatedRow,
+    };
+    const updatedBoard = {
+      ...shipBoard.board,
+      [col]: updatedCol,
+    };
+    const updatedGameboard = {
+      ...shipBoard,
+      board: updatedBoard,
+    };
+    return updatedGameboard;
+  }
+  return null;
 };
 
 export const checkGameover = (ships) => {

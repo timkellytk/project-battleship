@@ -170,8 +170,8 @@ describe('placeShip()', () => {
 });
 
 describe('receiveAttack()', () => {
-  const testBoard = gameboard();
   test('returns an updated board with hit true for coordinates', () => {
+    const testBoard = gameboard();
     const updatedCol = {
       ...testBoard.board,
       A: {
@@ -184,6 +184,18 @@ describe('receiveAttack()', () => {
       board: updatedCol,
     };
     expect(receiveAttack('A', 1, testBoard)).toEqual(updatedBoard);
+  });
+  test('returns an updated board with HIT added to the hitArray of the relevant ship', () => {
+    const expectedBoard = gameboard();
+    expectedBoard.board.A[1].ship = expectedBoard.ships.carrier;
+    expect(
+      receiveAttack('A', 1, expectedBoard).ships.carrier.hitArray
+    ).toEqual(['HIT']);
+  });
+  test('returns null when hit is already true for coordinates', () => {
+    const expectedBoard = gameboard();
+    expectedBoard.board.A[1].hit = true;
+    expect(receiveAttack('A', 1, expectedBoard)).toEqual(null);
   });
 });
 
