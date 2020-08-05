@@ -1,6 +1,6 @@
-export function hitShip(array) {
+export const hitShip = (array) => {
   array.push('HIT');
-}
+};
 export const isSunk = (hitArray, length) => length === hitArray.length;
 
 export const shipFactory = (shipLength) => {

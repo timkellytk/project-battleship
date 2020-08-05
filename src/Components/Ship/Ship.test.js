@@ -32,7 +32,8 @@ describe('shipFactory()', () => {
     expect(shipFactory(2).hitArray).toEqual([]);
   });
   test('returns the expected sunk property', () => {
-    expect(shipFactory(2)).toHaveProperty('sunk');
+    const testShip = shipFactory(2);
+    expect(testShip).toHaveProperty('sunk');
   });
   test('returns a hit() method', () => {
     expect(shipFactory(2)).toHaveProperty('hit');
