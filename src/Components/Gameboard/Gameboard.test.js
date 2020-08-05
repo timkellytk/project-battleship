@@ -104,6 +104,14 @@ describe('placeShip()', () => {
     };
     expect(placeShip('C', 6, testShip, testBoard)).toEqual(updatedBoard);
   });
+  test('returns null when placeShip() on column that do not exist on gameboard', () => {
+    const testShip = shipFactory(2);
+    expect(placeShip('Z', 1, testShip, testBoard)).toEqual(null);
+  });
+  test('returns null when placeShip() on row that do not exist on gameboard', () => {
+    const testShip = shipFactory(2);
+    expect(placeShip('A', 11, testShip, testBoard)).toEqual(null);
+  });
 });
 
 describe('receiveAttack()', () => {

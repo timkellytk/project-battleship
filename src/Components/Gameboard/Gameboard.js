@@ -1,12 +1,13 @@
 import { shipFactory } from '../Ship/Ship';
 
+const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const cell = { ship: null, hit: null };
+
 export const createBoard = () => {
   const board = {};
-  const col = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  const rows = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-  const cell = { ship: null, hit: null };
 
-  col.forEach((letter) => {
+  columns.forEach((letter) => {
     const letterObject = {};
     rows.forEach((number) => {
       letterObject[number] = cell;
@@ -22,28 +23,42 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
   let activeCol = col;
   let activeRow = row;
 
+  const cellExists = (colInput, rowInput) => {
+    const columnExist = columns
+      .filter((c) => c === colInput)
+      .reduce((prev, cur) => prev || cur, false);
+    const rowExist = rows
+      .filter((r) => r === rowInput)
+      .reduce((prev, cur) => prev || cur, false);
+    return columnExist && rowExist;
+  };
+
   for (let i = 0; i < ship.length; i += 1) {
-    const updatedRow = {
-      ...updatedGameboard.board[activeCol][activeRow],
-      ship,
-    };
-    const updatedCol = {
-      ...updatedGameboard.board[activeCol],
-      [activeRow]: updatedRow,
-    };
-    const updatedBoard = {
-      ...updatedGameboard.board,
-      [activeCol]: updatedCol,
-    };
-    updatedGameboard = {
-      ...updatedGameboard,
-      board: updatedBoard,
-    };
-    if (vertical) {
-      activeRow += 1;
+    if (cellExists(activeCol, activeRow)) {
+      const updatedRow = {
+        ...updatedGameboard.board[activeCol][activeRow],
+        ship,
+      };
+      const updatedCol = {
+        ...updatedGameboard.board[activeCol],
+        [activeRow]: updatedRow,
+      };
+      const updatedBoard = {
+        ...updatedGameboard.board,
+        [activeCol]: updatedCol,
+      };
+      updatedGameboard = {
+        ...updatedGameboard,
+        board: updatedBoard,
+      };
+      if (vertical) {
+        activeRow += 1;
+      } else {
+        const activeColASCII = activeCol.charCodeAt(0) + 1;
+        activeCol = String.fromCharCode(activeColASCII);
+      }
     } else {
-      const activeColASCII = activeCol.charCodeAt(0) + 1;
-      activeCol = String.fromCharCode(activeColASCII);
+      return null;
     }
   }
   return updatedGameboard;
