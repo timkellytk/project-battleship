@@ -23,27 +23,22 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
   let activeCol = col;
   let activeRow = row;
 
-  const cellExists = (colInput, rowInput) => {
-    const columnExist = columns
-      .filter((c) => c === colInput)
-      .reduce((prev, cur) => prev || cur, false);
-    const rowExist = rows
-      .filter((r) => r === rowInput)
-      .reduce((prev, cur) => prev || cur, false);
-    return columnExist && rowExist;
-  };
-
   const noShip = (colInput, rowInput) => {
-    const shipCell = updatedGameboard.board[colInput][rowInput];
-    return shipCell.ship !== null;
+    const shipExists = updatedGameboard.board[colInput][rowInput].ship;
+    return shipExists === null;
   };
 
-  const cellCheck = (colInput, rowInput) => {
-    cellExists(colInput, rowInput && noShip(colInput, rowInput));
+  const cellAvailable = (colInput, rowInput) => {
+    const columnExist = columns.filter((c) => c === colInput).length !== 0;
+    const rowExist = rows.filter((r) => r === rowInput).length !== 0;
+    if (columnExist && rowExist) {
+      return noShip(colInput, rowInput);
+    }
+    return false;
   };
 
   for (let i = 0; i < ship.length; i += 1) {
-    if (cellCheck(activeCol, activeRow)) {
+    if (cellAvailable(activeCol, activeRow)) {
       const updatedRow = {
         ...updatedGameboard.board[activeCol][activeRow],
         ship,

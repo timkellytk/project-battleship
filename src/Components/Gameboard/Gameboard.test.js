@@ -42,7 +42,6 @@ describe('createBoard()', () => {
 
 describe('placeShip()', () => {
   const testBoard = gameboard();
-
   test('returns an updated board with a ship on the selected cell', () => {
     const testShip = shipFactory(1);
     const updatedCol = {
@@ -112,19 +111,21 @@ describe('placeShip()', () => {
     const testShip = shipFactory(2);
     expect(placeShip('A', 11, testShip, testBoard)).toEqual(null);
   });
-  test('returns null when placeShip() overlaps onto a column that does not exist', () => {
-    expect().toEqual(null);
+  test('returns null when placeShip() overlaps onto a row with a cell that does not exist', () => {
+    const testShip = shipFactory(2);
+    expect(placeShip('A', 10, testShip, testBoard, true)).toEqual(null);
   });
-  test('returns null when placeShip() overlaps onto a row that does not exist', () => {
-    expect().toEqual(null);
+  test('returns null when placeShip() overlaps onto a column with a cell that does not exist', () => {
+    const testShip = shipFactory(2);
+    expect(placeShip('J', 1, testShip, testBoard)).toEqual(null);
   });
-  test.only('returns null when placeShip() on cell with a ship', () => {
+  test('returns null when placeShip() on cell with a ship', () => {
     const testShip = shipFactory(2);
     const placedShip = shipFactory(1);
     const updatedCol = {
       ...testBoard.board,
       A: {
-        ...testBoard.board.B,
+        ...testBoard.board.A,
         1: { ship: placedShip, hit: null },
       },
     };
@@ -134,8 +135,37 @@ describe('placeShip()', () => {
     };
     expect(placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
   });
-  test('returns null when placeShip() overlaps onto a cell with a ship', () => {
-    expect().toEqual(null);
+  test('returns null when placeShip() overlaps onto a row with a cell that contains a ship', () => {
+    const testShip = shipFactory(2);
+    const placedShip = shipFactory(2);
+    const updatedCol = {
+      ...testBoard.board,
+      A: {
+        ...testBoard.board.A,
+        2: { ship: placedShip, hit: null },
+      },
+    };
+    const updatedBoard = {
+      ...testBoard,
+      board: updatedCol,
+    };
+    expect(placeShip('A', 1, testShip, updatedBoard, true)).toEqual(null);
+  });
+  test('returns null when placeShip() overlaps onto a column with a cell that contains a ship', () => {
+    const testShip = shipFactory(2);
+    const placedShip = shipFactory(2);
+    const updatedCol = {
+      ...testBoard.board,
+      B: {
+        ...testBoard.board.B,
+        1: { ship: placedShip, hit: null },
+      },
+    };
+    const updatedBoard = {
+      ...testBoard,
+      board: updatedCol,
+    };
+    expect(placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
   });
 });
 
