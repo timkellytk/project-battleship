@@ -1,5 +1,6 @@
 export const hitShip = (array) => {
-  array.push('HIT');
+  const updatedArray = [...array, 'HIT'];
+  return updatedArray;
 };
 export const isSunk = (hitArray, length) => length === hitArray.length;
 
@@ -11,7 +12,7 @@ export const shipFactory = (shipLength) => {
     length,
     hitArray,
     hit() {
-      hitShip(this.hitArray);
+      return hitShip(this.hitArray);
     },
     sunk: () => isSunk(hitArray, length),
   };
