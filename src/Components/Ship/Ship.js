@@ -4,16 +4,19 @@ export const hitShip = (array) => {
 };
 export const isSunk = (hitArray, length) => length === hitArray.length;
 
-export const shipFactory = (shipLength) => {
+export const shipFactory = (shipLength, id) => {
   const length = shipLength;
   const hitArray = [];
 
   return {
+    id,
     length,
     hitArray,
     hit() {
       return hitShip(this.hitArray);
     },
-    sunk: () => isSunk(hitArray, length),
+    sunk() {
+      return isSunk(this.hitArray, this.length);
+    },
   };
 };

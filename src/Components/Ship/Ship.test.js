@@ -26,6 +26,9 @@ describe('isSunk()', () => {
 });
 
 describe('shipFactory()', () => {
+  test('returns the expected id property', () => {
+    expect(shipFactory(2, 'submarine').id).toEqual('submarine');
+  });
   test('returns the expected length property', () => {
     expect(shipFactory(2).length).toEqual(2);
   });

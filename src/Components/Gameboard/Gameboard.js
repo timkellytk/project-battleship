@@ -73,9 +73,6 @@ export const receiveAttack = (col, row, shipBoard) => {
   const relevantShip = shipBoard.board[col][row].ship;
 
   if (relevantHit === null) {
-    if (relevantShip) {
-      relevantShip.hit();
-    }
     const updatedRow = {
       ...shipBoard.board[col][row],
       hit: true,
@@ -88,6 +85,20 @@ export const receiveAttack = (col, row, shipBoard) => {
       ...shipBoard.board,
       [col]: updatedCol,
     };
+    if (relevantShip) {
+      const updatedHitArray = relevantShip.hit();
+      const updatedShip = { ...relevantShip, hitArray: updatedHitArray };
+      const updatedShips = {
+        ...shipBoard.ships,
+        [relevantShip.id]: updatedShip,
+      };
+      const updatedGameboard = {
+        ...shipBoard,
+        board: updatedBoard,
+        ships: updatedShips,
+      };
+      return updatedGameboard;
+    }
     const updatedGameboard = {
       ...shipBoard,
       board: updatedBoard,
@@ -100,8 +111,7 @@ export const receiveAttack = (col, row, shipBoard) => {
 export const checkGameover = (ships) => {
   const sunkArray = Object.keys(ships).map((key) => {
     const ship = ships[key];
-    const { sunk } = ship;
-    return sunk();
+    return ship.sunk();
   });
   const isGameover = sunkArray.reduce((cur, prev) => prev && cur);
   return isGameover;
@@ -110,11 +120,11 @@ export const checkGameover = (ships) => {
 export const gameboard = () => {
   const board = createBoard();
   const ships = {
-    carrier: shipFactory(5),
-    battleship: shipFactory(4),
-    cruiser: shipFactory(3),
-    submarine: shipFactory(3),
-    destroyer: shipFactory(2),
+    carrier: shipFactory(5, 'carrier'),
+    battleship: shipFactory(4, 'battleship'),
+    cruiser: shipFactory(3, 'cruiser'),
+    submarine: shipFactory(3, 'submarine'),
+    destroyer: shipFactory(2, 'destroyer'),
   };
   const game = {
     board,

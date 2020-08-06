@@ -1,6 +1,5 @@
 import { attack } from './Player';
 import { gameboard } from '../Gameboard/Gameboard';
-import { shipFactory } from '../Ship/Ship';
 
 describe('attack()', () => {
   test('returns an updated board with {hit: true} on an empty cell', () => {
@@ -13,9 +12,9 @@ describe('attack()', () => {
     expect(attack('A', 1, initialGameboard)).toEqual(testGameboard);
   });
 
-  test('returns an updated board with {hit: true} on an cell with a ship', () => {
+  test('returns an updated board with {hit: true} on a cell with a ship', () => {
     let initialGameboard = gameboard();
-    const initialShip = shipFactory(2);
+    const initialShip = initialGameboard.ships.carrier;
     initialGameboard = initialGameboard.placeShip(
       'B',
       1,
@@ -27,7 +26,7 @@ describe('attack()', () => {
     const testBoard = { ...initialGameboard.board, B: testCol };
     const testGameboard = { ...initialGameboard, board: testBoard };
 
-    expect(attack('B', 1, initialGameboard)).toEqual(testGameboard);
+    expect(attack('B', 1, initialGameboard).board).toEqual(testGameboard.board);
   });
 
   test('returns an updated board with an extra hit on hitArray on the relevant ship', () => {

@@ -212,7 +212,7 @@ describe('checkGameover()', () => {
     Object.keys(testShips).forEach((key) => {
       const ship = testShips[key];
       for (let i = 0; i < ship.length; i += 1) {
-        ship.hit();
+        ship.hitArray = ship.hit();
       }
     });
     expect(checkGameover(testShips)).toEqual(true);
