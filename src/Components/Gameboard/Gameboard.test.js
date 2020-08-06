@@ -44,64 +44,62 @@ describe('placeShip()', () => {
   const testBoard = gameboard();
   test('returns an updated board with a ship on the selected cell', () => {
     const testShip = shipFactory(1);
-    const updatedCol = {
-      ...testBoard.board,
-      A: {
-        1: { ship: testShip, hit: null },
-        2: { ship: null, hit: null },
-        3: { ship: null, hit: null },
-        4: { ship: null, hit: null },
-        5: { ship: null, hit: null },
-        6: { ship: null, hit: null },
-        7: { ship: null, hit: null },
-        8: { ship: null, hit: null },
-        9: { ship: null, hit: null },
-        10: { ship: null, hit: null },
-      },
+    const cell = { ship: testShip, hit: null };
+    const updatedRow = {
+      ...testBoard.board.A,
+      1: cell,
     };
-    const updatedBoard = {
+    const updatedBoard = { ...testBoard.board, A: updatedRow };
+    const updatedGameboard = {
       ...testBoard,
-      board: updatedCol,
+      board: updatedBoard,
     };
 
-    expect(placeShip('A', 1, testShip, testBoard)).toEqual(updatedBoard);
+    expect(placeShip('A', 1, testShip, testBoard)).toEqual(updatedGameboard);
   });
 
   test('returns an updated board with a ship bigger than 1 cell', () => {
     const testShip = shipFactory(2);
-    const updatedCol = {
-      ...testBoard.board,
-      B: {
-        ...testBoard.board.B,
-        2: { ship: testShip, hit: null },
-        3: { ship: testShip, hit: null },
-      },
+    const cell = { ship: testShip, hit: null };
+    const updatedRow = {
+      ...testBoard.board.B,
+      2: cell,
+      3: cell,
     };
     const updatedBoard = {
-      ...testBoard,
-      board: updatedCol,
+      ...testBoard.board,
+      B: updatedRow,
     };
-    expect(placeShip('B', 2, testShip, testBoard, true)).toEqual(updatedBoard);
+    const updatedGameboard = {
+      ...testBoard,
+      board: updatedBoard,
+    };
+    expect(placeShip('B', 2, testShip, testBoard, true)).toEqual(
+      updatedGameboard
+    );
   });
 
   test('returns an updated board with a horizontal ship bigger than 1 cell', () => {
     const testShip = shipFactory(2);
+    const cell = { ship: testShip, hit: null };
+    const updatedRowC = {
+      ...testBoard.board.C,
+      6: cell,
+    };
+    const updatedRowD = {
+      ...testBoard.board.D,
+      6: cell,
+    };
     const updatedCol = {
       ...testBoard.board,
-      C: {
-        ...testBoard.board.B,
-        6: { ship: testShip, hit: null },
-      },
-      D: {
-        ...testBoard.board.B,
-        6: { ship: testShip, hit: null },
-      },
+      C: updatedRowC,
+      D: updatedRowD,
     };
-    const updatedBoard = {
+    const updatedGameboard = {
       ...testBoard,
       board: updatedCol,
     };
-    expect(placeShip('C', 6, testShip, testBoard)).toEqual(updatedBoard);
+    expect(placeShip('C', 6, testShip, testBoard)).toEqual(updatedGameboard);
   });
   test('returns null when placeShip() on column that does not exist', () => {
     const testShip = shipFactory(2);
@@ -122,12 +120,14 @@ describe('placeShip()', () => {
   test('returns null when placeShip() on cell with a ship', () => {
     const testShip = shipFactory(2);
     const placedShip = shipFactory(1);
+    const cell = { ship: placedShip, hit: null };
+    const updatedRow = {
+      ...testBoard.board.A,
+      1: cell,
+    };
     const updatedCol = {
       ...testBoard.board,
-      A: {
-        ...testBoard.board.A,
-        1: { ship: placedShip, hit: null },
-      },
+      A: updatedRow,
     };
     const updatedBoard = {
       ...testBoard,
@@ -138,12 +138,14 @@ describe('placeShip()', () => {
   test('returns null when placeShip() overlaps onto a row with a cell that contains a ship', () => {
     const testShip = shipFactory(2);
     const placedShip = shipFactory(2);
+    const cell = { ship: placedShip, hit: null };
+    const updatedRow = {
+      ...testBoard.board.A,
+      2: cell,
+    };
     const updatedCol = {
       ...testBoard.board,
-      A: {
-        ...testBoard.board.A,
-        2: { ship: placedShip, hit: null },
-      },
+      A: updatedRow,
     };
     const updatedBoard = {
       ...testBoard,
@@ -154,12 +156,14 @@ describe('placeShip()', () => {
   test('returns null when placeShip() overlaps onto a column with a cell that contains a ship', () => {
     const testShip = shipFactory(2);
     const placedShip = shipFactory(2);
+    const cell = { ship: placedShip, hit: null };
+    const updatedRow = {
+      ...testBoard.board.B,
+      1: cell,
+    };
     const updatedCol = {
       ...testBoard.board,
-      B: {
-        ...testBoard.board.B,
-        1: { ship: placedShip, hit: null },
-      },
+      B: updatedRow,
     };
     const updatedBoard = {
       ...testBoard,
@@ -172,12 +176,14 @@ describe('placeShip()', () => {
 describe('receiveAttack()', () => {
   test('returns an updated board with hit true for coordinates', () => {
     const testBoard = gameboard();
+    const cell = { ship: null, hit: true };
+    const updatedRow = {
+      ...testBoard.board.A,
+      1: cell,
+    };
     const updatedCol = {
       ...testBoard.board,
-      A: {
-        ...testBoard.board.A,
-        1: { ship: null, hit: true },
-      },
+      A: updatedRow,
     };
     const updatedBoard = {
       ...testBoard,
