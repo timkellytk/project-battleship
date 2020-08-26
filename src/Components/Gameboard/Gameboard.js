@@ -151,7 +151,9 @@ export const gameboard = () => {
     board,
     ships,
     placeShip,
-    receiveAttack,
+    receiveAttack(col, row) {
+      return receiveAttack(col, row, this);
+    },
     checkGameover() {
       return checkGameover(this.ships);
     },

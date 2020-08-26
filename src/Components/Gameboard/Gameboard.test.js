@@ -169,34 +169,21 @@ describe('gameboard().placeShip() method', () => {
 });
 
 describe('gameboard().receiveAtack() method', () => {
-  const testBoard = gameboard();
   test('returns an updated board with hit true for coordinates', () => {
-    const cell = { ship: null, hit: true };
-    const updatedRow = {
-      ...testBoard.board.A,
-      1: cell,
-    };
-    const updatedCol = {
-      ...testBoard.board,
-      A: updatedRow,
-    };
-    const updatedBoard = {
-      ...testBoard,
-      board: updatedCol,
-    };
-    expect(gameboard().receiveAttack('A', 1, testBoard)).toEqual(updatedBoard);
+    const updatedBoard = gameboard().receiveAttack('A', 1);
+    expect(updatedBoard.board.A[1].hit).toEqual(true);
   });
   test('returns an updated board with HIT added to the hitArray of the relevant ship', () => {
-    const expectedBoard = gameboard();
-    expectedBoard.board.A[1].ship = expectedBoard.ships.carrier;
-    expect(
-      gameboard().receiveAttack('A', 1, expectedBoard).ships.carrier.hitArray
-    ).toEqual(['HIT']);
+    const testBoard = gameboard();
+    testBoard.board.A[1].ship = testBoard.ships.carrier;
+
+    const updatedBoard = testBoard.receiveAttack('A', 1);
+    expect(updatedBoard.ships.carrier.hitArray).toEqual(['HIT']);
   });
   test('returns null when hit is already true for coordinates', () => {
-    const expectedBoard = gameboard();
-    expectedBoard.board.A[1].hit = true;
-    expect(gameboard().receiveAttack('A', 1, expectedBoard)).toEqual(null);
+    const testBoard = gameboard();
+    testBoard.board.A[1].hit = true;
+    expect(testBoard.receiveAttack('A', 1)).toEqual(null);
   });
 });
 
