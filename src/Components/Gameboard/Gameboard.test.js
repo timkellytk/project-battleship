@@ -45,6 +45,7 @@ describe('gameboard() properties', () => {
 describe('gameboard().placeShip() method', () => {
   const testBoard = gameboard();
   test('placeShip() returns an updated board with a ship on the selected cell', () => {
+    // Copy testBoard and add ship to 'A1'
     const testShip = shipFactory(1);
     const cell = { ship: testShip, hit: null };
     const updatedRow = {
@@ -57,12 +58,11 @@ describe('gameboard().placeShip() method', () => {
       board: updatedBoard,
     };
 
-    expect(gameboard().placeShip('A', 1, testShip, testBoard)).toEqual(
-      updatedGameboard
-    );
+    expect(testBoard.placeShip('A', 1, testShip)).toEqual(updatedGameboard);
   });
 
   test('placeShip() returns an updated board with a ship bigger than 1 cell', () => {
+    // Copy testBoard and add ship to 'B2' and 'B3'
     const testShip = shipFactory(2);
     const cell = { ship: testShip, hit: null };
     const updatedRow = {
@@ -78,14 +78,18 @@ describe('gameboard().placeShip() method', () => {
       ...testBoard,
       board: updatedBoard,
     };
-    expect(gameboard().placeShip('B', 2, testShip, testBoard, true)).toEqual(
+    expect(testBoard.placeShip('B', 2, testShip, true)).toEqual(
       updatedGameboard
     );
   });
 
   test('placeShip() returns an updated board for horizontal ships', () => {
+    // Copy testBoard and add ship to 'C6' and 'D6'
     const testShip = shipFactory(2);
-    const cell = { ship: testShip, hit: null };
+    const cell = {
+      ship: testShip,
+      hit: null,
+    };
     const updatedRowC = {
       ...testBoard.board.C,
       6: cell,
@@ -103,41 +107,33 @@ describe('gameboard().placeShip() method', () => {
       ...testBoard,
       board: updatedCol,
     };
-    expect(gameboard().placeShip('C', 6, testShip, testBoard)).toEqual(
+
+    expect(testBoard.placeShip('C', 6, testShip, false)).toEqual(
       updatedGameboard
     );
   });
   test('placeShip() returns null if cell is not available', () => {
     // Column does not exist
     const testShipColumn = shipFactory(2);
-    expect(gameboard().placeShip('Z', 1, testShipColumn, testBoard)).toEqual(
-      null
-    );
+    expect(gameboard().placeShip('Z', 1, testShipColumn)).toEqual(null);
     // Row does not exist
     const testShipRow = shipFactory(2);
-    expect(gameboard().placeShip('A', 11, testShipRow, testBoard)).toEqual(
-      null
-    );
+    expect(gameboard().placeShip('A', 11, testShipRow)).toEqual(null);
     // Ship already exists
     const testShip = shipFactory(2);
     const placedShip = shipFactory(1);
     const updatedBoard = gameboard();
 
     updatedBoard.board.A[1] = { ship: placedShip, hit: null };
-
-    expect(gameboard().placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
+    expect(updatedBoard.placeShip('A', 1, testShip)).toEqual(null);
   });
   test('placeShip() returns null if the ship overlaps onto an unavailable cell', () => {
     // Column does not exist
     const testShipColumn = shipFactory(2);
-    expect(gameboard().placeShip('J', 1, testShipColumn, testBoard)).toEqual(
-      null
-    );
+    expect(gameboard().placeShip('J', 1, testShipColumn)).toEqual(null);
     // Row does not exist
     const testShipRow = shipFactory(2);
-    expect(
-      gameboard().placeShip('A', 10, testShipRow, testBoard, true)
-    ).toEqual(null);
+    expect(gameboard().placeShip('A', 10, testShipRow, true)).toEqual(null);
     // Ship already exists on overlapping row
     const testShip = shipFactory(2);
     const placedShip = shipFactory(2);
@@ -148,9 +144,7 @@ describe('gameboard().placeShip() method', () => {
       hit: null,
     };
 
-    expect(gameboard().placeShip('A', 1, testShip, updatedBoard, true)).toEqual(
-      null
-    );
+    expect(updatedBoard.placeShip('A', 1, testShip, true)).toEqual(null);
 
     // Ship already exists on overlapping column
     const testShip2 = shipFactory(2);
@@ -162,9 +156,7 @@ describe('gameboard().placeShip() method', () => {
       hit: null,
     };
 
-    expect(gameboard().placeShip('A', 1, testShip2, updatedBoard2)).toEqual(
-      null
-    );
+    expect(updatedBoard2.placeShip('A', 1, testShip2)).toEqual(null);
   });
 });
 

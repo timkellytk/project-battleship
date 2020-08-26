@@ -24,10 +24,19 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
 
   const cellAvailable = (colInput, rowInput) => {
     // Check if column and rows exist
-    const columnExist = columns.filter((c) => c === colInput).length !== 0;
-    const rowExist = rows.filter((r) => r === rowInput).length !== 0;
+    let columnExist = false;
+    let rowExist = false;
+    columns.forEach((c) => {
+      if (c === activeCol) {
+        columnExist = true;
+      }
+    });
+    rows.forEach((r) => {
+      if (r === activeRow) {
+        rowExist = true;
+      }
+    });
     if (columnExist && rowExist) {
-      // Check if cell is empty
       const cellEmpty =
         updatedGameboard.board[colInput][rowInput].ship === null;
       return cellEmpty;
@@ -150,7 +159,9 @@ export const gameboard = () => {
   const game = {
     board,
     ships,
-    placeShip,
+    placeShip(col, row, ship, vertical) {
+      return placeShip(col, row, ship, this, vertical);
+    },
     receiveAttack(col, row) {
       return receiveAttack(col, row, this);
     },
