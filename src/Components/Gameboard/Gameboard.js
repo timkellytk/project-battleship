@@ -6,72 +6,77 @@ const cell = { ship: null, hit: null };
 
 export const createBoard = () => {
   const board = {};
-
   columns.forEach((letter) => {
-    const letterObject = {};
+    const columnObj = {};
     rows.forEach((number) => {
-      letterObject[number] = cell;
+      columnObj[number] = cell;
     });
-    board[letter] = letterObject;
+    board[letter] = columnObj;
   });
-
   return board;
 };
 
 export const placeShip = (col, row, ship, shipBoard, vertical) => {
+  // Update gameboard variables
   let updatedGameboard = shipBoard;
   let activeCol = col;
   let activeRow = row;
 
-  const noShip = (colInput, rowInput) => {
-    const shipExists = updatedGameboard.board[colInput][rowInput].ship;
-    return shipExists === null;
-  };
-
   const cellAvailable = (colInput, rowInput) => {
+    // Check if column and rows exist
     const columnExist = columns.filter((c) => c === colInput).length !== 0;
     const rowExist = rows.filter((r) => r === rowInput).length !== 0;
     if (columnExist && rowExist) {
-      return noShip(colInput, rowInput);
+      // Check if cell is empty
+      const cellEmpty =
+        updatedGameboard.board[colInput][rowInput].ship === null;
+      return cellEmpty;
     }
     return false;
   };
 
+  // Add the ship to relevant coordinates on the gameboard
   for (let i = 0; i < ship.length; i += 1) {
-    if (cellAvailable(activeCol, activeRow)) {
-      const updatedRow = {
-        ...updatedGameboard.board[activeCol][activeRow],
-        ship,
-      };
-      const updatedCol = {
-        ...updatedGameboard.board[activeCol],
-        [activeRow]: updatedRow,
-      };
-      const updatedBoard = {
-        ...updatedGameboard.board,
-        [activeCol]: updatedCol,
-      };
-      updatedGameboard = {
-        ...updatedGameboard,
-        board: updatedBoard,
-      };
-      if (vertical) {
-        activeRow += 1;
-      } else {
-        const activeColASCII = activeCol.charCodeAt(0) + 1;
-        activeCol = String.fromCharCode(activeColASCII);
-      }
-    } else {
+    if (!cellAvailable(activeCol, activeRow)) {
       return null;
     }
+
+    // Add the ship to the coordinates
+    const updatedRow = {
+      ...updatedGameboard.board[activeCol][activeRow],
+      ship,
+    };
+    const updatedCol = {
+      ...updatedGameboard.board[activeCol],
+      [activeRow]: updatedRow,
+    };
+    const updatedBoard = {
+      ...updatedGameboard.board,
+      [activeCol]: updatedCol,
+    };
+    updatedGameboard = {
+      ...updatedGameboard,
+      board: updatedBoard,
+    };
+
+    // Update the next coordinates
+    if (vertical) {
+      activeRow += 1;
+    } else {
+      const activeColASCII = activeCol.charCodeAt(0) + 1;
+      activeCol = String.fromCharCode(activeColASCII);
+    }
   }
+
   return updatedGameboard;
 };
 
 export const receiveAttack = (col, row, shipBoard) => {
+  // Get cell information
   const relevantHit = shipBoard.board[col][row].hit;
   const relevantShip = shipBoard.board[col][row].ship;
 
+  // If cell has not been hit, update hit for the cell
   if (relevantHit === null) {
     const updatedRow = {
       ...shipBoard.board[col][row],
@@ -85,6 +90,8 @@ export const receiveAttack = (col, row, shipBoard) => {
       ...shipBoard.board,
       [col]: updatedCol,
     };
+
+    // If ship exists on cell, update the hitArray of the relevant ship and return updatedGameboard
     if (relevantShip) {
       const updatedHitArray = relevantShip.hit();
       const updatedShip = { ...relevantShip, hitArray: updatedHitArray };
@@ -98,23 +105,37 @@ export const receiveAttack = (col, row, shipBoard) => {
         ships: updatedShips,
       };
       return updatedGameboard;
+    } else {
+      // If ship does not exist, return updatedGameboard
+      const updatedGameboard = {
+        ...shipBoard,
+        board: updatedBoard,
+      };
+      return updatedGameboard;
     }
-    const updatedGameboard = {
-      ...shipBoard,
-      board: updatedBoard,
-    };
-    return updatedGameboard;
   }
+  // If cell has already been hit, return null
   return null;
 };
 
 export const checkGameover = (ships) => {
+  // Set gameover to true
+  let gameover = true;
+
+  // Transform ships to an true/false array for sunk
   const sunkArray = Object.keys(ships).map((key) => {
     const ship = ships[key];
     return ship.sunk();
   });
-  const isGameover = sunkArray.reduce((cur, prev) => prev && cur);
-  return isGameover;
+
+  // If a ship is not sunk set gameover to false
+  sunkArray.forEach((sunk) => {
+    if (sunk === false) {
+      gameover = false;
+    }
+  });
+
+  return gameover;
 };
 
 export const gameboard = () => {
