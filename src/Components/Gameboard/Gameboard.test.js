@@ -1,48 +1,50 @@
-import {
-  createBoard,
-  gameboard,
-  placeShip,
-  receiveAttack,
-  checkGameover,
-} from './Gameboard';
-
+import { gameboard } from './Gameboard';
 import { shipFactory } from '../Ship/Ship';
 
-describe('createBoard()', () => {
-  test('returns the expected object', () => {
-    const col = () => {
-      return {
-        1: { ship: null, hit: null },
-        2: { ship: null, hit: null },
-        3: { ship: null, hit: null },
-        4: { ship: null, hit: null },
-        5: { ship: null, hit: null },
-        6: { ship: null, hit: null },
-        7: { ship: null, hit: null },
-        8: { ship: null, hit: null },
-        9: { ship: null, hit: null },
-        10: { ship: null, hit: null },
-      };
+describe('gameboard() properties', () => {
+  test('board is the expected object', () => {
+    const cell = { ship: null, hit: null };
+
+    const col = {
+      1: cell,
+      2: cell,
+      3: cell,
+      4: cell,
+      5: cell,
+      6: cell,
+      7: cell,
+      8: cell,
+      9: cell,
+      10: cell,
     };
+
     const board = {
-      A: col(),
-      B: col(),
-      C: col(),
-      D: col(),
-      E: col(),
-      F: col(),
-      G: col(),
-      H: col(),
-      I: col(),
-      J: col(),
+      A: col,
+      B: col,
+      C: col,
+      D: col,
+      E: col,
+      F: col,
+      G: col,
+      H: col,
+      I: col,
+      J: col,
     };
-    expect(createBoard()).toEqual(board);
+
+    expect(gameboard().board).toEqual(board);
+  });
+  test('returns the expected ship object with correct properties', () => {
+    expect(gameboard().ships).toHaveProperty('carrier');
+    expect(gameboard().ships).toHaveProperty('battleship');
+    expect(gameboard().ships).toHaveProperty('cruiser');
+    expect(gameboard().ships).toHaveProperty('submarine');
+    expect(gameboard().ships).toHaveProperty('destroyer');
   });
 });
 
-describe('placeShip()', () => {
+describe('gameboard().placeShip() method', () => {
   const testBoard = gameboard();
-  test('returns an updated board with a ship on the selected cell', () => {
+  test('placeShip() returns an updated board with a ship on the selected cell', () => {
     const testShip = shipFactory(1);
     const cell = { ship: testShip, hit: null };
     const updatedRow = {
@@ -55,10 +57,12 @@ describe('placeShip()', () => {
       board: updatedBoard,
     };
 
-    expect(placeShip('A', 1, testShip, testBoard)).toEqual(updatedGameboard);
+    expect(gameboard().placeShip('A', 1, testShip, testBoard)).toEqual(
+      updatedGameboard
+    );
   });
 
-  test('returns an updated board with a ship bigger than 1 cell', () => {
+  test('placeShip() returns an updated board with a ship bigger than 1 cell', () => {
     const testShip = shipFactory(2);
     const cell = { ship: testShip, hit: null };
     const updatedRow = {
@@ -74,12 +78,12 @@ describe('placeShip()', () => {
       ...testBoard,
       board: updatedBoard,
     };
-    expect(placeShip('B', 2, testShip, testBoard, true)).toEqual(
+    expect(gameboard().placeShip('B', 2, testShip, testBoard, true)).toEqual(
       updatedGameboard
     );
   });
 
-  test('returns an updated board with a horizontal ship bigger than 1 cell', () => {
+  test('placeShip() returns an updated board for horizontal ships', () => {
     const testShip = shipFactory(2);
     const cell = { ship: testShip, hit: null };
     const updatedRowC = {
@@ -99,83 +103,74 @@ describe('placeShip()', () => {
       ...testBoard,
       board: updatedCol,
     };
-    expect(placeShip('C', 6, testShip, testBoard)).toEqual(updatedGameboard);
+    expect(gameboard().placeShip('C', 6, testShip, testBoard)).toEqual(
+      updatedGameboard
+    );
   });
-  test('returns null when placeShip() on column that does not exist', () => {
-    const testShip = shipFactory(2);
-    expect(placeShip('Z', 1, testShip, testBoard)).toEqual(null);
-  });
-  test('returns null when placeShip() on row that does not exist', () => {
-    const testShip = shipFactory(2);
-    expect(placeShip('A', 11, testShip, testBoard)).toEqual(null);
-  });
-  test('returns null when placeShip() overlaps onto a row with a cell that does not exist', () => {
-    const testShip = shipFactory(2);
-    expect(placeShip('A', 10, testShip, testBoard, true)).toEqual(null);
-  });
-  test('returns null when placeShip() overlaps onto a column with a cell that does not exist', () => {
-    const testShip = shipFactory(2);
-    expect(placeShip('J', 1, testShip, testBoard)).toEqual(null);
-  });
-  test('returns null when placeShip() on cell with a ship', () => {
+  test('placeShip() returns null if cell is not available', () => {
+    // Column does not exist
+    const testShipColumn = shipFactory(2);
+    expect(gameboard().placeShip('Z', 1, testShipColumn, testBoard)).toEqual(
+      null
+    );
+    // Row does not exist
+    const testShipRow = shipFactory(2);
+    expect(gameboard().placeShip('A', 11, testShipRow, testBoard)).toEqual(
+      null
+    );
+    // Ship already exists
     const testShip = shipFactory(2);
     const placedShip = shipFactory(1);
-    const cell = { ship: placedShip, hit: null };
-    const updatedRow = {
-      ...testBoard.board.A,
-      1: cell,
-    };
-    const updatedCol = {
-      ...testBoard.board,
-      A: updatedRow,
-    };
-    const updatedBoard = {
-      ...testBoard,
-      board: updatedCol,
-    };
-    expect(placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
+    const updatedBoard = gameboard();
+
+    updatedBoard.board.A[1] = { ship: placedShip, hit: null };
+
+    expect(gameboard().placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
   });
-  test('returns null when placeShip() overlaps onto a row with a cell that contains a ship', () => {
+  test('placeShip() returns null if the ship overlaps onto an unavailable cell', () => {
+    // Column does not exist
+    const testShipColumn = shipFactory(2);
+    expect(gameboard().placeShip('J', 1, testShipColumn, testBoard)).toEqual(
+      null
+    );
+    // Row does not exist
+    const testShipRow = shipFactory(2);
+    expect(
+      gameboard().placeShip('A', 10, testShipRow, testBoard, true)
+    ).toEqual(null);
+    // Ship already exists on overlapping row
     const testShip = shipFactory(2);
     const placedShip = shipFactory(2);
-    const cell = { ship: placedShip, hit: null };
-    const updatedRow = {
-      ...testBoard.board.A,
-      2: cell,
+    const updatedBoard = gameboard();
+
+    updatedBoard.board.A[2] = {
+      ship: placedShip,
+      hit: null,
     };
-    const updatedCol = {
-      ...testBoard.board,
-      A: updatedRow,
+
+    expect(gameboard().placeShip('A', 1, testShip, updatedBoard, true)).toEqual(
+      null
+    );
+
+    // Ship already exists on overlapping column
+    const testShip2 = shipFactory(2);
+    const placedShip2 = shipFactory(2);
+    const updatedBoard2 = gameboard();
+
+    updatedBoard2.board.B[1] = {
+      ship: placedShip2,
+      hit: null,
     };
-    const updatedBoard = {
-      ...testBoard,
-      board: updatedCol,
-    };
-    expect(placeShip('A', 1, testShip, updatedBoard, true)).toEqual(null);
-  });
-  test('returns null when placeShip() overlaps onto a column with a cell that contains a ship', () => {
-    const testShip = shipFactory(2);
-    const placedShip = shipFactory(2);
-    const cell = { ship: placedShip, hit: null };
-    const updatedRow = {
-      ...testBoard.board.B,
-      1: cell,
-    };
-    const updatedCol = {
-      ...testBoard.board,
-      B: updatedRow,
-    };
-    const updatedBoard = {
-      ...testBoard,
-      board: updatedCol,
-    };
-    expect(placeShip('A', 1, testShip, updatedBoard)).toEqual(null);
+
+    expect(gameboard().placeShip('A', 1, testShip2, updatedBoard2)).toEqual(
+      null
+    );
   });
 });
 
-describe('receiveAttack()', () => {
+describe('gameboard().receiveAtack() method', () => {
+  const testBoard = gameboard();
   test('returns an updated board with hit true for coordinates', () => {
-    const testBoard = gameboard();
     const cell = { ship: null, hit: true };
     const updatedRow = {
       ...testBoard.board.A,
@@ -189,23 +184,26 @@ describe('receiveAttack()', () => {
       ...testBoard,
       board: updatedCol,
     };
-    expect(receiveAttack('A', 1, testBoard)).toEqual(updatedBoard);
+    expect(gameboard().receiveAttack('A', 1, testBoard)).toEqual(updatedBoard);
   });
   test('returns an updated board with HIT added to the hitArray of the relevant ship', () => {
     const expectedBoard = gameboard();
     expectedBoard.board.A[1].ship = expectedBoard.ships.carrier;
     expect(
-      receiveAttack('A', 1, expectedBoard).ships.carrier.hitArray
+      gameboard().receiveAttack('A', 1, expectedBoard).ships.carrier.hitArray
     ).toEqual(['HIT']);
   });
   test('returns null when hit is already true for coordinates', () => {
     const expectedBoard = gameboard();
     expectedBoard.board.A[1].hit = true;
-    expect(receiveAttack('A', 1, expectedBoard)).toEqual(null);
+    expect(gameboard().receiveAttack('A', 1, expectedBoard)).toEqual(null);
   });
 });
 
-describe('checkGameover()', () => {
+describe('gameboard().checkGameover() method', () => {
+  test('returns false if all ships are not sunk', () => {
+    expect(gameboard().checkGameover()).toEqual(false);
+  });
   test('returns true if all ships are sunk', () => {
     const testBoard = gameboard();
     const testShips = testBoard.ships;
@@ -215,43 +213,18 @@ describe('checkGameover()', () => {
         ship.hitArray = ship.hit();
       }
     });
-    expect(checkGameover(testShips)).toEqual(true);
-  });
-  test('returns false if all ships are not sunk', () => {
-    const testBoard = gameboard();
-    const testShips = testBoard.ships;
-    expect(checkGameover(testShips)).toEqual(false);
+    expect(testBoard.checkGameover()).toEqual(true);
   });
   test('returns false if only 2 ships are sunk', () => {
     const testBoard = gameboard();
     const testShips = testBoard.ships;
-    const sunkShips = Object.keys(testShips).slice(0, 2);
+    const sunkShips = Object.keys(testBoard.ships).slice(0, 2);
     sunkShips.forEach((key) => {
       const ship = testShips[key];
       for (let i = 0; i < ship.length; i += 1) {
         ship.hit();
       }
     });
-    expect(checkGameover(testShips)).toEqual(false);
-  });
-});
-
-describe('gameboard()', () => {
-  test('returns the expected board property', () => {
-    const testBoard = createBoard();
-    expect(gameboard().board).toEqual(testBoard);
-  });
-  test('returns the expected ship object with correct properties', () => {
-    expect(gameboard().ships).toHaveProperty('carrier');
-    expect(gameboard().ships).toHaveProperty('battleship');
-    expect(gameboard().ships).toHaveProperty('cruiser');
-    expect(gameboard().ships).toHaveProperty('submarine');
-    expect(gameboard().ships).toHaveProperty('destroyer');
-  });
-  test('returns the expected placeShip() method', () => {
-    expect(gameboard().placeShip).toEqual(placeShip);
-  });
-  test('returns the expected receiveAttack() method', () => {
-    expect(gameboard().receiveAttack).toEqual(receiveAttack);
+    expect(testBoard.checkGameover()).toEqual(false);
   });
 });

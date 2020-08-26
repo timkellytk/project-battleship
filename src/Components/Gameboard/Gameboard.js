@@ -9,7 +9,7 @@ export const createBoard = () => {
   columns.forEach((letter) => {
     const columnObj = {};
     rows.forEach((number) => {
-      columnObj[number] = cell;
+      columnObj[number] = { ...cell };
     });
     board[letter] = columnObj;
   });
@@ -152,6 +152,9 @@ export const gameboard = () => {
     ships,
     placeShip,
     receiveAttack,
+    checkGameover() {
+      return checkGameover(this.ships);
+    },
   };
   return game;
 };
