@@ -19,7 +19,7 @@ describe('shipFactory() methods', () => {
     expect(shipFactory(2).hit()).toEqual(['HIT']);
   });
   test('hit() returns an array ["HIT", "HIT"] on a ship with a hitArray ["HIT"]', () => {
-    // Create ship with  previous hit
+    // Create ship with previous hit
     const hitShip = shipFactory(2);
     hitShip.hitArray = hitShip.hit();
 
