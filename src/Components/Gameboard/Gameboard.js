@@ -1,10 +1,10 @@
-import { shipFactory } from '../Ship/Ship';
+import shipFactory from '../Ship/Ship';
 
 const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const cell = { ship: null, hit: null };
 
-export const createBoard = () => {
+const createBoard = () => {
   const board = {};
   columns.forEach((letter) => {
     const columnObj = {};
@@ -16,7 +16,7 @@ export const createBoard = () => {
   return board;
 };
 
-export const placeShip = (col, row, ship, shipBoard, vertical) => {
+const placeShip = (col, row, ship, shipBoard, vertical) => {
   // Update gameboard variables
   let updatedGameboard = shipBoard;
   let activeCol = col;
@@ -80,7 +80,7 @@ export const placeShip = (col, row, ship, shipBoard, vertical) => {
   return updatedGameboard;
 };
 
-export const receiveAttack = (col, row, shipBoard) => {
+const receiveAttack = (col, row, shipBoard) => {
   // Get cell information
   const relevantHit = shipBoard.board[col][row].hit;
   const relevantShip = shipBoard.board[col][row].ship;
@@ -127,7 +127,7 @@ export const receiveAttack = (col, row, shipBoard) => {
   return null;
 };
 
-export const checkGameover = (ships) => {
+const checkGameover = (ships) => {
   // Set gameover to true
   let gameover = true;
 
@@ -147,7 +147,7 @@ export const checkGameover = (ships) => {
   return gameover;
 };
 
-export const gameboard = () => {
+const gameboard = () => {
   const board = createBoard();
   const ships = {
     carrier: shipFactory(5, 'carrier'),
@@ -171,3 +171,5 @@ export const gameboard = () => {
   };
   return game;
 };
+
+export default gameboard;

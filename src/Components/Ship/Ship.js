@@ -1,4 +1,4 @@
-export const shipFactory = (shipLength, id) => {
+const shipFactory = (shipLength, id) => {
   const length = shipLength;
   const hitArray = [];
 
@@ -15,3 +15,5 @@ export const shipFactory = (shipLength, id) => {
     },
   };
 };
+
+export default shipFactory;

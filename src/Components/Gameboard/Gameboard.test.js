@@ -1,5 +1,5 @@
-import { gameboard } from './Gameboard';
-import { shipFactory } from '../Ship/Ship';
+import gameboard from './Gameboard';
+import shipFactory from '../Ship/Ship';
 
 describe('gameboard() properties', () => {
   test('board is the expected object', () => {

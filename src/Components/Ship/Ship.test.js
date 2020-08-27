@@ -1,4 +1,4 @@
-import { shipFactory } from './Ship';
+import shipFactory from './Ship';
 
 describe('shipFactory() properties', () => {
   test('id returns the expected string', () => {
