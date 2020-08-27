@@ -1,8 +1,5 @@
 import shipFactory from '../Ship/Ship';
-
-const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const cell = { ship: null, hit: null };
+import { columns, rows, cell } from '../Constants/Constants';
 
 const createBoard = () => {
   const board = {};
