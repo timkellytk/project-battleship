@@ -1,6 +1,21 @@
 import player from './Player';
 import computer from './Computer';
 
+describe('player().gameboard property', () => {
+  test('player() returns an object with gameboard as property', () => {
+    expect(player()).toHaveProperty('gameboard');
+  });
+  test('player().gameboard is an object with appropriate properties', () => {
+    const gameboard = player().gameboard;
+
+    expect(gameboard).toHaveProperty('board');
+    expect(gameboard).toHaveProperty('ships');
+    expect(gameboard).toHaveProperty('placeShip');
+    expect(gameboard).toHaveProperty('receiveAttack');
+    expect(gameboard).toHaveProperty('checkGameover');
+  });
+});
+
 describe('player().attack() method', () => {
   test('returns the enemy object with {hit = true} on  coordinates', () => {
     const updatedEnemy = player().attack('A', 1, computer());
