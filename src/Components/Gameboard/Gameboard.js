@@ -127,26 +127,6 @@ const receiveAttack = (col, row, shipBoard) => {
   return null;
 };
 
-const checkGameover = (ships) => {
-  // Set gameover to true
-  let gameover = true;
-
-  // Transform ships to an true/false array for sunk
-  const sunkArray = Object.keys(ships).map((key) => {
-    const ship = ships[key];
-    return ship.sunk();
-  });
-
-  // If a ship is not sunk set gameover to false
-  sunkArray.forEach((sunk) => {
-    if (sunk === false) {
-      gameover = false;
-    }
-  });
-
-  return gameover;
-};
-
 const gameboard = () => {
   const board = createBoard();
   const ships = {
@@ -166,7 +146,7 @@ const gameboard = () => {
       return receiveAttack(col, row, this);
     },
     checkGameover() {
-      return checkGameover(this.ships);
+      return Object.keys(this.ships).every((key) => this.ships[key].sunk());
     },
   };
   return game;
