@@ -1,13 +1,22 @@
 import React from 'react';
 import { Button, Card, Space, Typography, Row } from 'antd';
-import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  LaptopOutlined,
+  TrophyTwoTone,
+  DislikeTwoTone,
+} from '@ant-design/icons';
 
 const { Title } = Typography;
 
 const Header = (props) => {
   const playButtons = (
     <Space>
-      <Button type="primary" size="large" onClick={() => props.setPlay(true)}>
+      <Button
+        type="primary"
+        size="large"
+        onClick={() => props.setStartGame(true)}
+      >
         Play Game
       </Button>
       <Button type="default" size="large">
@@ -35,15 +44,40 @@ const Header = (props) => {
     </Space>
   );
 
-  const gameplay = (
-    <Card>{props.playersTurn ? infoPlayersTurn : infoComputersTurn}</Card>
+  const infoPlayerWins = (
+    <Space>
+      <TrophyTwoTone
+        style={{
+          fontSize: '1.6em',
+          marginBottom: '6px',
+        }}
+      />
+      <Title level={5}>You win!</Title>
+    </Space>
   );
+
+  const infoComputerWins = (
+    <Space>
+      <DislikeTwoTone
+        style={{
+          fontSize: '1.6em',
+          marginBottom: '6px',
+        }}
+      />
+      <Title level={5}>You lost</Title>
+    </Space>
+  );
+
+  const turn = props.playersTurn ? infoPlayersTurn : infoComputersTurn;
+  const winner = props.winner === 'player' ? infoPlayerWins : infoComputerWins;
+
+  const gameplay = <Card>{props.winner ? winner : turn}</Card>;
 
   return (
     <Row justify="center">
       <Space direction="vertical" size="large" align="center">
         <Title level={1}>Battleship</Title>
-        {props.play ? gameplay : playButtons}
+        {props.startGame ? gameplay : playButtons}
       </Space>
     </Row>
   );

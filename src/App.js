@@ -6,17 +6,19 @@ import Footer from './Components/Footer/Footer';
 import './App.less';
 
 const App = () => {
-  const [play, setPlay] = useState(false);
+  const [startGame, setStartGame] = useState(false);
   const [playersTurn, setPlayersTurn] = useState(true);
+  const [winner, setWinner] = useState(null);
 
   return (
     <Layout>
       <div className="App">
         <Space direction="vertical" size="large" align="center">
           <Header
-            play={play}
+            startGame={startGame}
+            setStartGame={(bool) => setStartGame(bool)}
             playersTurn={playersTurn}
-            setPlay={(bool) => setPlay(bool)}
+            winner={winner}
           />
           <Gameboards setPlayersTurn={(bool) => setPlayersTurn(bool)} />
           <Footer />
