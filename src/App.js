@@ -1,28 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Space, Layout, Typography, Row, Col } from 'antd';
-import { PushpinTwoTone } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 
 import './App.less';
 
 const { Title, Paragraph } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 const App = () => {
-  const Header = () => (
-    <Row justify="center">
-      <Space direction="vertical" size="large" align="center">
-        <Title level={1}>Battleship</Title>
-        <Space>
-          <Button type="primary" size="large">
-            Play Game
-          </Button>
-          <Button type="default" size="large">
-            Randomise Ships
-          </Button>
-        </Space>
+  const [play, setPlay] = useState(false);
+  const [playersTurn, setPlayersTurn] = useState(true);
+
+  const Header = () => {
+    let Instructions = () => (
+      <Space>
+        <Button type="primary" size="large" onClick={() => setPlay(true)}>
+          Play Game
+        </Button>
+        <Button type="default" size="large">
+          Randomise Ships
+        </Button>
       </Space>
-    </Row>
-  );
+    );
+    if (play) {
+      Instructions = () => {
+        let information = (
+          <Space>
+            <UserOutlined style={{ fontSize: '1.6em', marginBottom: '6px' }} />
+            <Title level={5}>Your turn</Title>
+          </Space>
+        );
+        if (!playersTurn) {
+          information = (
+            <Space>
+              <LaptopOutlined
+                style={{
+                  fontSize: '1.6em',
+                  marginBottom: '6px',
+                }}
+              />
+              <Title level={5}>Computer's turn</Title>
+            </Space>
+          );
+        }
+
+        return <Card>{information}</Card>;
+      };
+    }
+    return (
+      <Row justify="center">
+        <Space direction="vertical" size="large" align="center">
+          <Title level={1}>Battleship</Title>
+          <Instructions />
+        </Space>
+      </Row>
+    );
+  };
+
   const Gameboards = () => (
     <Row justify="center">
       <Space size="large" align="center">
@@ -31,6 +65,7 @@ const App = () => {
       </Space>
     </Row>
   );
+
   const GameFooter = () => (
     <Footer style={{ textAlign: 'center' }}>
       <Paragraph>
