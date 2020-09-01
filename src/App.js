@@ -7,7 +7,7 @@ import './App.less';
 
 const App = () => {
   const [play, setPlay] = useState(false);
-  const [playersTurn] = useState(true);
+  const [playersTurn, setPlayersTurn] = useState(true);
 
   return (
     <Layout>
@@ -15,10 +15,10 @@ const App = () => {
         <Space direction="vertical" size="large" align="center">
           <Header
             play={play}
-            playersTurn={!playersTurn}
+            playersTurn={playersTurn}
             setPlay={(bool) => setPlay(bool)}
           />
-          <Gameboards />
+          <Gameboards setPlayersTurn={(bool) => setPlayersTurn(bool)} />
           <Footer />
         </Space>
       </div>
