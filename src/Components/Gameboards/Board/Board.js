@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 
 const StyledBoardWrapper = styled.div`
   display: grid;
@@ -57,5 +58,9 @@ const Board = (props) => (
     {props.children}
   </StyledBoardWrapper>
 );
+
+Board.propTypes = {
+  children: propTypes.element.isRequired,
+};
 
 export default Board;
