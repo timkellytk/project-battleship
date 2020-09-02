@@ -7,22 +7,23 @@ const StyledGameboard = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  border-bottom: 1px solid ${borderColour};
-  border-right: 1px solid ${borderColour};
+  grid-gap: 1px;
+  background-color: ${borderColour};
+  border: 1px solid ${borderColour};
 `;
 
 const Gameboard = () => (
   <StyledGameboard>
+    <Cell hit />
+    <Cell hit ship sunk />
+    <Cell hit ship sunk />
+    <Cell hit ship sunk />
     <Cell />
     <Cell />
     <Cell />
+    <Cell hit ship />
     <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
+    <Cell hit ship />
     <Cell />
     <Cell />
     <Cell />
