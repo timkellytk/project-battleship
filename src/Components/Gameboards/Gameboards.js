@@ -3,14 +3,14 @@ import { Space, Row } from 'antd';
 import Board from './Board/Board';
 import Gameboard from './Gameboard/Gameboard';
 
-const Gameboards = () => (
+const Gameboards = (props) => (
   <Row justify="center">
     <Space size={50} align="center">
       <Board>
-        <Gameboard />
+        <Gameboard board={props.player} />
       </Board>
       <Board>
-        <Gameboard computer />
+        <Gameboard board={props.computer} computer />
       </Board>
     </Space>
   </Row>

@@ -12,119 +12,24 @@ const StyledGameboard = styled.div`
   border: 1px solid ${borderColour};
 `;
 
-const Gameboard = (props) => (
-  <StyledGameboard>
-    <Cell />
-    <Cell hit ship sunk />
-    <Cell computer={props.computer} hit ship />
-    <Cell computer={props.computer} hit ship sunk />
-    <Cell computer={props.computer} />
-    <Cell />
-    <Cell />
-    <Cell hit />
-    <Cell />
-    <Cell hit />
-    <Cell />
-    <Cell ship hit computer={props.computer} />
-    <Cell ship computer={props.computer} />
-    <Cell ship computer={props.computer} />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
-  </StyledGameboard>
-);
+const Gameboard = (props) => {
+  const cells = [];
+  Object.keys(props.board).forEach((column) => {
+    Object.keys(props.board[column]).forEach((row) => {
+      const { hit, ship } = props.board[column][row];
+      cells.push(
+        <Cell
+          computer={props.computer}
+          hit={hit}
+          ship={ship}
+          sunk={ship ? ship.sunk() : null}
+          key={column + row}
+        />
+      );
+    });
+  });
+
+  return <StyledGameboard>{cells}</StyledGameboard>;
+};
 
 export default Gameboard;

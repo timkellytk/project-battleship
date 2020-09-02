@@ -3,6 +3,8 @@ import { Space, Layout } from 'antd';
 import Header from './Components/Header/Header';
 import Gameboards from './Components/Gameboards/Gameboards';
 import Footer from './Components/Footer/Footer';
+import createPlayer from './Game/Player/Player';
+import createComputer from './Game/Player/Computer';
 import styled from 'styled-components';
 import './App.less';
 
@@ -17,6 +19,8 @@ const StyledWrapper = styled.div`
 
 const App = () => {
   const [startGame, setStartGame] = useState(false);
+  const [player, setPlayer] = useState(createPlayer());
+  const [computer, setComputer] = useState(createComputer());
   const [playersTurn, setPlayersTurn] = useState(true);
   const [winner, setWinner] = useState(null);
 
@@ -30,7 +34,11 @@ const App = () => {
             playersTurn={playersTurn}
             winner={winner}
           />
-          <Gameboards setPlayersTurn={(bool) => setPlayersTurn(bool)} />
+          <Gameboards
+            player={player.gameboard.board}
+            computer={computer.gameboard.board}
+            setPlayersTurn={(bool) => setPlayersTurn(bool)}
+          />
           <Footer />
         </Space>
       </StyledWrapper>
