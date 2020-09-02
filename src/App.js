@@ -3,7 +3,17 @@ import { Space, Layout } from 'antd';
 import Header from './Components/Header/Header';
 import Gameboards from './Components/Gameboards/Gameboard';
 import Footer from './Components/Footer/Footer';
+import styled from 'styled-components';
 import './App.less';
+
+const StyledWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+`;
 
 const App = () => {
   const [startGame, setStartGame] = useState(false);
@@ -12,7 +22,7 @@ const App = () => {
 
   return (
     <Layout>
-      <div className="App">
+      <StyledWrapper>
         <Space direction="vertical" size="large" align="center">
           <Header
             startGame={startGame}
@@ -23,7 +33,7 @@ const App = () => {
           <Gameboards setPlayersTurn={(bool) => setPlayersTurn(bool)} />
           <Footer />
         </Space>
-      </div>
+      </StyledWrapper>
     </Layout>
   );
 };
