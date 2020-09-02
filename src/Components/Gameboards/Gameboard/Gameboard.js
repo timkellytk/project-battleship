@@ -12,22 +12,22 @@ const StyledGameboard = styled.div`
   border: 1px solid ${borderColour};
 `;
 
-const Gameboard = () => (
+const Gameboard = (props) => (
   <StyledGameboard>
+    <Cell />
+    <Cell hit ship sunk />
+    <Cell computer={props.computer} hit ship />
+    <Cell computer={props.computer} hit ship sunk />
+    <Cell computer={props.computer} />
+    <Cell />
+    <Cell />
     <Cell hit />
-    <Cell hit ship sunk />
-    <Cell hit ship sunk />
-    <Cell hit ship sunk />
     <Cell />
+    <Cell hit />
     <Cell />
-    <Cell />
-    <Cell hit ship />
-    <Cell />
-    <Cell hit ship />
-    <Cell />
-    <Cell />
-    <Cell />
-    <Cell />
+    <Cell ship hit computer={props.computer} />
+    <Cell ship computer={props.computer} />
+    <Cell ship computer={props.computer} />
     <Cell />
     <Cell />
     <Cell />

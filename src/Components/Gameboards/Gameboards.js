@@ -10,7 +10,7 @@ const Gameboards = () => (
         <Gameboard />
       </Board>
       <Board>
-        <Gameboard />
+        <Gameboard computer />
       </Board>
     </Space>
   </Row>
