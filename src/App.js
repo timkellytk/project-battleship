@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Space, Layout } from 'antd';
 import Header from './Components/Header/Header';
-import Gameboards from './Components/Gameboards/Gameboard';
+import Gameboards from './Components/Gameboards/Gameboards';
 import Footer from './Components/Footer/Footer';
 import styled from 'styled-components';
 import './App.less';

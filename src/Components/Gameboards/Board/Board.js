@@ -1,12 +1,12 @@
 import React from 'react';
+import { boardDimensions, cellDimensions } from '../../Constants/Constants';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 
 const StyledBoardWrapper = styled.div`
   display: grid;
-  width: 432;
-  height: 432;
-  grid-template: 32px 1fr / 32px 1fr;
+  width: ${boardDimensions}px;
+  grid-template: ${cellDimensions}px 1fr / ${cellDimensions}px 1fr;
 `;
 
 const StyledNumbersColumn = styled.div`
