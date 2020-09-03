@@ -14,15 +14,16 @@ const StyledGameboard = styled.div`
 
 const Gameboard = (props) => {
   const cells = [];
-  Object.keys(props.board).forEach((column) => {
-    Object.keys(props.board[column]).forEach((row) => {
-      const { hit, ship } = props.board[column][row];
+  Object.keys(props.gameboard.board).forEach((column) => {
+    Object.keys(props.gameboard.board[column]).forEach((row) => {
+      const { hit, ship } = props.gameboard.board[column][row];
       cells.push(
         <Cell
           computer={props.computer}
           hit={hit}
           ship={ship}
           sunk={ship ? ship.sunk() : null}
+          clicked={() => props.attackComputer(column, row)}
           key={column + row}
         />
       );

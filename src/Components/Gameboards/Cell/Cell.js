@@ -51,7 +51,11 @@ const HitCell = (props) =>
   props.ship ? <ShipHit sunk={props.sunk} /> : <EmptyHit />;
 
 const NullCell = (props) =>
-  props.computer ? <ComputerCell /> : <PlayerCell ship={props.ship} />;
+  props.computer ? (
+    <ComputerCell onClick={props.clicked} />
+  ) : (
+    <PlayerCell ship={props.ship} />
+  );
 
 const Cell = (props) => {
   return props.hit ? <HitCell {...props} /> : <NullCell {...props} />;

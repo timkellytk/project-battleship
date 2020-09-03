@@ -77,6 +77,8 @@ const placeShip = (col, row, ship, shipBoard, vertical) => {
   return updatedGameboard;
 };
 
+const randomiseShips = () => {};
+
 const receiveAttack = (col, row, shipBoard) => {
   // Get cell information
   const relevantHit = shipBoard.board[col][row].hit;

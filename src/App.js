@@ -24,6 +24,26 @@ const App = () => {
   const [playersTurn, setPlayersTurn] = useState(true);
   const [winner, setWinner] = useState(null);
 
+  const attackComputerHandler = (col, row) => {
+    const updatedComputer = player.attack(col, row, computer);
+    setComputer(updatedComputer);
+    setPlayersTurn(false);
+  };
+
+  const attackPlayerHandler = () => {
+    const updatedPlayer = computer.attack(player);
+    setPlayer(updatedPlayer);
+    setPlayersTurn(true);
+  };
+
+  // If playersTurn is true
+  if (playersTurn) {
+    // Wait for player attack
+  } else {
+    // Else computer attack
+    attackPlayerHandler();
+  }
+
   return (
     <Layout>
       <StyledWrapper>
@@ -35,9 +55,10 @@ const App = () => {
             winner={winner}
           />
           <Gameboards
-            player={player.gameboard.board}
-            computer={computer.gameboard.board}
-            setPlayersTurn={(bool) => setPlayersTurn(bool)}
+            startGame={startGame}
+            player={player.gameboard}
+            computer={computer.gameboard}
+            attackComputer={(col, row) => attackComputerHandler(col, row)}
           />
           <Footer />
         </Space>
