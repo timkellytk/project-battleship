@@ -1,15 +1,3 @@
-/* 
-Notes on what Ships need: 
-ShipFactory(length, col, row, orientation )
-- length = length
-- hitCount = 0
-- firstCoordinate = [col, row]
-- orientation = vertical || horizontal)
-- getLength() = return length
-- getShipCoordinates() = e.g. [coordinate1, coordinate2, coordinate3]
-- hit() = add 1 to hitCount
-- isSunk() = if length === hitCount
-*/
 import Ship from './Ship';
 
 describe('Ship', () => {
@@ -18,8 +6,9 @@ describe('Ship', () => {
     ship = new Ship(0, 0, 4);
   });
 
-  test('creates expected ship', () => {
-    expect(ship.length).toBe(4);
+  test('Creates expected ship', () => {
+    expect(ship.length).toEqual(4);
+    expect(ship.hitCount).toEqual(0);
     expect(ship.startCoordinate).toEqual({ col: 0, row: 0 });
     expect(ship.orientation).toEqual(true);
     expect(ship.getCoordinates()).toEqual([
@@ -28,5 +17,31 @@ describe('Ship', () => {
       { col: 0, row: 2 },
       { col: 0, row: 3 },
     ]);
+  });
+
+  test('Toggle ship orientation', () => {
+    ship.toggleOrientation();
+    expect(ship.orientation).toEqual(false);
+    expect(ship.getCoordinates()).toEqual([
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 2, row: 0 },
+      { col: 3, row: 0 },
+    ]);
+  });
+
+  test('Count hits to ship', () => {
+    ship.hit();
+    ship.hit();
+    expect(ship.hitCount).toEqual(2);
+  });
+
+  test('Find sunk ships', () => {
+    ship.hit();
+    ship.hit();
+    ship.hit();
+    expect(ship.isSunk()).toEqual(false);
+    ship.hit();
+    expect(ship.isSunk()).toEqual(true);
   });
 });
