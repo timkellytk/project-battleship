@@ -1,8 +1,8 @@
 /* 
 Test requirements for the Gameboard:
 - board = array(array(10 * null) * 10) (DONE)
-- ships = [] - set an empty array and allow yourself to intialiseShips with a function
-- placeShip(col, row, ship) = place ship at col, row coordinates
+- ships = [] - set an empty array and allow yourself to intialiseShips with a function (DONE)
+- placeShip(col, row, ship) = place ship at col, row coordinates (DONE)
 - initaliseShips = add all starting ships to the ship array
 - moveShip(col, row, ship)
 - toggleShip(ship) = toggle the ship's orientation
@@ -32,22 +32,27 @@ describe('Gameboard', () => {
     }
   );
   test.each([new Ship(0, 0, 2), new Ship(7, 5, 2), new Ship(6, 4, 3, false)])(
-    'placeShip() adds to ship array and returns true if ship has valid coords',
+    'placeShip() for valid coords: adds to ship array and returns true',
     (placedShip) => {
       expect(gameboard.placeShip(placedShip)).toEqual(true);
       expect(gameboard.ships.length).toEqual(1);
     }
   );
   test.each([new Ship(-1, 0, 2), new Ship(5, 9, 2), new Ship(9, 5, 2, false)])(
-    'placeShip() does not add to ship array and returns false if ship has invalid coords',
+    'placeShip() for invalid coords: does not add to ship array and returns false',
     (placedShip) => {
       expect(gameboard.placeShip(placedShip)).toEqual(false);
       expect(gameboard.ships.length).toEqual(0);
     }
   );
-  test('placeShip() does not add to ship array and returns false if ship already exists at coords', () => {
+  test('placeShip() if ship already exists at coords: does not add to ship array and returns false', () => {
     gameboard.placeShip(new Ship(0, 0, 2));
     expect(gameboard.placeShip(new Ship(0, 0, 2))).toEqual(false);
     expect(gameboard.ships.length).toEqual(1);
+  });
+  test('intialiseShips() creates all ships for new game', () => {
+    /*     gameboard.intialiseShips();
+ expect(gameboard.ships.length).toEqual(10);
+ */
   });
 });
