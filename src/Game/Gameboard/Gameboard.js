@@ -25,6 +25,15 @@ const noShipExists = (coords, ships) =>
 const allOtherShips = (ships, shipIndex) =>
   ships.filter((_, index) => index !== shipIndex);
 
+const shipExists = (ships, attackCoords) =>
+  ships.reduce((shipAtCoords, curShip) => {
+    const shipExistsAtCoords = curShip
+      .getCoordinates()
+      .filter((shipCoord) => shipCoord === attackCoords);
+
+    return shipExistsAtCoords ? curShip : shipAtCoords;
+  }, null);
+
 class Gameboard {
   constructor() {
     this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(''));
@@ -92,6 +101,16 @@ class Gameboard {
       return true;
     }
     return false;
+  }
+  receiveAttack(col, row) {
+    const ship = shipExists(this.ships, { col, row });
+    if (ship) {
+      ship.hit();
+      return true;
+    } else {
+      this.board[col][row] = 'HIT';
+      return false;
+    }
   }
 }
 

@@ -130,9 +130,14 @@ describe('Gameboard', () => {
     expect(gameboard.toggleShip(0)).toEqual(false);
     expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
   });
-  /* test('receiveAttack() for empty cell: record miss on board and return false', () => {
+  test('receiveAttack() for empty cell: record miss on board and return false', () => {
     expect(gameboard.receiveAttack(0, 0)).toEqual(false);
     expect(gameboard.board[0][0]).toEqual('HIT');
   });
-  test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {}); */
+  test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {
+    gameboard.placeShip(new Ship(0, 0, 2));
+    expect(gameboard.receiveAttack(0, 0)).toEqual(true);
+    expect(gameboard.board[0][0]).toEqual('');
+    expect(gameboard.ships[0].hitCount).toEqual(1);
+  });
 });
