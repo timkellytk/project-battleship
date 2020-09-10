@@ -1,4 +1,6 @@
+import Ship from '../Ship/Ship';
 import { BOARD_SIZE } from '../Constants/Constants';
+import { getRandomInt, getRandomBool } from '../utils';
 
 const validCoordinates = (coords) =>
   coords.reduce((valid, { col, row }) => {
@@ -33,6 +35,34 @@ class Gameboard {
       return true;
     }
     return false;
+  }
+  intialiseShips() {
+    const shipsRequired = [
+      { quantity: 4, size: 1 },
+      { quantity: 3, size: 2 },
+      { quantity: 2, size: 3 },
+      { quantity: 1, size: 4 },
+    ];
+
+    shipsRequired.forEach(({ quantity, size }) => {
+      let i = 0;
+      while (i < quantity) {
+        const newShip = new Ship(
+          getRandomInt(0, 9),
+          getRandomInt(0, 9),
+          size,
+          getRandomBool()
+        );
+        if (newShip) {
+          this.ships.push(newShip);
+          i += 1;
+        }
+      }
+    });
+  }
+  randomiseShips() {
+    this.ships = [];
+    this.intialiseShips();
   }
 }
 

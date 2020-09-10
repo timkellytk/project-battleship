@@ -3,10 +3,10 @@ Test requirements for the Gameboard:
 - board = array(array(10 * null) * 10) (DONE)
 - ships = [] - set an empty array and allow yourself to intialiseShips with a function (DONE)
 - placeShip(col, row, ship) = place ship at col, row coordinates (DONE)
-- initaliseShips = add all starting ships to the ship array
+- initaliseShips = add all starting ships to the ship array (DONE)
+- randomiseShips() = randomly replace all the ships (DONE)
 - moveShip(col, row, ship)
 - toggleShip(ship) = toggle the ship's orientation
-- randomiseShips() = randomly place all the ships
 - receiveAttack(col, row) =>
   if(!attackShips(col, row)) {
     update board at board[col][row] = 'miss'  
@@ -50,9 +50,25 @@ describe('Gameboard', () => {
     expect(gameboard.placeShip(new Ship(0, 0, 2))).toEqual(false);
     expect(gameboard.ships.length).toEqual(1);
   });
-  test('intialiseShips() creates all ships for new game', () => {
-    /*     gameboard.intialiseShips();
- expect(gameboard.ships.length).toEqual(10);
- */
-  });
+  test.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])(
+    'intialiseShips() creates all ships for new game',
+    (index) => {
+      gameboard.intialiseShips();
+      expect(gameboard.ships.length).toEqual(10);
+      expect(gameboard.ships[index]).toBeTruthy();
+    }
+  );
+  test.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])(
+    'randomiseShips() randomises the ships',
+    (index) => {
+      gameboard.intialiseShips();
+      const initalShips = gameboard.ships;
+      gameboard.randomiseShips();
+      const randomShips = gameboard.ships;
+
+      expect(initalShips !== randomShips).toBeTruthy();
+      expect(gameboard.ships.length).toEqual(10);
+      expect(gameboard.ships[index]).toBeTruthy();
+    }
+  );
 });
