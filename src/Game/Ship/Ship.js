@@ -8,11 +8,14 @@ class Ship {
   toggleOrientation() {
     this.orientation = !this.orientation;
   }
-  getCoordinates() {
-    const { col, row } = this.startCoordinate;
+  getCoordinates(
+    startCoordinate = this.startCoordinate,
+    orientation = this.orientation
+  ) {
+    const { col, row } = startCoordinate;
     const coords = [...Array(this.length)];
     return coords.map((_, index) =>
-      this.orientation ? { col, row: row + index } : { col: col + index, row }
+      orientation ? { col, row: row + index } : { col: col + index, row }
     );
   }
   hit() {

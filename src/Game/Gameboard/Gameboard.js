@@ -22,6 +22,9 @@ const noShipExists = (coords, ships) =>
     return noExistingShip ? noShip : false;
   }, true);
 
+const allOtherShips = (ships, shipIndex) =>
+  ships.filter((_, index) => index !== shipIndex);
+
 class Gameboard {
   constructor() {
     this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(''));
@@ -63,6 +66,32 @@ class Gameboard {
   randomiseShips() {
     this.ships = [];
     this.intialiseShips();
+  }
+  moveShip(col, row, shipIndex) {
+    const ship = this.ships[shipIndex];
+    const newStartCoord = { col, row };
+    const newCoords = ship.getCoordinates(newStartCoord);
+    const otherShips = allOtherShips(this.ships, shipIndex);
+
+    if (validCoordinates(newCoords) && noShipExists(newCoords, otherShips)) {
+      ship.startCoordinate = newStartCoord;
+      return true;
+    }
+    return false;
+  }
+  toggleShip(shipIndex) {
+    const ship = this.ships[shipIndex];
+    const newCoords = ship.getCoordinates(
+      ship.startCoordinate,
+      !ship.orientation
+    );
+    const otherShips = allOtherShips(this.ships, shipIndex);
+
+    if (validCoordinates(newCoords) && noShipExists(newCoords, otherShips)) {
+      ship.toggleOrientation();
+      return true;
+    }
+    return false;
   }
 }
 

@@ -5,8 +5,8 @@ Test requirements for the Gameboard:
 - placeShip(col, row, ship) = place ship at col, row coordinates (DONE)
 - initaliseShips = add all starting ships to the ship array (DONE)
 - randomiseShips() = randomly replace all the ships (DONE)
-- moveShip(col, row, ship)
-- toggleShip(ship) = toggle the ship's orientation
+- moveShip(col, row, ship) (DONE)
+- toggleShip(ship) = toggle the ship's orientation (DONE)
 - receiveAttack(col, row) =>
   if(!attackShips(col, row)) {
     update board at board[col][row] = 'miss'  
@@ -45,7 +45,7 @@ describe('Gameboard', () => {
       expect(gameboard.ships.length).toEqual(0);
     }
   );
-  test('placeShip() if ship already exists at coords: does not add to ship array and returns false', () => {
+  test('placeShip() for ship exists at coords: does not add to ship array and returns false', () => {
     gameboard.placeShip(new Ship(0, 0, 2));
     expect(gameboard.placeShip(new Ship(0, 0, 2))).toEqual(false);
     expect(gameboard.ships.length).toEqual(1);
@@ -71,4 +71,68 @@ describe('Gameboard', () => {
       expect(gameboard.ships[index]).toBeTruthy();
     }
   );
+  test('moveShip() for valid coords: returns true and updates ship coords', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    expect(gameboard.moveShip(5, 6, 0)).toEqual(true);
+    expect(gameboard.ships[0].startCoordinate).toEqual({ col: 5, row: 6 });
+    expect(gameboard.ships[0].getCoordinates()).toEqual([
+      { col: 5, row: 6 },
+      { col: 5, row: 7 },
+    ]);
+  });
+  test('moveShip() for valid coords with current ship at coords: returns true and updates ship coords', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    expect(gameboard.moveShip(7, 6, 0)).toEqual(true);
+    expect(gameboard.ships[0].startCoordinate).toEqual({ col: 7, row: 6 });
+    expect(gameboard.ships[0].getCoordinates()).toEqual([
+      { col: 7, row: 6 },
+      { col: 7, row: 7 },
+    ]);
+  });
+  test('moveShip() for invalid coords: returns false and does not update ship coords', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    const expectedStartCoords = gameboard.ships[0].startCoordinate;
+    const expectedCoords = gameboard.ships[0].getCoordinates();
+
+    expect(gameboard.moveShip(10, 2, 0)).toEqual(false);
+    expect(gameboard.ships[0].startCoordinate).toEqual(expectedStartCoords);
+    expect(gameboard.ships[0].getCoordinates()).toEqual(expectedCoords);
+  });
+  test('moveShip() for ship exists at coords: returns false and does not update ship coords', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    const expectedStartCoords = gameboard.ships[0].startCoordinate;
+    const expectedCoords = gameboard.ships[0].getCoordinates();
+    gameboard.placeShip(new Ship(0, 1, 2));
+
+    expect(gameboard.moveShip(0, 0, 0)).toEqual(false);
+    expect(gameboard.ships[0].startCoordinate).toEqual(expectedStartCoords);
+    expect(gameboard.ships[0].getCoordinates()).toEqual(expectedCoords);
+  });
+  test('toggleShip() for valid coords: returns true and update orientation', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    const prevOrientation = gameboard.ships[0].orientation;
+
+    expect(gameboard.toggleShip(0)).toEqual(true);
+    expect(gameboard.ships[0].orientation).toEqual(!prevOrientation);
+  });
+  test('toggleShip() for invalid coords: returns false and does not update orientation', () => {
+    gameboard.placeShip(new Ship(9, 5, 2));
+    const prevOrientation = gameboard.ships[0].orientation;
+
+    expect(gameboard.toggleShip(0)).toEqual(false);
+    expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
+  });
+  test('toggleShip() for other ship exists at coords: returns false and does not update orientation', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
+    const prevOrientation = gameboard.ships[0].orientation;
+    gameboard.placeShip(new Ship(8, 5, 2));
+
+    expect(gameboard.toggleShip(0)).toEqual(false);
+    expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
+  });
+  /* test('receiveAttack() for empty cell: record miss on board and return false', () => {
+    expect(gameboard.receiveAttack(0, 0)).toEqual(false);
+    expect(gameboard.board[0][0]).toEqual('HIT');
+  });
+  test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {}); */
 });
