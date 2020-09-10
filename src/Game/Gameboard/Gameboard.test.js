@@ -7,11 +7,7 @@ Test requirements for the Gameboard:
 - randomiseShips() = randomly replace all the ships (DONE)
 - moveShip(col, row, ship) (DONE)
 - toggleShip(ship) = toggle the ship's orientation (DONE)
-- receiveAttack(col, row) =>
-  if(!attackShips(col, row)) {
-    update board at board[col][row] = 'miss'  
-  }
-  return
+- receiveAttack(col, row) (DONE)
 - gameover() = check if all ships are sunk
 */
 import Gameboard from './Gameboard';
@@ -139,5 +135,15 @@ describe('Gameboard', () => {
     expect(gameboard.receiveAttack(0, 0)).toEqual(true);
     expect(gameboard.board[0][0]).toEqual('');
     expect(gameboard.ships[0].hitCount).toEqual(1);
+  });
+  test('gameover() for all ships sunk', () => {
+    gameboard.placeShip(new Ship(0, 0, 2));
+    gameboard.ships[0].hit();
+    gameboard.ships[0].hit();
+    expect(gameboard.gameover()).toEqual(true);
+  });
+  test('gameover() for not all ships sunk', () => {
+    gameboard.placeShip(new Ship(0, 0, 2));
+    expect(gameboard.gameover()).toEqual(false);
   });
 });

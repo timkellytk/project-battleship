@@ -104,13 +104,20 @@ class Gameboard {
   }
   receiveAttack(col, row) {
     const ship = shipExists(this.ships, { col, row });
+
     if (ship) {
       ship.hit();
       return true;
-    } else {
-      this.board[col][row] = 'HIT';
-      return false;
     }
+    this.board[col][row] = 'HIT';
+    return false;
+  }
+  gameover() {
+    const result = this.ships.reduce((gameover, ship) => {
+      return ship.isSunk() && gameover;
+    }, true);
+
+    return result;
   }
 }
 
