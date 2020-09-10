@@ -1,15 +1,3 @@
-/* 
-Test requirements for the Gameboard:
-- board = array(array(10 * null) * 10) (DONE)
-- ships = [] - set an empty array and allow yourself to intialiseShips with a function (DONE)
-- placeShip(col, row, ship) = place ship at col, row coordinates (DONE)
-- initaliseShips = add all starting ships to the ship array (DONE)
-- randomiseShips() = randomly replace all the ships (DONE)
-- moveShip(col, row, ship) (DONE)
-- toggleShip(ship) = toggle the ship's orientation (DONE)
-- receiveAttack(col, row) (DONE)
-- gameover() = check if all ships are sunk
-*/
 import Gameboard from './Gameboard';
 import Ship from '../Ship/Ship';
 
