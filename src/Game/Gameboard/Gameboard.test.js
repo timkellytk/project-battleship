@@ -134,4 +134,14 @@ describe('Gameboard', () => {
     gameboard.placeShip(new Ship(0, 0, 2));
     expect(gameboard.gameover()).toEqual(false);
   });
+  test('getGameboard() returns gameboard', () => {
+    expect(gameboard.getGameboard()).toEqual(gameboard.board);
+    gameboard.receiveAttack(0, 0);
+    expect(gameboard.getGameboard()).toEqual(gameboard.board);
+  });
+  test('getShips() returns ships', () => {
+    expect(gameboard.getShips()).toEqual(gameboard.ships);
+    gameboard.placeShip(new Ship(0, 0, 2));
+    expect(gameboard.getShips()).toEqual(gameboard.ships);
+  });
 });

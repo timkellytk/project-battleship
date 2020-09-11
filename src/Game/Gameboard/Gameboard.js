@@ -39,6 +39,12 @@ class Gameboard {
     this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(''));
     this.ships = [];
   }
+  getGameboard() {
+    return this.board;
+  }
+  getShips() {
+    return this.ships;
+  }
   placeShip(ship) {
     const coords = ship.getCoordinates();
 
