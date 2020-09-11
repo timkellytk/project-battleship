@@ -119,10 +119,11 @@ describe('Gameboard', () => {
     expect(gameboard.board[0][0]).toEqual('HIT');
   });
   test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {
+    gameboard.placeShip(new Ship(5, 5, 2));
     gameboard.placeShip(new Ship(0, 0, 2));
     expect(gameboard.receiveAttack(0, 0)).toEqual(true);
     expect(gameboard.board[0][0]).toEqual('');
-    expect(gameboard.ships[0].hitCount).toEqual(1);
+    expect(gameboard.ships[1].hitCount).toEqual(1);
   });
   test('gameover() for all ships sunk', () => {
     gameboard.placeShip(new Ship(0, 0, 2));
