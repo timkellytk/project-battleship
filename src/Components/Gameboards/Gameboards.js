@@ -8,14 +8,10 @@ const Gameboards = (props) => {
     <Row justify="center">
       <Space size={50} align="center">
         <Board>
-          <Gameboard gameboard={props.player} />
+          <Gameboard gameboard={props.player} ships={props.ships} />
         </Board>
         <Board>
-          <Gameboard
-            gameboard={props.computer}
-            attackComputer={props.attackComputer}
-            computer
-          />
+          <Gameboard gameboard={props.computer} />
         </Board>
       </Space>
     </Row>
