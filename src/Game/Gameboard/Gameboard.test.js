@@ -117,6 +117,8 @@ describe('Gameboard', () => {
   test('receiveAttack() for empty cell: record miss on board and return false', () => {
     expect(gameboard.receiveAttack(0, 0)).toEqual(false);
     expect(gameboard.board[0][0]).toEqual('HIT');
+    expect(gameboard.board[0][1]).toEqual('');
+    expect(gameboard.board[1][0]).toEqual('');
   });
   test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {
     gameboard.placeShip(new Ship(5, 5, 2));

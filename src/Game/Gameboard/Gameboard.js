@@ -40,7 +40,9 @@ const shipExists = (ships, attackCoords) =>
 
 class Gameboard {
   constructor() {
-    this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(''));
+    this.board = [...Array(BOARD_SIZE)].map((col) =>
+      [...Array(BOARD_SIZE)].map((cell) => '')
+    );
     this.ships = [];
   }
   getGameboard() {
@@ -119,6 +121,7 @@ class Gameboard {
       ship.hit();
       return true;
     }
+
     this.board[col][row] = 'HIT';
     return false;
   }
