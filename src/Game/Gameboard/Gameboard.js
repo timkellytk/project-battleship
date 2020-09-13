@@ -29,12 +29,11 @@ const shipExists = (ships, attackCoords) =>
   ships.reduce((shipAtCoords, curShip) => {
     const shipExistsAtCoords = curShip
       .getCoordinates()
-      .reduce((shipExistsBool, shipCoord) => {
-        const shipExists =
+      .some(
+        (shipCoord) =>
           shipCoord.col === attackCoords.col &&
-          shipCoord.row === attackCoords.row;
-        return shipExists ? true : shipExistsBool;
-      }, false);
+          shipCoord.row === attackCoords.row
+      );
     return shipExistsAtCoords ? curShip : shipAtCoords;
   }, null);
 
