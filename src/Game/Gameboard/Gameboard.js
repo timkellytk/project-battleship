@@ -21,7 +21,7 @@ const allOtherShips = (ships, shipIndex) =>
   ships.filter((_, index) => index !== shipIndex);
 
 const findShip = (ships, attackCoords) =>
-  ships.reduce((shipAtCoords, curShip) => {
+  ships.find((curShip) => {
     const shipExistsAtCoords = curShip
       .getCoordinates()
       .some(
@@ -29,8 +29,8 @@ const findShip = (ships, attackCoords) =>
           shipCoord.col === attackCoords.col &&
           shipCoord.row === attackCoords.row
       );
-    return shipExistsAtCoords ? curShip : shipAtCoords;
-  }, null);
+    return shipExistsAtCoords;
+  });
 
 class Gameboard {
   constructor() {
