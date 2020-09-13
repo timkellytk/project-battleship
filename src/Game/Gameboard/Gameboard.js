@@ -8,19 +8,14 @@ const validCoordinates = (coords) =>
   });
 
 const noShipExists = (coords, ships) =>
-  coords.reduce((noShip, coord) => {
-    const noExistingShip = ships.reduce((noOtherShip, otherShip) => {
-      const noExistingCoord = otherShip
-        .getCoordinates()
-        .reduce((emptyCoord, otherCoord) => {
-          const coordClash =
-            coord.col === otherCoord.col && coord.row === otherCoord.row;
-          return coordClash ? false : emptyCoord;
-        }, true);
-      return noExistingCoord ? noOtherShip : false;
-    }, true);
-    return noExistingShip ? noShip : false;
-  }, true);
+  coords.every((coord) => {
+    const existingShipsGameboard = ships.some((otherShip) => {
+      return otherShip.getCoordinates().some((otherCoord) => {
+        return coord.col === otherCoord.col && coord.row === otherCoord.row;
+      });
+    });
+    return !existingShipsGameboard;
+  });
 
 const allOtherShips = (ships, shipIndex) =>
   ships.filter((_, index) => index !== shipIndex);
