@@ -3,9 +3,9 @@ import { BOARD_SIZE } from '../Constants/Constants';
 import { getRandomInt, getRandomBool } from '../utils';
 
 const validCoordinates = (coords) =>
-  coords.reduce((valid, { col, row }) => {
-    return col > 9 || col < 0 || row > 9 || row < 0 ? false : valid;
-  }, true);
+  coords.every(({ col, row }) => {
+    return col >= 0 && col <= 9 && row >= 0 && row <= 9;
+  });
 
 const noShipExists = (coords, ships) =>
   coords.reduce((noShip, coord) => {
