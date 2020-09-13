@@ -126,10 +126,7 @@ class Gameboard {
     return false;
   }
   gameover() {
-    const result = this.ships.reduce((gameover, ship) => {
-      return ship.isSunk() && gameover;
-    }, true);
-
+    const result = this.ships.every((ship) => ship.isSunk());
     return result;
   }
 }
