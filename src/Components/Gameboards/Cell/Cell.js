@@ -3,6 +3,7 @@ import { cellDimensions, backgroundColour } from '../../Constants/Constants';
 import styled from 'styled-components';
 
 const StyledCell = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,19 +32,23 @@ const StyledEmptyHit = styled.div`
 `;
 
 const Cell = (props) => {
-  let result = <StyledCell computer={props.computer} onClick={props.clicked} />;
+  let result = (
+    <StyledCell computer={props.computer} onClick={props.clicked}>
+      {props.children}
+    </StyledCell>
+  );
   if (props.hit === 'MISS') {
     result = (
       <ClickedCell>
-        <StyledEmptyHit>.</StyledEmptyHit>
+        <StyledEmptyHit>.{props.children}</StyledEmptyHit>
       </ClickedCell>
     );
   }
   if (props.hit === 'HIT') {
-    result = <ClickedCell>X</ClickedCell>;
+    result = <ClickedCell>X{props.children}</ClickedCell>;
   }
   if (props.hit === 'SUNK') {
-    result = <ClickedCell sunk />;
+    result = <ClickedCell sunk>{props.children}</ClickedCell>;
   }
   return result;
 };

@@ -70,7 +70,6 @@ const Game = () => {
   useEffect(() => {
     initialiseGame();
   }, []);
-
   return (
     <Layout>
       <StyledWrapper>
