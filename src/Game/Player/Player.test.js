@@ -20,25 +20,26 @@ describe('Player', () => {
   });
 
   test.each([
-    [0, 0, 0],
-    [3, 3, 3],
-    [5, 1, 7],
-  ])('attack() for coords with ship', (col, row, shipIndex) => {
+    [0, 0, 0, 'SUNK'],
+    [3, 3, 3, 'SUNK'],
+    [5, 1, 7, 'HIT'],
+  ])('attack() for coords with ship', (col, row, shipIndex, expectedResult) => {
     enemy.gameboard.intialiseShips();
 
     // Remove randomness by excluding tests when moveShip is not possible
     if (enemy.gameboard.moveShip(col, row, shipIndex)) {
       expect(player.attack(col, row, enemy)).toEqual(true);
       expect(enemy.gameboard.getShips()[shipIndex].hitCount).toEqual(1);
-      expect(enemy.gameboard.getGameboard()[col].row).toEqual(undefined);
+      expect(enemy.gameboard.getGameboard()[col][row]).toEqual(expectedResult);
     }
   });
+
   test.each([
     [0, 0],
     [3, 3],
     [5, 1],
   ])('attack() for empty coords', (col, row) => {
     expect(player.attack(col, row, enemy)).toEqual(false);
-    expect(enemy.gameboard.getGameboard()[col][row]).toEqual('HIT');
+    expect(enemy.gameboard.getGameboard()[col][row]).toEqual('MISS');
   });
 });
