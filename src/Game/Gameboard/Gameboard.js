@@ -113,14 +113,11 @@ class Gameboard {
 
     if (ship) {
       ship.hit();
-      if (ship.isSunk()) {
-        ship.getCoordinates().forEach(({ col, row }) => {
-          this.board[col][row] = 'SUNK';
-        });
-        return true;
-      }
-
-      this.board[col][row] = 'HIT';
+      ship.isSunk()
+        ? ship.getCoordinates().forEach(({ col, row }) => {
+            this.board[col][row] = 'SUNK';
+          })
+        : (this.board[col][row] = 'HIT');
       return true;
     }
 
