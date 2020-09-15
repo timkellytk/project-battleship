@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import styled from 'styled-components';
 import Player from '../../Game/Player/Player';
 import Computer from '../../Game/Player/Computer';
+const _ = require('lodash');
 
 const StyledWrapper = styled.div`
   min-height: 100vh;
@@ -21,7 +22,6 @@ let player;
 let computer;
 
 const Game = () => {
-  // Set state
   const [gameboard, setGameboard] = useState([]);
   const [ships, setShips] = useState([]);
   const [attackGameboard, setAttackGameboard] = useState([]);
@@ -44,11 +44,33 @@ const Game = () => {
     setGameover(false);
   };
 
+  const handlePlayerAttack = (col, row) => {
+    const hitShip = player.attack(col, row, computer);
+    const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
+    setAttackGameboard(updatedGameboard);
+    if (!hitShip) {
+      setPlayerTurn(!playerTurn);
+      handleComputerAttack();
+    }
+    return;
+  };
+
+  const handleComputerAttack = () => {
+    const hitShip = computer.attack(player);
+    const updatedGameboard = _.cloneDeep(player.gameboard.getGameboard());
+    setGameboard(updatedGameboard);
+    if (hitShip) {
+      handleComputerAttack();
+      return;
+    }
+    setPlayerTurn(!playerTurn);
+    return;
+  };
+
   useEffect(() => {
     initialiseGame();
   }, []);
 
-  console.log({ gameboard, attackGameboard });
   return (
     <Layout>
       <StyledWrapper>
@@ -58,6 +80,7 @@ const Game = () => {
             player={gameboard}
             ships={ships}
             computer={attackGameboard}
+            attackComputer={handlePlayerAttack}
           />
           <Footer />
         </Space>

@@ -9,17 +9,11 @@ const StyledCell = styled.div`
   height: ${cellDimensions - 2}px;
   width: ${cellDimensions - 2}px;
   background-color: ${backgroundColour};
-`;
-
-const PlayerShip = styled(StyledCell)`
-  background-color: #197ddc;
-`;
-
-const ComputerCell = styled(StyledCell)`
   :hover {
-    border: 2px solid green;
-    background-color: rgba(51, 170, 51, 0.2);
-    cursor: pointer;
+    border: ${(props) => (props.computer ? '2px solid green;' : null)};
+    background-color: ${(props) =>
+      props.computer ? 'rgba(51, 170, 51, 0.2)' : null};
+    cursor: ${(props) => (props.computer ? 'pointer' : null)};
   }
 `;
 
@@ -36,29 +30,22 @@ const StyledEmptyHit = styled.div`
   margin-bottom: 0.6em;
 `;
 
-const PlayerCell = (props) => (props.ship ? <PlayerShip /> : <StyledCell />);
-
-const EmptyHit = () => (
-  <ClickedCell>
-    <StyledEmptyHit>.</StyledEmptyHit>
-  </ClickedCell>
-);
-
-const ShipHit = (props) =>
-  props.sunk ? <ClickedCell sunk>X</ClickedCell> : <ClickedCell>X</ClickedCell>;
-
-const HitCell = (props) =>
-  props.ship ? <ShipHit sunk={props.sunk} /> : <EmptyHit />;
-
-const NullCell = (props) =>
-  props.computer ? (
-    <ComputerCell onClick={props.clicked} />
-  ) : (
-    <PlayerCell ship={props.ship} />
-  );
-
 const Cell = (props) => {
-  return props.hit ? <HitCell {...props} /> : <NullCell {...props} />;
+  let result = <StyledCell computer={props.computer} onClick={props.clicked} />;
+  if (props.hit === 'MISS') {
+    result = (
+      <ClickedCell>
+        <StyledEmptyHit>.</StyledEmptyHit>
+      </ClickedCell>
+    );
+  }
+  if (props.hit === 'HIT') {
+    result = <ClickedCell>X</ClickedCell>;
+  }
+  if (props.hit === 'SUNK') {
+    result = <ClickedCell sunk />;
+  }
+  return result;
 };
 
 export default Cell;

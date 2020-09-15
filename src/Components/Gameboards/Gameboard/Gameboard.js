@@ -13,19 +13,19 @@ const StyledGameboard = styled.div`
 `;
 
 const Gameboard = (props) => {
-  const cells = [];
-  for (let i = 0; i < 100; i++) {
-    cells.push(
-      <Cell
-        computer={props.computer}
-        hit={null}
-        ship={null}
-        sunk={null}
-        clicked={null}
-        key={null}
-      />
-    );
-  }
+  const cells = props.gameboard.map((col, colIndex) =>
+    col.map((row, rowIndex) => {
+      return (
+        <Cell
+          hit={row}
+          key={colIndex + rowIndex}
+          computer={props.computer}
+          clicked={() => props.handleClick(colIndex, rowIndex)}
+        />
+      );
+    })
+  );
+
   return <StyledGameboard>{cells}</StyledGameboard>;
 };
 

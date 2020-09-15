@@ -11,7 +11,11 @@ const Gameboards = (props) => {
           <Gameboard gameboard={props.player} ships={props.ships} />
         </Board>
         <Board>
-          <Gameboard gameboard={props.computer} />
+          <Gameboard
+            gameboard={props.computer}
+            handleClick={props.attackComputer}
+            computer
+          />
         </Board>
       </Space>
     </Row>
