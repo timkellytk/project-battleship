@@ -71,8 +71,8 @@ class Gameboard {
           size,
           getRandomBool()
         );
-        if (newShip) {
-          this.ships.push(newShip);
+        const shipPlaced = this.placeShip(newShip);
+        if (shipPlaced) {
           i += 1;
         }
       }
