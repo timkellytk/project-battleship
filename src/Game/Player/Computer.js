@@ -4,14 +4,16 @@ import { getRandomInt } from '../utils';
 const getRandomCoordinate = (gameboard) => {
   const emptyCoordinates = gameboard.board.reduce(
     (accumulatorArray, col, colIndex) => {
-      const colArray = col.map((_, rowIndex) => {
-        if (gameboard.board[colIndex][rowIndex] !== 'HIT') {
+      const colArray = col
+        .map((_, rowIndex) => {
           return {
             col: colIndex,
             row: rowIndex,
           };
-        }
-      });
+        })
+        .filter((cell) => {
+          return gameboard.board[cell.col][cell.row] === '';
+        });
       return [...accumulatorArray, ...colArray];
     },
     []
