@@ -25,23 +25,10 @@ const Header = (props) => {
     </Space>
   );
 
-  const infoPlayersTurn = (
-    <Space>
-      <UserOutlined style={{ fontSize: '1.6em', marginBottom: '6px' }} />
-      <Title level={5}>Your turn</Title>
-    </Space>
-  );
-
-  const infoComputersTurn = (
-    <Space>
-      <LaptopOutlined
-        style={{
-          fontSize: '1.6em',
-          marginBottom: '6px',
-        }}
-      />
-      <Title level={5}>Computer's turn</Title>
-    </Space>
+  const restartButton = (
+    <Button type="primary" size="large" onClick={() => props.playAgain()}>
+      Restart
+    </Button>
   );
 
   const infoPlayerWins = (
@@ -68,16 +55,13 @@ const Header = (props) => {
     </Space>
   );
 
-  const turn = props.playersTurn ? infoPlayersTurn : infoComputersTurn;
-  const winner = props.winner === 'player' ? infoPlayerWins : infoComputerWins;
-
-  const gameplay = <Card>{props.winner ? winner : turn}</Card>;
-
   return (
     <Row justify="center">
       <Space direction="vertical" size="large" align="center">
         <Title level={1}>Battleship</Title>
-        {props.startGame ? gameplay : playButtons}
+        {props.winner === 'player' ? infoPlayerWins : null}
+        {props.winner === 'computer' ? infoComputerWins : null}
+        {props.startGame ? restartButton : playButtons}
       </Space>
     </Row>
   );

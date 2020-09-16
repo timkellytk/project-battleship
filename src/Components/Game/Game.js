@@ -27,7 +27,7 @@ const Game = () => {
   const [attackGameboard, setAttackGameboard] = useState([]);
   const [start, setStart] = useState(false);
   const [playerTurn, setPlayerTurn] = useState(true);
-  const [gameover, setGameover] = useState(false);
+  const [winner, setWinner] = useState(false);
 
   const initialiseGame = () => {
     player = new Player();
@@ -41,7 +41,11 @@ const Game = () => {
 
     setStart(false);
     setPlayerTurn(true);
-    setGameover(false);
+    setWinner(false);
+  };
+
+  const handleStartGame = () => {
+    setStart(true);
   };
 
   const handlePlayerAttack = (col, row) => {
@@ -49,7 +53,10 @@ const Game = () => {
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
     setAttackGameboard(updatedGameboard);
     if (!hitShip) {
-      setPlayerTurn(!playerTurn);
+      if (computer.gameboard.gameover()) {
+        return setWinner('player');
+      }
+      setPlayerTurn(false);
       handleComputerAttack();
     }
     return;
@@ -60,21 +67,30 @@ const Game = () => {
     const updatedGameboard = _.cloneDeep(player.gameboard.getGameboard());
     setGameboard(updatedGameboard);
     if (hitShip) {
-      handleComputerAttack();
-      return;
+      if (player.gameboard.gameover()) {
+        return setWinner('computer');
+      }
+      return handleComputerAttack();
     }
-    setPlayerTurn(!playerTurn);
+    setPlayerTurn(true);
     return;
   };
 
   useEffect(() => {
     initialiseGame();
   }, []);
+
   return (
     <Layout>
       <StyledWrapper>
         <Space direction="vertical" size="large" align="center">
-          <Header />
+          <Header
+            startGame={start}
+            setStartGame={handleStartGame}
+            playerTurn={playerTurn}
+            winner={winner}
+            playAgain={initialiseGame}
+          />
           <Gameboards
             player={gameboard}
             ships={ships}
