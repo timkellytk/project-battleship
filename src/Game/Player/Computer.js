@@ -25,7 +25,7 @@ const getRandomCoordinate = (gameboard) => {
 
 class Computer extends Player {
   attack(enemy) {
-    const { col, row } = getRandomCoordinate(this.gameboard);
+    const { col, row } = getRandomCoordinate(enemy.gameboard);
     return enemy.gameboard.receiveAttack(col, row);
   }
 }

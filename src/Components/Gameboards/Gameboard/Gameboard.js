@@ -1,6 +1,7 @@
 import React from 'react';
 import Cell from '../Cell/Cell';
 import Ship from '../Ship/Ship';
+import { v4 as uuidv4 } from 'uuid';
 import { borderColour } from '../../Constants/Constants';
 import styled from 'styled-components';
 
@@ -20,7 +21,7 @@ const Gameboard = (props) => {
       const emptyCell = (
         <Cell
           hit={col}
-          key={rowIndex + colIndex}
+          key={uuidv4()}
           computer={props.computer}
           clicked={
             props.computer ? () => props.handleClick(rowIndex, colIndex) : null
@@ -39,7 +40,7 @@ const Gameboard = (props) => {
         );
         if (shipStartsOnCell) {
           shipCell = (
-            <Cell>
+            <Cell key={uuidv4()} hit={col}>
               <Ship
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}
