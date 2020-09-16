@@ -23,7 +23,7 @@ const ShipBlock = styled.div`
 `;
 
 const Ship = (props) => {
-  return <ShipBlock {...props} onClick={props.toggleShip} />;
+  return <ShipBlock {...props} onClick={props.setCurrentShip} />;
 };
 
 export default Ship;

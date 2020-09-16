@@ -54,7 +54,7 @@ const Header = (props) => {
         {props.winner === 'player' ? infoPlayerWins : null}
         {props.winner === 'computer' ? infoComputerWins : null}
         {props.startGame ? restartButton : playButtons}
-        <MoveShip />
+        <MoveShip currentShip={props.currentShip} />
       </Space>
     </Row>
   );

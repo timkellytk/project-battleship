@@ -52,7 +52,7 @@ const Gameboard = (props) => {
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}
                 coordinates={shipStartsOnCell.getCoordinates()}
-                toggleShip={() => props.toggleShip(shipIndexOnCell)}
+                setCurrentShip={() => props.setCurrentShip(shipIndexOnCell)}
               />
             </Cell>
           );
