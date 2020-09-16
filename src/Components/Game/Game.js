@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Layout } from 'antd';
+import { Space, Layout, message } from 'antd';
 import Header from '../Header/Header';
 import Gameboards from '../Gameboards/Gameboards';
 import Footer from '../Footer/Footer';
@@ -72,6 +72,7 @@ const Game = () => {
       handleSetCurrentShip(currentShipIndex);
       return true;
     }
+    message.warning('There is already a ship in this location');
     return false;
   };
 
@@ -79,7 +80,10 @@ const Game = () => {
     if (player.gameboard.toggleShip(currentShipIndex)) {
       setShips(_.cloneDeep(player.gameboard.getShips()));
       handleSetCurrentShip(currentShipIndex);
+      return true;
     }
+    message.warning('You need empty cells to update ship orientation');
+    return false;
   };
 
   const handlePlayerAttack = (col, row) => {
