@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Card, Select, Button, Switch, Typography, Space } from 'antd';
+import React from 'react';
+import { Form, Card, Select, Switch, Typography, Space } from 'antd';
 import Ship from '../../Gameboards/Ship/Ship';
 
 const { Option } = Select;
@@ -21,7 +21,9 @@ const MoveShip = (props) => {
   return (
     <Card>
       <Space direction="vertical">
-        <Title level={5}>Click on a ship to change the coordinates</Title>
+        <Title level={5}>
+          Click on a ship to change the starting coordinate
+        </Title>
         <Form layout="inline">
           <Form.Item label="Ship">
             <Ship length={length} orientation={orientation} showcase />
