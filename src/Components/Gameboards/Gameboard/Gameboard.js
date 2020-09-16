@@ -31,6 +31,7 @@ const Gameboard = (props) => {
       );
 
       let shipStartsOnCell = false;
+      let shipIndexOnCell;
       let shipCell;
 
       if (props.ships) {
@@ -40,12 +41,18 @@ const Gameboard = (props) => {
             ship.startCoordinate.col === colIndex
         );
         if (shipStartsOnCell) {
+          shipIndexOnCell = props.ships.findIndex(
+            (ship) =>
+              ship.startCoordinate.row === rowIndex &&
+              ship.startCoordinate.col === colIndex
+          );
           shipCell = (
             <Cell key={uuidv4()} hit={col} startGame={props.startGame}>
               <Ship
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}
                 coordinates={shipStartsOnCell.getCoordinates()}
+                toggleShip={() => props.toggleShip(shipIndexOnCell)}
               />
             </Cell>
           );

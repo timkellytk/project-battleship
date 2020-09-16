@@ -54,6 +54,17 @@ const Game = () => {
     setShips(updatedShips);
   };
 
+  const handleMoveShip = (shipIndex) => {
+    // const ship = ships[shipIndex]
+    // set updatedShip =
+  };
+
+  const handleToggleShip = (shipIndex) => {
+    if (player.gameboard.toggleShip(shipIndex)) {
+      setShips(_.cloneDeep(player.gameboard.getShips()));
+    }
+  };
+
   const handlePlayerAttack = (col, row) => {
     const hitShip = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
@@ -103,6 +114,7 @@ const Game = () => {
             player={gameboard}
             ships={ships}
             computer={attackGameboard}
+            toggleShip={handleToggleShip}
             attackComputer={handlePlayerAttack}
           />
           <Footer />
