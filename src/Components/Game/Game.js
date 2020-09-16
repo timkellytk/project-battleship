@@ -48,6 +48,12 @@ const Game = () => {
     setStart(true);
   };
 
+  const handleRandomiseShips = () => {
+    player.gameboard.randomiseShips();
+    const updatedShips = _.cloneDeep(player.gameboard.getShips());
+    setShips(updatedShips);
+  };
+
   const handlePlayerAttack = (col, row) => {
     const hitShip = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
@@ -86,9 +92,10 @@ const Game = () => {
         <Space direction="vertical" size="large" align="center">
           <Header
             startGame={start}
-            setStartGame={handleStartGame}
             playerTurn={playerTurn}
             winner={winner}
+            setStartGame={handleStartGame}
+            randomiseShips={handleRandomiseShips}
             playAgain={initialiseGame}
           />
           <Gameboards

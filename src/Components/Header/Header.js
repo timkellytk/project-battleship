@@ -12,14 +12,10 @@ const { Title } = Typography;
 const Header = (props) => {
   const playButtons = (
     <Space>
-      <Button
-        type="primary"
-        size="large"
-        onClick={() => props.setStartGame(true)}
-      >
+      <Button type="primary" size="large" onClick={props.setStartGame}>
         Play Game
       </Button>
-      <Button type="default" size="large">
+      <Button type="default" size="large" onClick={props.randomiseShips}>
         Randomise Ships
       </Button>
     </Space>
