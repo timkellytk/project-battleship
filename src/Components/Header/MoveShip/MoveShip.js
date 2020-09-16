@@ -6,19 +6,17 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const MoveShip = (props) => {
-  const [column, setColumn] = useState('');
-  const [row, setRow] = useState('');
-  const [length, setLength] = useState('');
-  const [orientation, setOrientation] = useState(false);
+  let column;
+  let row;
+  let length;
+  let orientation;
 
-  useEffect(() => {
-    if (props.currentShip) {
-      setColumn(props.currentShip.startCoordinate.col);
-      setRow(props.currentShip.startCoordinate.row);
-      setLength(props.currentShip.length);
-      setOrientation(props.currentShip.orientation);
-    }
-  });
+  if (props.currentShip) {
+    column = props.currentShip.startCoordinate.col;
+    row = props.currentShip.startCoordinate.row;
+    length = props.currentShip.length;
+    orientation = props.currentShip.orientation;
+  }
 
   return (
     <Card>
