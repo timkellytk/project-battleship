@@ -133,6 +133,7 @@ const Game = () => {
             startGame={start}
             player={gameboard}
             ships={ships}
+            currentShipIndex={currentShipIndex}
             computer={attackGameboard}
             setCurrentShip={handleSetCurrentShip}
             attackComputer={handlePlayerAttack}
