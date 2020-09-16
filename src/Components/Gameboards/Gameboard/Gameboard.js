@@ -23,6 +23,7 @@ const Gameboard = (props) => {
           hit={col}
           key={uuidv4()}
           computer={props.computer}
+          startGame={props.startGame}
           clicked={
             props.computer ? () => props.handleClick(rowIndex, colIndex) : null
           }
@@ -40,7 +41,7 @@ const Gameboard = (props) => {
         );
         if (shipStartsOnCell) {
           shipCell = (
-            <Cell key={uuidv4()} hit={col}>
+            <Cell key={uuidv4()} hit={col} startGame={props.startGame}>
               <Ship
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}

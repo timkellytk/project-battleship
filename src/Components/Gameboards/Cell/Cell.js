@@ -11,10 +11,12 @@ const StyledCell = styled.div`
   width: ${cellDimensions - 2}px;
   background-color: ${backgroundColour};
   :hover {
-    border: ${(props) => (props.computer ? '2px solid green;' : null)};
+    border: ${(props) =>
+      props.startGame && props.computer ? '2px solid green;' : null};
     background-color: ${(props) =>
-      props.computer ? 'rgba(51, 170, 51, 0.2)' : null};
-    cursor: ${(props) => (props.computer ? 'pointer' : null)};
+      props.startGame && props.computer ? 'rgba(51, 170, 51, 0.2)' : null};
+    cursor: ${(props) =>
+      props.startGame && props.computer ? 'pointer' : null};
   }
 `;
 
@@ -33,7 +35,11 @@ const StyledEmptyHit = styled.div`
 
 const Cell = (props) => {
   let result = (
-    <StyledCell computer={props.computer} onClick={props.clicked}>
+    <StyledCell
+      computer={props.computer}
+      onClick={props.startGame ? props.clicked : null}
+      startGame={props.startGame}
+    >
       {props.children}
     </StyledCell>
   );

@@ -7,6 +7,7 @@ const StyledBoardWrapper = styled.div`
   display: grid;
   width: ${boardDimensions}px;
   grid-template: ${cellDimensions}px 1fr / ${cellDimensions}px 1fr;
+  opacity: ${(props) => (props.startGame ? '100%' : '50%')};
 `;
 
 const StyledNumbersColumn = styled.div`
@@ -30,7 +31,7 @@ const StyledCell = styled.div`
 `;
 
 const Board = (props) => (
-  <StyledBoardWrapper>
+  <StyledBoardWrapper startGame={props.startGame}>
     <StyledLettersColumn>
       <StyledCell>A</StyledCell>
       <StyledCell>B</StyledCell>

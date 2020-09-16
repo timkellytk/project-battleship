@@ -99,6 +99,7 @@ const Game = () => {
             playAgain={initialiseGame}
           />
           <Gameboards
+            startGame={start}
             player={gameboard}
             ships={ships}
             computer={attackGameboard}
