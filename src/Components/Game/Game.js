@@ -54,9 +54,12 @@ const Game = () => {
     setShips(updatedShips);
   };
 
-  const handleMoveShip = (shipIndex) => {
-    // const ship = ships[shipIndex]
-    // set updatedShip =
+  const handleMoveShip = (row, col, shipIndex) => {
+    if (player.gameboard.moveShip(row, col, shipIndex)) {
+      setShips(_.cloneDeep(player.gameboard.getShips()));
+      return true;
+    }
+    return false;
   };
 
   const handleToggleShip = (shipIndex) => {

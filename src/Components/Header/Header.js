@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Space, Typography, Row } from 'antd';
 import { TrophyTwoTone, DislikeTwoTone } from '@ant-design/icons';
+import MoveShip from './MoveShip/MoveShip';
 
 const { Title } = Typography;
 
@@ -50,10 +51,10 @@ const Header = (props) => {
     <Row justify="center">
       <Space direction="vertical" size="large" align="center">
         <Title level={1}>Battleship</Title>
-
         {props.winner === 'player' ? infoPlayerWins : null}
         {props.winner === 'computer' ? infoComputerWins : null}
         {props.startGame ? restartButton : playButtons}
+        <MoveShip />
       </Space>
     </Row>
   );

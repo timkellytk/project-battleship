@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { boardDimensions } from '../../Constants/Constants';
 
 const ShipBlock = styled.div`
-  position: absolute;
+  position: ${[(props) => (props.showcase ? 'relative' : 'absolute')]};
   cursor: pointer;
   z-index: 100;
   left: 0%;
