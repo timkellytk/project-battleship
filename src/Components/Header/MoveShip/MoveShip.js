@@ -17,15 +17,9 @@ const MoveShip = (props) => {
       setRow(props.currentShip.startCoordinate.row);
       setLength(props.currentShip.length);
       setOrientation(props.currentShip.orientation);
-      console.log('fired');
     }
   });
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  console.log({ column, row, orientation });
   return (
     <Card>
       <Space direction="vertical">
@@ -38,7 +32,7 @@ const MoveShip = (props) => {
             <Select
               value={column}
               style={{ width: 60 }}
-              onChange={handleChange}
+              onChange={(value) => props.moveShip(row, value)}
             >
               <Option value={0}>A</Option>
               <Option value={1}>B</Option>
@@ -53,7 +47,11 @@ const MoveShip = (props) => {
             </Select>
           </Form.Item>
           <Form.Item label="Row">
-            <Select value={row} style={{ width: 60 }}>
+            <Select
+              value={row}
+              style={{ width: 60 }}
+              onChange={(value) => props.moveShip(value, column)}
+            >
               <Option value={0}>1</Option>
               <Option value={1}>2</Option>
               <Option value={2}>3</Option>
@@ -67,7 +65,7 @@ const MoveShip = (props) => {
             </Select>
           </Form.Item>
           <Form.Item label="Horizontal">
-            <Switch checked={orientation} />
+            <Switch checked={orientation} onChange={props.toggleShip} />
           </Form.Item>
         </Form>
       </Space>

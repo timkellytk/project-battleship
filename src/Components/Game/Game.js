@@ -25,6 +25,7 @@ const Game = () => {
   const [gameboard, setGameboard] = useState([]);
   const [ships, setShips] = useState([]);
   const [currentShip, setCurrentShip] = useState(null);
+  const [currentShipIndex, setCurrentShipIndex] = useState(null);
   const [attackGameboard, setAttackGameboard] = useState([]);
   const [start, setStart] = useState(false);
   const [playerTurn, setPlayerTurn] = useState(true);
@@ -36,6 +37,7 @@ const Game = () => {
     setGameboard(player.gameboard.getGameboard());
     setShips(player.gameboard.getShips());
     setCurrentShip(player.gameboard.getShips()[0]);
+    setCurrentShipIndex(0);
 
     computer = new Computer();
     computer.gameboard.intialiseShips();
@@ -55,24 +57,28 @@ const Game = () => {
     const updatedShips = _.cloneDeep(player.gameboard.getShips());
     setShips(updatedShips);
     setCurrentShip(player.gameboard.getShips()[0]);
+    setCurrentShipIndex(0);
   };
 
   const handleSetCurrentShip = (shipIndex) => {
     const ship = player.gameboard.getShips()[shipIndex];
     setCurrentShip(ship);
+    setCurrentShipIndex(shipIndex);
   };
 
-  const handleMoveShip = (row, col, shipIndex) => {
-    if (player.gameboard.moveShip(row, col, shipIndex)) {
+  const handleMoveShip = (row, col) => {
+    if (player.gameboard.moveShip(row, col, currentShipIndex)) {
       setShips(_.cloneDeep(player.gameboard.getShips()));
+      handleSetCurrentShip(currentShipIndex);
       return true;
     }
     return false;
   };
 
-  const handleToggleShip = (shipIndex) => {
-    if (player.gameboard.toggleShip(shipIndex)) {
+  const handleToggleShip = () => {
+    if (player.gameboard.toggleShip(currentShipIndex)) {
       setShips(_.cloneDeep(player.gameboard.getShips()));
+      handleSetCurrentShip(currentShipIndex);
     }
   };
 
@@ -117,6 +123,8 @@ const Game = () => {
             playerTurn={playerTurn}
             winner={winner}
             currentShip={currentShip}
+            toggleShip={handleToggleShip}
+            moveShip={handleMoveShip}
             setStartGame={handleStartGame}
             randomiseShips={handleRandomiseShips}
             playAgain={initialiseGame}
