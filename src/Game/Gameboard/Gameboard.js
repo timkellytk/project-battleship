@@ -3,15 +3,15 @@ import { BOARD_SIZE } from '../Constants/Constants';
 import { getRandomInt, getRandomBool } from '../utils';
 
 const validCoordinates = (coords) =>
-  coords.every(({ col, row }) => {
-    return col >= 0 && col <= 9 && row >= 0 && row <= 9;
+  coords.every(({ row, col }) => {
+    return row >= 0 && row <= 9 && col >= 0 && col <= 9;
   });
 
 const noShipExists = (coords, ships) =>
   coords.every((coord) => {
     const existingShipsGameboard = ships.some((otherShip) => {
       return otherShip.getCoordinates().some((otherCoord) => {
-        return coord.col === otherCoord.col && coord.row === otherCoord.row;
+        return coord.row === otherCoord.row && coord.col === otherCoord.col;
       });
     });
     return !existingShipsGameboard;
@@ -26,15 +26,15 @@ const findShip = (ships, attackCoords) =>
       .getCoordinates()
       .some(
         (shipCoord) =>
-          shipCoord.col === attackCoords.col &&
-          shipCoord.row === attackCoords.row
+          shipCoord.row === attackCoords.row &&
+          shipCoord.col === attackCoords.col
       );
     return shipExistsAtCoords;
   });
 
 class Gameboard {
   constructor() {
-    this.board = [...Array(BOARD_SIZE)].map((col) =>
+    this.board = [...Array(BOARD_SIZE)].map((row) =>
       [...Array(BOARD_SIZE)].map((cell) => '')
     );
     this.ships = [];
@@ -82,9 +82,9 @@ class Gameboard {
     this.ships = [];
     this.intialiseShips();
   }
-  moveShip(col, row, shipIndex) {
+  moveShip(row, col, shipIndex) {
     const ship = this.ships[shipIndex];
-    const newStartCoord = { col, row };
+    const newStartCoord = { row, col };
     const newCoords = ship.getCoordinates(newStartCoord);
     const otherShips = allOtherShips(this.ships, shipIndex);
 
@@ -108,20 +108,20 @@ class Gameboard {
     }
     return false;
   }
-  receiveAttack(col, row) {
-    const ship = findShip(this.ships, { col, row });
+  receiveAttack(row, col) {
+    const ship = findShip(this.ships, { row, col });
 
     if (ship) {
       ship.hit();
       ship.isSunk()
-        ? ship.getCoordinates().forEach(({ col, row }) => {
-            this.board[col][row] = 'SUNK';
+        ? ship.getCoordinates().forEach(({ row, col }) => {
+            this.board[row][col] = 'SUNK';
           })
-        : (this.board[col][row] = 'HIT');
+        : (this.board[row][col] = 'HIT');
       return true;
     }
 
-    this.board[col][row] = 'MISS';
+    this.board[row][col] = 'MISS';
     return false;
   }
   gameover() {

@@ -1,8 +1,8 @@
 class Ship {
-  constructor(col, row, shipLength = 1, orientation = true) {
+  constructor(row, col, shipLength = 1, orientation = true) {
     this.length = shipLength;
     this.hitCount = 0;
-    this.startCoordinate = { col, row };
+    this.startCoordinate = { row, col };
     this.orientation = orientation;
   }
   toggleOrientation() {
@@ -12,10 +12,10 @@ class Ship {
     startCoordinate = this.startCoordinate,
     orientation = this.orientation
   ) {
-    const { col, row } = startCoordinate;
+    const { row, col } = startCoordinate;
     const coords = [...Array(this.length)];
     return coords.map((_, index) =>
-      orientation ? { col, row: row + index } : { col: col + index, row }
+      orientation ? { row, col: col + index } : { row: row + index, col }
     );
   }
   hit() {

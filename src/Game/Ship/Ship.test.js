@@ -9,13 +9,13 @@ describe('Ship', () => {
   test('Creates expected ship', () => {
     expect(ship.length).toEqual(4);
     expect(ship.hitCount).toEqual(0);
-    expect(ship.startCoordinate).toEqual({ col: 0, row: 0 });
+    expect(ship.startCoordinate).toEqual({ row: 0, col: 0 });
     expect(ship.orientation).toEqual(true);
     expect(ship.getCoordinates()).toEqual([
-      { col: 0, row: 0 },
-      { col: 0, row: 1 },
-      { col: 0, row: 2 },
-      { col: 0, row: 3 },
+      { row: 0, col: 0 },
+      { row: 0, col: 1 },
+      { row: 0, col: 2 },
+      { row: 0, col: 3 },
     ]);
   });
 
@@ -23,10 +23,10 @@ describe('Ship', () => {
     ship.toggleOrientation();
     expect(ship.orientation).toEqual(false);
     expect(ship.getCoordinates()).toEqual([
-      { col: 0, row: 0 },
-      { col: 1, row: 0 },
-      { col: 2, row: 0 },
-      { col: 3, row: 0 },
+      { row: 0, col: 0 },
+      { row: 1, col: 0 },
+      { row: 2, col: 0 },
+      { row: 3, col: 0 },
     ]);
   });
 

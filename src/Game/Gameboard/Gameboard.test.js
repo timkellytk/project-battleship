@@ -58,19 +58,19 @@ describe('Gameboard', () => {
   test('moveShip() for valid coords: returns true and updates ship coords', () => {
     gameboard.placeShip(new Ship(7, 5, 2));
     expect(gameboard.moveShip(5, 6, 0)).toEqual(true);
-    expect(gameboard.ships[0].startCoordinate).toEqual({ col: 5, row: 6 });
+    expect(gameboard.ships[0].startCoordinate).toEqual({ row: 5, col: 6 });
     expect(gameboard.ships[0].getCoordinates()).toEqual([
-      { col: 5, row: 6 },
-      { col: 5, row: 7 },
+      { row: 5, col: 6 },
+      { row: 5, col: 7 },
     ]);
   });
   test('moveShip() for valid coords with current ship at coords: returns true and updates ship coords', () => {
     gameboard.placeShip(new Ship(7, 5, 2));
     expect(gameboard.moveShip(7, 6, 0)).toEqual(true);
-    expect(gameboard.ships[0].startCoordinate).toEqual({ col: 7, row: 6 });
+    expect(gameboard.ships[0].startCoordinate).toEqual({ row: 7, col: 6 });
     expect(gameboard.ships[0].getCoordinates()).toEqual([
-      { col: 7, row: 6 },
-      { col: 7, row: 7 },
+      { row: 7, col: 6 },
+      { row: 7, col: 7 },
     ]);
   });
   test('moveShip() for invalid coords: returns false and does not update ship coords', () => {

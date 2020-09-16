@@ -15,15 +15,15 @@ const StyledGameboard = styled.div`
 `;
 
 const Gameboard = (props) => {
-  const cells = props.gameboard.map((col, colIndex) =>
-    col.map((row, rowIndex) => {
+  const cells = props.gameboard.map((row, rowIndex) =>
+    row.map((col, colIndex) => {
       const emptyCell = (
         <Cell
-          hit={row}
-          key={colIndex + rowIndex}
+          hit={col}
+          key={rowIndex + colIndex}
           computer={props.computer}
           clicked={
-            props.computer ? () => props.handleClick(colIndex, rowIndex) : null
+            props.computer ? () => props.handleClick(rowIndex, colIndex) : null
           }
         />
       );
@@ -34,8 +34,8 @@ const Gameboard = (props) => {
       if (props.ships) {
         shipStartsOnCell = props.ships.find(
           (ship) =>
-            ship.startCoordinate.col === colIndex &&
-            ship.startCoordinate.row === rowIndex
+            ship.startCoordinate.row === rowIndex &&
+            ship.startCoordinate.col === colIndex
         );
         if (shipStartsOnCell) {
           shipCell = (
