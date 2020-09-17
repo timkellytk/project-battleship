@@ -22,14 +22,14 @@ describe('Computer', () => {
 
   test('attack() for empty coords', () => {
     const prevGameboard = [...player.gameboard.getGameboard()];
-    expect(computer.attack(player)).toEqual(false);
+    expect(computer.attack(player)).toEqual('MISS');
     expect(player.gameboard.getGameboard() !== prevGameboard).toBe(true);
   });
   test('attack() returns a valid value for all cords', () => {
     let i = 0;
     while (i < 100) {
       const prevGameboard = [...player.gameboard.getGameboard()];
-      expect(computer.attack(player)).toEqual(false);
+      computer.attack(player);
       expect(player.gameboard.getGameboard() !== prevGameboard).toBe(true);
       i++;
     }

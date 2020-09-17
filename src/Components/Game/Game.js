@@ -87,10 +87,10 @@ const Game = () => {
   };
 
   const handlePlayerAttack = (col, row) => {
-    const hitShip = player.attack(col, row, computer);
+    const result = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
     setAttackGameboard(updatedGameboard);
-    if (!hitShip) {
+    if (result === 'HIT' || 'SUNK') {
       if (computer.gameboard.gameover()) {
         return setWinner('player');
       }
@@ -101,10 +101,11 @@ const Game = () => {
   };
 
   const handleComputerAttack = () => {
-    const hitShip = computer.attack(player);
+    const result = computer.attack(player);
     const updatedGameboard = _.cloneDeep(player.gameboard.getGameboard());
     setGameboard(updatedGameboard);
-    if (hitShip) {
+    console.log('handleComputerAttack', result);
+    if (result !== 'MISS') {
       if (player.gameboard.gameover()) {
         return setWinner('computer');
       }

@@ -154,15 +154,14 @@ class Gameboard {
         ship.getCoordinates().forEach(({ row, col }) => {
           updateBoardSunkShip(row, col, this.board);
         });
-      } else {
-        this.board[row][col] = 'HIT';
+        return 'SUNK';
       }
-
-      return true;
+      this.board[row][col] = 'HIT';
+      return 'HIT';
     }
 
     this.board[row][col] = 'MISS';
-    return false;
+    return 'MISS';
   }
   gameover() {
     const result = this.ships.every((ship) => ship.isSunk());

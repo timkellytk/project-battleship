@@ -134,7 +134,7 @@ describe('Gameboard', () => {
     expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
   });
   test('receiveAttack() for empty cell: record miss on board and return false', () => {
-    expect(gameboard.receiveAttack(0, 0)).toEqual(false);
+    expect(gameboard.receiveAttack(0, 0)).toEqual('MISS');
     expect(gameboard.board[0][0]).toEqual('MISS');
     expect(gameboard.board[0][1]).toEqual('');
     expect(gameboard.board[1][0]).toEqual('');
@@ -142,15 +142,15 @@ describe('Gameboard', () => {
   test('receiveAttack() for cell with a ship: send hit() to the correct ship and return true', () => {
     gameboard.placeShip(new Ship(5, 5, 2));
     gameboard.placeShip(new Ship(0, 0, 2));
-    expect(gameboard.receiveAttack(0, 0)).toEqual(true);
+    expect(gameboard.receiveAttack(0, 0)).toEqual('HIT');
     expect(gameboard.board[0][0]).toEqual('HIT');
     expect(gameboard.ships[1].hitCount).toEqual(1);
   });
   test('receiveAttack() for cell with a sunk ship: send hit() to the correct ship and update all cells to "SUNK" on gameboard', () => {
     gameboard.placeShip(new Ship(5, 5, 2));
     gameboard.placeShip(new Ship(0, 0, 2));
-    expect(gameboard.receiveAttack(0, 0)).toEqual(true);
-    expect(gameboard.receiveAttack(0, 1)).toEqual(true);
+    expect(gameboard.receiveAttack(0, 0)).toEqual('HIT');
+    expect(gameboard.receiveAttack(0, 1)).toEqual('SUNK');
     expect(gameboard.board[0][0]).toEqual('SUNK');
     expect(gameboard.board[0][1]).toEqual('SUNK');
     expect(gameboard.board[1][0]).toEqual('MISS');

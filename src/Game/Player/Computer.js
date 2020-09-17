@@ -23,10 +23,29 @@ const getRandomCoordinate = (gameboard) => {
   return { row, col };
 };
 
+const getComputerCoordinate = (gameboard) => {
+  /* 
+  Required logic:
+  - If 'HIT' then return getEmptySurroundingCoordinate(shipExistsAtCoords, gameboard)
+  - If 'SUNK' or 'MISS then return getRandomCoordinate(gameboard);
+  */
+  return getRandomCoordinate(gameboard);
+};
+
+let shipExistsAtCoords;
+
 class Computer extends Player {
   attack(enemy) {
-    const { row, col } = getRandomCoordinate(enemy.gameboard);
-    return enemy.gameboard.receiveAttack(row, col);
+    const { row, col } = getComputerCoordinate(enemy.gameboard);
+    const result = enemy.gameboard.receiveAttack(row, col);
+    if (result === 'HIT') {
+      shipExistsAtCoords = { row, col };
+    }
+    if (result === 'SUNK') {
+      shipExistsAtCoords = null;
+    }
+    console.log(shipExistsAtCoords);
+    return result;
   }
 }
 

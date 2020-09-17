@@ -28,7 +28,7 @@ describe('Player', () => {
 
     // Remove randomness by excluding tests when moveShip is not possible
     if (enemy.gameboard.moveShip(col, row, shipIndex)) {
-      expect(player.attack(col, row, enemy)).toEqual(true);
+      expect(player.attack(col, row, enemy)).toEqual('SUNK' || 'HIT');
       expect(enemy.gameboard.getShips()[shipIndex].hitCount).toEqual(1);
       expect(enemy.gameboard.getGameboard()[col][row]).toEqual(expectedResult);
     }
@@ -39,7 +39,7 @@ describe('Player', () => {
     [3, 3],
     [5, 1],
   ])('attack() for empty coords', (col, row) => {
-    expect(player.attack(col, row, enemy)).toEqual(false);
+    expect(player.attack(col, row, enemy)).toEqual('MISS');
     expect(enemy.gameboard.getGameboard()[col][row]).toEqual('MISS');
   });
 });
