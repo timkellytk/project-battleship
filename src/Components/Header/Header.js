@@ -11,7 +11,7 @@ const Header = (props) => {
       <Button type="primary" size="large" onClick={props.setStartGame}>
         Play Game
       </Button>
-      <Button type="default" size="large" onClick={props.randomiseShips}>
+      <Button type="ghost" size="large" onClick={props.randomiseShips}>
         Randomise Ships
       </Button>
     </Space>
