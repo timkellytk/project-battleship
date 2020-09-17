@@ -1,5 +1,5 @@
 import Player from './Player';
-import { getRandomInt, getSurroundingCoords, validCoordinate } from '../utils';
+import { getRandomInt, validCoordinate } from '../utils';
 
 const getRandomCoordinate = (gameboard) => {
   const emptyCoordinates = gameboard.board.reduce(
@@ -26,9 +26,19 @@ const getRandomCoordinate = (gameboard) => {
 const emptyCoordinate = (row, col, gameboard) =>
   gameboard[row][col] !== 'MISS' && gameboard[row][col] !== 'HIT';
 
+const getPossibleCoords = ({ row, col }) => {
+  return [
+    { row: row - 1, col },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col },
+  ];
+};
+
 const getSurroundingEmptyCoordinate = (hitShipArray, gameboard) => {
   for (let i = 0; i < hitShipArray.length; i++) {
-    const surroundingCoords = getSurroundingCoords(hitShipArray[i]);
+    const surroundingCoords = getPossibleCoords(hitShipArray[i]);
     const anyCellAvailable = surroundingCoords.some(
       ({ row, col }) =>
         validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)

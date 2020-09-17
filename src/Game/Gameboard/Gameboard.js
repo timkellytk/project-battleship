@@ -1,11 +1,6 @@
 import Ship from '../Ship/Ship';
 import { BOARD_SIZE } from '../Constants/Constants';
-import {
-  getRandomInt,
-  getRandomBool,
-  validCoordinate,
-  getSurroundingCoords,
-} from '../utils';
+import { getRandomInt, getRandomBool, validCoordinate } from '../utils';
 
 const validCoordinates = (coords) =>
   coords.every(({ row, col }) => {
@@ -21,6 +16,20 @@ const noShipExists = (coords, ships) =>
     });
     return !existingShipsGameboard;
   });
+
+const getSurroundingCoords = ({ row, col }) => {
+  return [
+    { row: row - 1, col: col - 1 },
+    { row: row - 1, col },
+    { row: row - 1, col: col + 1 },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col: col - 1 },
+    { row: row + 1, col },
+    { row: row + 1, col: col + 1 },
+  ];
+};
 
 const surroundingShipExists = (coord, otherCoord) => {
   return getSurroundingCoords(coord).some(
