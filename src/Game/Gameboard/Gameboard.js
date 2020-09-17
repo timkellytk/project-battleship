@@ -11,11 +11,25 @@ const noShipExists = (coords, ships) =>
   coords.every((coord) => {
     const existingShipsGameboard = ships.some((otherShip) => {
       return otherShip.getCoordinates().some((otherCoord) => {
-        return coord.row === otherCoord.row && coord.col === otherCoord.col;
+        return surroundingShipExists(coord, otherCoord);
       });
     });
     return !existingShipsGameboard;
   });
+
+const surroundingShipExists = (coord, otherCoord) => {
+  return (
+    (coord.row - 1 === otherCoord.row && coord.col - 1 === otherCoord.col) ||
+    (coord.row - 1 === otherCoord.row && coord.col === otherCoord.col) ||
+    (coord.row - 1 === otherCoord.row && coord.col + 1 === otherCoord.col) ||
+    (coord.row === otherCoord.row && coord.col - 1 === otherCoord.col) ||
+    (coord.row === otherCoord.row && coord.col === otherCoord.col) ||
+    (coord.row === otherCoord.row && coord.col + 1 === otherCoord.col) ||
+    (coord.row + 1 === otherCoord.row && coord.col - 1 === otherCoord.col) ||
+    (coord.row + 1 === otherCoord.row && coord.col === otherCoord.col) ||
+    (coord.row + 1 === otherCoord.row && coord.col + 1 === otherCoord.col)
+  );
+};
 
 const allOtherShips = (ships, shipIndex) =>
   ships.filter((_, index) => index !== shipIndex);

@@ -34,6 +34,11 @@ describe('Gameboard', () => {
     expect(gameboard.placeShip(new Ship(0, 0, 2))).toEqual(false);
     expect(gameboard.ships.length).toEqual(1);
   });
+  test('placeShip() for ship exists at surrounding coords: does not add to ship array and returns false', () => {
+    gameboard.placeShip(new Ship(0, 1, 2));
+    expect(gameboard.placeShip(new Ship(0, 0, 2))).toEqual(false);
+    expect(gameboard.ships.length).toEqual(1);
+  });
   test.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])(
     'intialiseShips() creates all ships for new game',
     (index) => {
@@ -76,17 +81,23 @@ describe('Gameboard', () => {
   test('moveShip() for invalid coords: returns false and does not update ship coords', () => {
     gameboard.placeShip(new Ship(7, 5, 2));
     const expectedStartCoords = gameboard.ships[0].startCoordinate;
-    const expectedCoords = gameboard.ships[0].getCoordinates();
 
     expect(gameboard.moveShip(10, 2, 0)).toEqual(false);
     expect(gameboard.ships[0].startCoordinate).toEqual(expectedStartCoords);
-    expect(gameboard.ships[0].getCoordinates()).toEqual(expectedCoords);
   });
   test('moveShip() for ship exists at coords: returns false and does not update ship coords', () => {
     gameboard.placeShip(new Ship(7, 5, 2));
+    const expectedStartCoords = { ...gameboard.ships[0].startCoordinate };
+    gameboard.placeShip(new Ship(0, 0, 2));
+
+    expect(gameboard.moveShip(0, 0, 0)).toEqual(false);
+    expect(gameboard.ships[0].startCoordinate).toEqual(expectedStartCoords);
+  });
+  test('moveShip() for ship exists at surrounding coords: returns false and does not update ship coords', () => {
+    gameboard.placeShip(new Ship(7, 5, 2));
     const expectedStartCoords = gameboard.ships[0].startCoordinate;
     const expectedCoords = gameboard.ships[0].getCoordinates();
-    gameboard.placeShip(new Ship(0, 1, 2));
+    gameboard.placeShip(new Ship(1, 0, 2));
 
     expect(gameboard.moveShip(0, 0, 0)).toEqual(false);
     expect(gameboard.ships[0].startCoordinate).toEqual(expectedStartCoords);
@@ -107,7 +118,15 @@ describe('Gameboard', () => {
     expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
   });
   test('toggleShip() for other ship exists at coords: returns false and does not update orientation', () => {
-    gameboard.placeShip(new Ship(7, 5, 2));
+    gameboard.placeShip(new Ship(6, 5, 3));
+    const prevOrientation = gameboard.ships[0].orientation;
+    gameboard.placeShip(new Ship(8, 5, 2));
+
+    expect(gameboard.toggleShip(0)).toEqual(false);
+    expect(gameboard.ships[0].orientation).toEqual(prevOrientation);
+  });
+  test('toggleShip() for other ship exists at surrounding coords: returns false and does not update orientation', () => {
+    gameboard.placeShip(new Ship(6, 5, 2));
     const prevOrientation = gameboard.ships[0].orientation;
     gameboard.placeShip(new Ship(8, 5, 2));
 
