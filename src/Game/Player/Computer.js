@@ -72,7 +72,7 @@ class Computer extends Player {
     const { row, col } = getComputerCoordinate(enemy.gameboard);
     const result = enemy.gameboard.receiveAttack(row, col);
     if (result === 'HIT') {
-      hitShipArray.push({ row, col });
+      hitShipArray.unshift({ row, col });
     }
     if (result === 'SUNK') {
       hitShipArray = [];
