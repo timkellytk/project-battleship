@@ -59,8 +59,12 @@ const updateBoardSunkShip = (row, col, board) => {
   board[row][col] = 'SUNK';
   const surroundingCoords = getSurroundingCoords({ row, col });
   surroundingCoords.forEach(({ row, col }) => {
-    if (validCoordinate(row, col) && board[row][col] !== 'SUNK') {
-      board[row][col] = 'HIT';
+    if (
+      validCoordinate(row, col) &&
+      board[row][col] !== 'SUNK' &&
+      board[row][col] !== 'HIT'
+    ) {
+      board[row][col] = 'MISS';
     }
   });
 };
