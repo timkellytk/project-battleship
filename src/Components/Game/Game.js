@@ -90,13 +90,14 @@ const Game = () => {
     const result = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
     setAttackGameboard(updatedGameboard);
-    if (result === 'HIT' || 'SUNK') {
+    if (result === 'HIT' || result === 'SUNK') {
       if (computer.gameboard.gameover()) {
         return setWinner('player');
       }
-      setPlayerTurn(false);
-      handleComputerAttack();
+      return;
     }
+    setPlayerTurn(false);
+    handleComputerAttack();
     return;
   };
 
