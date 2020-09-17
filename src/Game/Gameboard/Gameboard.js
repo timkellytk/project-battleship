@@ -7,6 +7,9 @@ const validCoordinates = (coords) =>
     return row >= 0 && row <= 9 && col >= 0 && col <= 9;
   });
 
+const validCoordinate = (row, col) =>
+  row >= 0 && row <= 9 && col >= 0 && col <= 9;
+
 const noShipExists = (coords, ships) =>
   coords.every((coord) => {
     const existingShipsGameboard = ships.some((otherShip) => {
@@ -45,6 +48,26 @@ const findShip = (ships, attackCoords) =>
       );
     return shipExistsAtCoords;
   });
+
+const updateBoardSunkShip = (row, col, board) => {
+  board[row][col] = 'SUNK';
+  const surroundingCoords = [
+    { row: row - 1, col: col - 1 },
+    { row: row - 1, col },
+    { row: row - 1, col: col + 1 },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col: col - 1 },
+    { row: row + 1, col },
+    { row: row + 1, col: col + 1 },
+  ];
+  surroundingCoords.forEach(({ row, col }) => {
+    if (validCoordinate(row, col) && board[row][col] !== 'SUNK') {
+      board[row][col] = 'HIT';
+    }
+  });
+};
 
 class Gameboard {
   constructor() {
@@ -129,7 +152,7 @@ class Gameboard {
       ship.hit();
       if (ship.isSunk()) {
         ship.getCoordinates().forEach(({ row, col }) => {
-          this.board[row][col] = 'SUNK';
+          updateBoardSunkShip(row, col, this.board);
         });
       } else {
         this.board[row][col] = 'HIT';
