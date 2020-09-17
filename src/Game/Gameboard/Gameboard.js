@@ -20,17 +20,23 @@ const noShipExists = (coords, ships) =>
     return !existingShipsGameboard;
   });
 
+const getSurroundingCoords = ({ row, col }) => {
+  return [
+    { row: row - 1, col: col - 1 },
+    { row: row - 1, col },
+    { row: row - 1, col: col + 1 },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col: col - 1 },
+    { row: row + 1, col },
+    { row: row + 1, col: col + 1 },
+  ];
+};
+
 const surroundingShipExists = (coord, otherCoord) => {
-  return (
-    (coord.row - 1 === otherCoord.row && coord.col - 1 === otherCoord.col) ||
-    (coord.row - 1 === otherCoord.row && coord.col === otherCoord.col) ||
-    (coord.row - 1 === otherCoord.row && coord.col + 1 === otherCoord.col) ||
-    (coord.row === otherCoord.row && coord.col - 1 === otherCoord.col) ||
-    (coord.row === otherCoord.row && coord.col === otherCoord.col) ||
-    (coord.row === otherCoord.row && coord.col + 1 === otherCoord.col) ||
-    (coord.row + 1 === otherCoord.row && coord.col - 1 === otherCoord.col) ||
-    (coord.row + 1 === otherCoord.row && coord.col === otherCoord.col) ||
-    (coord.row + 1 === otherCoord.row && coord.col + 1 === otherCoord.col)
+  return getSurroundingCoords(coord).some(
+    ({ row, col }) => row === otherCoord.row && col === otherCoord.col
   );
 };
 
@@ -51,17 +57,7 @@ const findShip = (ships, attackCoords) =>
 
 const updateBoardSunkShip = (row, col, board) => {
   board[row][col] = 'SUNK';
-  const surroundingCoords = [
-    { row: row - 1, col: col - 1 },
-    { row: row - 1, col },
-    { row: row - 1, col: col + 1 },
-    { row, col: col - 1 },
-    { row, col },
-    { row, col: col + 1 },
-    { row: row + 1, col: col - 1 },
-    { row: row + 1, col },
-    { row: row + 1, col: col + 1 },
-  ];
+  const surroundingCoords = getSurroundingCoords({ row, col });
   surroundingCoords.forEach(({ row, col }) => {
     if (validCoordinate(row, col) && board[row][col] !== 'SUNK') {
       board[row][col] = 'HIT';
