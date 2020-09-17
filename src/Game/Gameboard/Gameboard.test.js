@@ -153,10 +153,10 @@ describe('Gameboard', () => {
     expect(gameboard.receiveAttack(0, 1)).toEqual(true);
     expect(gameboard.board[0][0]).toEqual('SUNK');
     expect(gameboard.board[0][1]).toEqual('SUNK');
-    expect(gameboard.board[1][0]).toEqual('HIT');
-    expect(gameboard.board[1][1]).toEqual('HIT');
-    expect(gameboard.board[1][2]).toEqual('HIT');
-    expect(gameboard.board[0][2]).toEqual('HIT');
+    expect(gameboard.board[1][0]).toEqual('MISS');
+    expect(gameboard.board[1][1]).toEqual('MISS');
+    expect(gameboard.board[1][2]).toEqual('MISS');
+    expect(gameboard.board[0][2]).toEqual('MISS');
   });
   test('gameover() for all ships sunk', () => {
     gameboard.placeShip(new Ship(0, 0, 2));
