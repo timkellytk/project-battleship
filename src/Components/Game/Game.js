@@ -72,7 +72,7 @@ const Game = () => {
       handleSetCurrentShip(currentShipIndex);
       return true;
     }
-    message.warning('There is already a ship in this location');
+    message.warning('Ships need to be surrounded by empty cells');
     return false;
   };
 
@@ -82,7 +82,7 @@ const Game = () => {
       handleSetCurrentShip(currentShipIndex);
       return true;
     }
-    message.warning('You need empty cells to update ship orientation');
+    message.warning('Ships need to be surrounded by empty cells');
     return false;
   };
 
