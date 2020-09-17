@@ -23,12 +23,41 @@ const getRandomCoordinate = (gameboard) => {
   return { row, col };
 };
 
+const getSurroundingCoords = ({ row, col }) => {
+  return [
+    { row: row - 1, col: col - 1 },
+    { row: row - 1, col },
+    { row: row - 1, col: col + 1 },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col: col - 1 },
+    { row: row + 1, col },
+    { row: row + 1, col: col + 1 },
+  ];
+};
+
+const validCoordinate = (row, col) =>
+  row >= 0 && row <= 9 && col >= 0 && col <= 9;
+
+const getEmptySurroundingCoordinate = (shipExistsAtCoords, gameboard) => {
+  const surroundingCoords = getSurroundingCoords(shipExistsAtCoords);
+  const emptySurroundingCoords = surroundingCoords.filter(({ row, col }) => {
+    return (
+      validCoordinate(row, col) &&
+      gameboard[row][col] !== 'MISS' &&
+      gameboard[row][col] !== 'HIT'
+    );
+  });
+  const emptyIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
+  const { row, col } = emptySurroundingCoords[emptyIndex];
+  return { row, col };
+};
+
 const getComputerCoordinate = (gameboard) => {
-  /* 
-  Required logic:
-  - If 'HIT' then return getEmptySurroundingCoordinate(shipExistsAtCoords, gameboard)
-  - If 'SUNK' or 'MISS then return getRandomCoordinate(gameboard);
-  */
+  if (shipExistsAtCoords) {
+    return getEmptySurroundingCoordinate(shipExistsAtCoords, gameboard.board);
+  }
   return getRandomCoordinate(gameboard);
 };
 
@@ -44,7 +73,6 @@ class Computer extends Player {
     if (result === 'SUNK') {
       shipExistsAtCoords = null;
     }
-    console.log(shipExistsAtCoords);
     return result;
   }
 }

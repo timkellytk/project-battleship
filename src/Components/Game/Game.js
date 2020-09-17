@@ -104,7 +104,6 @@ const Game = () => {
     const result = computer.attack(player);
     const updatedGameboard = _.cloneDeep(player.gameboard.getGameboard());
     setGameboard(updatedGameboard);
-    console.log('handleComputerAttack', result);
     if (result !== 'MISS') {
       if (player.gameboard.gameover()) {
         return setWinner('computer');
