@@ -19,10 +19,15 @@ const ShipBlock = styled.div`
       ? (boardDimensions / 10) * (props.length * 0.95) + 'px'
       : boardDimensions / 10 + 'px'};
   border: 1px solid hsla(224, 100%, 63.84%, 1);
-  background-color: ${(props) =>
-    !props.startGame && props.isCurrentShip
-      ? 'hsla(280, 100%, 66.74%, 0.60)'
-      : 'hsla(228, 100%, 66.74%, 0.22)'};
+  background-color: ${(props) => {
+    if (props.sunk) {
+      return '#db4c3f';
+    }
+    if (!props.startGame && props.isCurrentShip) {
+      return 'hsla(280, 100%, 66.74%, 0.60)';
+    }
+    return 'hsla(228, 100%, 66.74%, 0.22)';
+  }};
 `;
 
 const Ship = (props) => {

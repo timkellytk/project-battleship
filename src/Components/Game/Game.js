@@ -24,6 +24,7 @@ let computer;
 const Game = () => {
   const [gameboard, setGameboard] = useState([]);
   const [ships, setShips] = useState([]);
+  const [computerShips, setComputerShips] = useState([]);
   const [currentShip, setCurrentShip] = useState(null);
   const [currentShipIndex, setCurrentShipIndex] = useState(null);
   const [attackGameboard, setAttackGameboard] = useState([]);
@@ -42,6 +43,7 @@ const Game = () => {
     computer = new Computer();
     computer.gameboard.intialiseShips();
     setAttackGameboard(computer.gameboard.getGameboard());
+    setComputerShips(computer.gameboard.getShips());
 
     setStart(false);
     setPlayerTurn(true);
@@ -89,7 +91,10 @@ const Game = () => {
   const handlePlayerAttack = (col, row) => {
     const result = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
+    const updatedComputerShips = _.cloneDeep(computer.gameboard.getShips());
     setAttackGameboard(updatedGameboard);
+    setComputerShips(updatedComputerShips);
+
     if (result === 'HIT' || result === 'SUNK') {
       if (computer.gameboard.gameover()) {
         return setWinner('player');
@@ -128,6 +133,7 @@ const Game = () => {
             playerTurn={playerTurn}
             winner={winner}
             currentShip={currentShip}
+            ships={computerShips}
             toggleShip={handleToggleShip}
             moveShip={handleMoveShip}
             setStartGame={handleStartGame}
