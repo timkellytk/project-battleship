@@ -41,7 +41,47 @@ const validCoordinate = (row, col) =>
   row >= 0 && row <= 9 && col >= 0 && col <= 9;
 
 const getEmptySurroundingCoordinate = (shipExistsAtCoords, gameboard) => {
-  const surroundingCoords = getSurroundingCoords(shipExistsAtCoords);
+  /* 
+  We have an array held in shipExistsAtCoords
+  For every item in the array
+  const surroundingCoords = getSurroundingCoords()
+  const anyCellAvailable = surroundingCoords.some(coord => criteria)
+  if (anyCellAvailable) {
+    getRandomIndex
+    const {row, col} = surroudningCoords[randomIndex]
+    return {row, col}
+  }
+
+
+
+  We need to check for an available cell that is free
+  */
+  for (let i = 0; i < shipExistsAtCoords.length; i++) {
+    const surroundingCoords = getSurroundingCoords(shipExistsAtCoords[i]);
+    const emptySurroundingCoords = surroundingCoords.filter(({ row, col }) => {
+      return (
+        validCoordinate(row, col) &&
+        gameboard[row][col] !== 'MISS' &&
+        gameboard[row][col] !== 'HIT'
+      );
+    });
+    const anyCellAvailable = surroundingCoords.some(({ row, col }) => {
+      return (
+        validCoordinate(row, col) &&
+        gameboard[row][col] !== 'MISS' &&
+        gameboard[row][col] !== 'HIT'
+      );
+    });
+
+    if (anyCellAvailable) {
+      const emptyIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
+      const { row, col } = emptySurroundingCoords[emptyIndex];
+      return { row, col };
+    }
+  } /* 
+  const surroundingCoords = shipExistsAtCoords.map((coord) =>
+    getSurroundingCoords(coord)
+  );
   const emptySurroundingCoords = surroundingCoords.filter(({ row, col }) => {
     return (
       validCoordinate(row, col) &&
@@ -51,27 +91,27 @@ const getEmptySurroundingCoordinate = (shipExistsAtCoords, gameboard) => {
   });
   const emptyIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
   const { row, col } = emptySurroundingCoords[emptyIndex];
-  return { row, col };
+  return { row, col }; */
 };
 
 const getComputerCoordinate = (gameboard) => {
-  if (shipExistsAtCoords) {
+  if (shipExistsAtCoords.length > 0) {
     return getEmptySurroundingCoordinate(shipExistsAtCoords, gameboard.board);
   }
   return getRandomCoordinate(gameboard);
 };
 
-let shipExistsAtCoords;
+let shipExistsAtCoords = [];
 
 class Computer extends Player {
   attack(enemy) {
     const { row, col } = getComputerCoordinate(enemy.gameboard);
     const result = enemy.gameboard.receiveAttack(row, col);
     if (result === 'HIT') {
-      shipExistsAtCoords = { row, col };
+      shipExistsAtCoords.push({ row, col });
     }
     if (result === 'SUNK') {
-      shipExistsAtCoords = null;
+      shipExistsAtCoords = [];
     }
     return result;
   }
