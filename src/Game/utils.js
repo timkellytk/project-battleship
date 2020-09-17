@@ -7,3 +7,20 @@ export const getRandomInt = (min, max) => {
 };
 
 export const getRandomBool = () => Math.random() >= 0.5;
+
+export const getSurroundingCoords = ({ row, col }) => {
+  return [
+    { row: row - 1, col: col - 1 },
+    { row: row - 1, col },
+    { row: row - 1, col: col + 1 },
+    { row, col: col - 1 },
+    { row, col },
+    { row, col: col + 1 },
+    { row: row + 1, col: col - 1 },
+    { row: row + 1, col },
+    { row: row + 1, col: col + 1 },
+  ];
+};
+
+export const validCoordinate = (row, col) =>
+  row >= 0 && row <= 9 && col >= 0 && col <= 9;

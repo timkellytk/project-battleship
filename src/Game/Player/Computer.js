@@ -1,5 +1,5 @@
 import Player from './Player';
-import { getRandomInt } from '../utils';
+import { getRandomInt, getSurroundingCoords, validCoordinate } from '../utils';
 
 const getRandomCoordinate = (gameboard) => {
   const emptyCoordinates = gameboard.board.reduce(
@@ -23,39 +23,7 @@ const getRandomCoordinate = (gameboard) => {
   return { row, col };
 };
 
-const getSurroundingCoords = ({ row, col }) => {
-  return [
-    { row: row - 1, col: col - 1 },
-    { row: row - 1, col },
-    { row: row - 1, col: col + 1 },
-    { row, col: col - 1 },
-    { row, col },
-    { row, col: col + 1 },
-    { row: row + 1, col: col - 1 },
-    { row: row + 1, col },
-    { row: row + 1, col: col + 1 },
-  ];
-};
-
-const validCoordinate = (row, col) =>
-  row >= 0 && row <= 9 && col >= 0 && col <= 9;
-
 const getEmptySurroundingCoordinate = (shipExistsAtCoords, gameboard) => {
-  /* 
-  We have an array held in shipExistsAtCoords
-  For every item in the array
-  const surroundingCoords = getSurroundingCoords()
-  const anyCellAvailable = surroundingCoords.some(coord => criteria)
-  if (anyCellAvailable) {
-    getRandomIndex
-    const {row, col} = surroudningCoords[randomIndex]
-    return {row, col}
-  }
-
-
-
-  We need to check for an available cell that is free
-  */
   for (let i = 0; i < shipExistsAtCoords.length; i++) {
     const surroundingCoords = getSurroundingCoords(shipExistsAtCoords[i]);
     const emptySurroundingCoords = surroundingCoords.filter(({ row, col }) => {
@@ -78,20 +46,7 @@ const getEmptySurroundingCoordinate = (shipExistsAtCoords, gameboard) => {
       const { row, col } = emptySurroundingCoords[emptyIndex];
       return { row, col };
     }
-  } /* 
-  const surroundingCoords = shipExistsAtCoords.map((coord) =>
-    getSurroundingCoords(coord)
-  );
-  const emptySurroundingCoords = surroundingCoords.filter(({ row, col }) => {
-    return (
-      validCoordinate(row, col) &&
-      gameboard[row][col] !== 'MISS' &&
-      gameboard[row][col] !== 'HIT'
-    );
-  });
-  const emptyIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
-  const { row, col } = emptySurroundingCoords[emptyIndex];
-  return { row, col }; */
+  }
 };
 
 const getComputerCoordinate = (gameboard) => {
