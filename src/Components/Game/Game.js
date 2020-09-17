@@ -141,6 +141,7 @@ const Game = () => {
             computer={attackGameboard}
             setCurrentShip={handleSetCurrentShip}
             attackComputer={handlePlayerAttack}
+            winner={winner}
           />
           <Footer />
         </Space>

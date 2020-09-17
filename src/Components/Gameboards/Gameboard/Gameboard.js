@@ -25,7 +25,9 @@ const Gameboard = (props) => {
           computer={props.computer}
           startGame={props.startGame}
           clicked={
-            props.computer ? () => props.handleClick(rowIndex, colIndex) : null
+            props.computer && props.winner === false
+              ? () => props.handleClick(rowIndex, colIndex)
+              : null
           }
         />
       );

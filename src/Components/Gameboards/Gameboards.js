@@ -20,8 +20,9 @@ const Gameboards = (props) => {
           <Gameboard
             gameboard={props.computer}
             handleClick={props.attackComputer}
-            computer
             startGame={props.startGame}
+            winner={props.winner}
+            computer
           />
         </Board>
       </Space>
