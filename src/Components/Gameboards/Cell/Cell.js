@@ -37,7 +37,7 @@ const Cell = (props) => {
   let result = (
     <StyledCell
       computer={props.computer}
-      onClick={props.startGame ? props.clicked : null}
+      onClick={props.clicked}
       startGame={props.startGame}
     >
       {props.children}

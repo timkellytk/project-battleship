@@ -92,6 +92,7 @@ const Game = () => {
     const result = player.attack(col, row, computer);
     const updatedGameboard = _.cloneDeep(computer.gameboard.getGameboard());
     const updatedComputerShips = _.cloneDeep(computer.gameboard.getShips());
+    setStart(true);
     setAttackGameboard(updatedGameboard);
     setComputerShips(updatedComputerShips);
 
@@ -144,6 +145,7 @@ const Game = () => {
             startGame={start}
             player={gameboard}
             ships={ships}
+            moveShip={handleMoveShip}
             currentShipIndex={currentShipIndex}
             computer={attackGameboard}
             setCurrentShip={handleSetCurrentShip}

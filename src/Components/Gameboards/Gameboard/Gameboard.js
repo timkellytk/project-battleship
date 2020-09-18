@@ -24,11 +24,15 @@ const Gameboard = (props) => {
           key={uuidv4()}
           computer={props.computer}
           startGame={props.startGame}
-          clicked={
-            props.computer && props.winner === false
-              ? () => props.handleClick(rowIndex, colIndex)
-              : null
-          }
+          clicked={() => {
+            if (props.computer && props.winner === false) {
+              return props.handleClick(rowIndex, colIndex);
+            }
+            if (!props.startGame) {
+              return props.moveShip(rowIndex, colIndex);
+            }
+            return null;
+          }}
         />
       );
 
