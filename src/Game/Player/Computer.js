@@ -30,37 +30,71 @@ const getPossibleCoords = ({ row, col }) => {
   return [
     { row: row - 1, col },
     { row, col: col - 1 },
-    { row, col },
     { row, col: col + 1 },
     { row: row + 1, col },
   ];
 };
 
 const getSurroundingEmptyCoordinate = (hitShipArray, gameboard) => {
-  for (let i = 0; i < hitShipArray.length; i++) {
-    const surroundingCoords = getPossibleCoords(hitShipArray[i]);
-    const anyCellAvailable = surroundingCoords.some(
-      ({ row, col }) =>
-        validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
-    );
-    if (anyCellAvailable) {
-      const emptySurroundingCoords = surroundingCoords.filter(
-        ({ row, col }) =>
-          validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
-      );
-      const randomIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
-      const { row, col } = emptySurroundingCoords[randomIndex];
-      return {
-        row,
-        col,
-      };
-    }
-  }
+  const surroundingCoords = getPossibleCoords(hitShipArray[0]);
+  const emptySurroundingCoords = surroundingCoords.filter(
+    ({ row, col }) =>
+      validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
+  );
+  const randomIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
+  const { row, col } = emptySurroundingCoords[randomIndex];
+  return {
+    row,
+    col,
+  };
+};
+
+const getVerticalCoordinate = (hitShipArray, gameboard) => {
+  const sortedArray = hitShipArray.sort((a, b) => a.row - b.row);
+  const lowCoord = { ...sortedArray[0] };
+  const highCoord = { ...sortedArray[sortedArray.length - 1] };
+  lowCoord.row -= 1;
+  highCoord.row += 1;
+
+  const verticalCoordinates = [lowCoord, highCoord].filter(
+    ({ row, col }) =>
+      validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
+  );
+  const randomIndex = getRandomInt(0, verticalCoordinates.length - 1);
+  const { row, col } = verticalCoordinates[randomIndex];
+  return {
+    row,
+    col,
+  };
+};
+
+const getHorizontalCoordinate = (hitShipArray, gameboard) => {
+  const sortedArray = hitShipArray.sort((a, b) => a.col - b.col);
+  const lowCoord = { ...sortedArray[0] };
+  const highCoord = { ...sortedArray[sortedArray.length - 1] };
+  lowCoord.col -= 1;
+  highCoord.col += 1;
+
+  const horizontalCoordinates = [lowCoord, highCoord].filter(
+    ({ row, col }) =>
+      validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
+  );
+  const randomIndex = getRandomInt(0, horizontalCoordinates.length - 1);
+  const { row, col } = horizontalCoordinates[randomIndex];
+  return {
+    row,
+    col,
+  };
 };
 
 const getComputerCoordinate = (gameboard) => {
-  if (hitShipArray.length > 0) {
+  if (hitShipArray.length === 1) {
     return getSurroundingEmptyCoordinate(hitShipArray, gameboard.board);
+  }
+  if (hitShipArray.length >= 2) {
+    return hitShipArray[0].col === hitShipArray[1].col
+      ? getVerticalCoordinate(hitShipArray, gameboard.board)
+      : getHorizontalCoordinate(hitShipArray, gameboard.board);
   }
   return getRandomCoordinate(gameboard);
 };
