@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0da2c6fcab1578b3f9b83cb36190197c",
+    "revision": "c704d76b01bfefa23c9e83e5a10662e6",
     "url": "/project-battleship/index.html"
   },
   {
-    "revision": "c1957385141a7020da76",
-    "url": "/project-battleship/static/css/main.704f05e9.chunk.css"
+    "revision": "7b04dcc1fa4436b3016f",
+    "url": "/project-battleship/static/css/main.5d79a116.chunk.css"
   },
   {
     "revision": "d376d898ab8597159cef",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/project-battleship/static/js/2.e6947925.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c1957385141a7020da76",
-    "url": "/project-battleship/static/js/main.8519a5fc.chunk.js"
+    "revision": "7b04dcc1fa4436b3016f",
+    "url": "/project-battleship/static/js/main.0c2b01bf.chunk.js"
   },
   {
     "revision": "edde4f0743caa6db60ae",

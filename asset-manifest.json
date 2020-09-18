@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/project-battleship/static/css/main.704f05e9.chunk.css",
-    "main.js": "/project-battleship/static/js/main.8519a5fc.chunk.js",
-    "main.js.map": "/project-battleship/static/js/main.8519a5fc.chunk.js.map",
+    "main.css": "/project-battleship/static/css/main.5d79a116.chunk.css",
+    "main.js": "/project-battleship/static/js/main.0c2b01bf.chunk.js",
+    "main.js.map": "/project-battleship/static/js/main.0c2b01bf.chunk.js.map",
     "runtime-main.js": "/project-battleship/static/js/runtime-main.b0a7044e.js",
     "runtime-main.js.map": "/project-battleship/static/js/runtime-main.b0a7044e.js.map",
     "static/js/2.e6947925.chunk.js": "/project-battleship/static/js/2.e6947925.chunk.js",
     "static/js/2.e6947925.chunk.js.map": "/project-battleship/static/js/2.e6947925.chunk.js.map",
     "index.html": "/project-battleship/index.html",
-    "precache-manifest.306646c85bfb1e9e5a41311fb9c54e75.js": "/project-battleship/precache-manifest.306646c85bfb1e9e5a41311fb9c54e75.js",
+    "precache-manifest.cf17e444af5f26fd72a3fa270b43d214.js": "/project-battleship/precache-manifest.cf17e444af5f26fd72a3fa270b43d214.js",
     "service-worker.js": "/project-battleship/service-worker.js",
-    "static/css/main.704f05e9.chunk.css.map": "/project-battleship/static/css/main.704f05e9.chunk.css.map",
+    "static/css/main.5d79a116.chunk.css.map": "/project-battleship/static/css/main.5d79a116.chunk.css.map",
     "static/js/2.e6947925.chunk.js.LICENSE.txt": "/project-battleship/static/js/2.e6947925.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b0a7044e.js",
     "static/js/2.e6947925.chunk.js",
-    "static/css/main.704f05e9.chunk.css",
-    "static/js/main.8519a5fc.chunk.js"
+    "static/css/main.5d79a116.chunk.css",
+    "static/js/main.0c2b01bf.chunk.js"
   ]
 }
