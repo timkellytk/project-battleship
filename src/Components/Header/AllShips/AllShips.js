@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
 import Ship from '../../Gameboards/Ship/Ship';
+import PropTypes from 'prop-types';
 
 const { Title } = Typography;
 
@@ -14,6 +15,10 @@ const AllShips = (props) => {
       <Space>{ships}</Space>
     </div>
   );
+};
+
+AllShips.propTypes = {
+  ships: PropTypes.array.isRequired,
 };
 
 export default AllShips;

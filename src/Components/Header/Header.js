@@ -1,7 +1,8 @@
 import React from 'react';
+import AllShips from './AllShips/AllShips';
 import { Button, Space, Typography, Row } from 'antd';
 import { TrophyTwoTone, DislikeTwoTone } from '@ant-design/icons';
-import AllShips from './AllShips/AllShips';
+import PropTypes from 'prop-types';
 
 const { Title, Paragraph } = Typography;
 
@@ -68,6 +69,15 @@ const Header = (props) => {
       </Space>
     </Row>
   );
+};
+
+Header.propTypes = {
+  startGame: PropTypes.bool.isRequired,
+  winner: PropTypes.oneOf([false, 'computer', 'player']),
+  ships: PropTypes.array.isRequired,
+  setStartGame: PropTypes.func.isRequired,
+  randomiseShips: PropTypes.func.isRequired,
+  playAgain: PropTypes.func.isRequired,
 };
 
 export default Header;

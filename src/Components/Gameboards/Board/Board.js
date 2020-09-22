@@ -1,7 +1,7 @@
 import React from 'react';
 import { boardDimensions, cellDimensions } from '../../Constants/Constants';
 import styled from 'styled-components';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const StyledBoardWrapper = styled.div`
   display: grid;
@@ -61,7 +61,8 @@ const Board = (props) => (
 );
 
 Board.propTypes = {
-  children: propTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
+  startGame: PropTypes.bool,
 };
 
 export default Board;
