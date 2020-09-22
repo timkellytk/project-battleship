@@ -64,7 +64,6 @@ const Gameboard = (props) => {
               <Ship
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}
-                coordinates={shipStartsOnCell.getCoordinates()}
                 shipIndex={shipIndexOnCell}
                 toggleShip={() => props.toggleShip(shipIndexOnCell)}
                 startGame={props.startGame}

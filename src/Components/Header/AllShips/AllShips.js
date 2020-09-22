@@ -6,8 +6,14 @@ import PropTypes from 'prop-types';
 const { Title } = Typography;
 
 const AllShips = (props) => {
-  const ships = props.ships.map((ship) => (
-    <Ship length={ship.length} sunk={ship.isSunk()} showcase />
+  const ships = props.ships.map((ship, index) => (
+    <Ship
+      key={index}
+      length={ship.length}
+      sunk={ship.isSunk()}
+      orientation={false}
+      showcase
+    />
   ));
   return (
     <div>
