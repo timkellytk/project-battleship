@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Space, Typography, Row } from 'antd';
 import { TrophyTwoTone, DislikeTwoTone } from '@ant-design/icons';
-import MoveShip from './MoveShip/MoveShip';
 import AllShips from './AllShips/AllShips';
 
 const { Title } = Typography;
