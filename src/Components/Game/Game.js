@@ -68,7 +68,6 @@ const Game = () => {
       setShips(_.cloneDeep(player.gameboard.getShips()));
       return;
     }
-    message.warning('Ships need to be surrounded by empty cells');
     return;
   };
 
@@ -77,7 +76,7 @@ const Game = () => {
       setShips(_.cloneDeep(player.gameboard.getShips()));
       return true;
     }
-    message.warning('Ships need to be surrounded by empty cells');
+    message.warning("You need empty cells to update the ship's direction");
     return false;
   };
 

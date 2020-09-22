@@ -3,7 +3,7 @@ import { Button, Space, Typography, Row } from 'antd';
 import { TrophyTwoTone, DislikeTwoTone } from '@ant-design/icons';
 import AllShips from './AllShips/AllShips';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const Header = (props) => {
   const playButtons = (
@@ -47,13 +47,23 @@ const Header = (props) => {
     </Space>
   );
 
+  const gameInstructions = (
+    <>
+      <Paragraph style={{ width: '350px', textAlign: 'center' }}>
+        Drag and drop your ships to move their location. Click ships to toggle
+        vertical or horizontal direction. Sink all of the enemy battleships to
+        win the game.
+      </Paragraph>
+    </>
+  );
+
   return (
     <Row justify="center">
       <Space direction="vertical" size="large" align="center">
         <Title level={1}>Battleship</Title>
         {props.winner === 'player' ? infoPlayerWins : null}
         {props.winner === 'computer' ? infoComputerWins : null}
-        {props.startGame ? <AllShips ships={props.ships} /> : null}
+        {props.startGame ? <AllShips ships={props.ships} /> : gameInstructions}
         {props.startGame ? restartButton : playButtons}
       </Space>
     </Row>
