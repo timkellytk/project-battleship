@@ -25,9 +25,6 @@ const ShipBlock = styled.div`
     if (props.sunk) {
       return '#db4c3f';
     }
-    if (!props.startGame && props.isCurrentShip) {
-      return 'hsla(280, 100%, 66.74%, 0.60)';
-    }
     return 'hsla(228, 100%, 66.74%, 0.22)';
   }};
 `;

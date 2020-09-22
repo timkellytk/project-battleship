@@ -15,8 +15,15 @@ const StyledCell = styled.div`
   align-items: center;
   height: ${cellDimensions - 2}px;
   width: ${cellDimensions - 2}px;
-  background-color: ${(props) =>
-    props.canDrop ? 'rgba(51, 170, 51, 0.2)' : backgroundColour};
+  background-color: ${(props) => {
+    if (props.canDrop && props.isOver) {
+      return 'rgba(340, 100, 51, 0.6)';
+    }
+    if (props.canDrop) {
+      return 'rgba(51, 170, 51, 0.2)';
+    }
+    return backgroundColour;
+  }};
   :hover {
     border: ${(props) =>
       props.startGame && props.computer ? '2px solid green;' : null};
@@ -54,6 +61,7 @@ const Cell = (props) => {
     <StyledCell
       ref={drop}
       canDrop={canDrop}
+      isOver={isOver}
       computer={props.computer}
       onClick={props.clicked}
       startGame={props.startGame}

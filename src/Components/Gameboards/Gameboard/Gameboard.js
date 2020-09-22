@@ -72,8 +72,6 @@ const Gameboard = (props) => {
                 coordinates={shipStartsOnCell.getCoordinates()}
                 shipIndex={shipIndexOnCell}
                 toggleShip={() => props.toggleShip(shipIndexOnCell)}
-                isCurrentShip={shipIndexOnCell === props.currentShipIndex}
-                setCurrentShip={() => props.setCurrentShip(shipIndexOnCell)}
                 startGame={props.startGame}
               />
             </Cell>

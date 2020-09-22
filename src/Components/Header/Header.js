@@ -54,15 +54,7 @@ const Header = (props) => {
         <Title level={1}>Battleship</Title>
         {props.winner === 'player' ? infoPlayerWins : null}
         {props.winner === 'computer' ? infoComputerWins : null}
-        {props.startGame ? (
-          <AllShips ships={props.ships} />
-        ) : (
-          <MoveShip
-            currentShip={props.currentShip}
-            toggleShip={props.toggleShip}
-            moveShip={props.moveShip}
-          />
-        )}
+        {props.startGame ? <AllShips ships={props.ships} /> : null}
         {props.startGame ? restartButton : playButtons}
       </Space>
     </Row>
