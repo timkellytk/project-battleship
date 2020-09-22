@@ -117,13 +117,9 @@ class Gameboard {
     this.intialiseShips();
   }
   moveShip(row, col, shipIndex) {
-    const ship = this.ships[shipIndex];
-    const newStartCoord = { row, col };
-    const newCoords = ship.getCoordinates(newStartCoord);
-    const otherShips = allOtherShips(this.ships, shipIndex);
-
-    if (validCoordinates(newCoords) && noShipExists(newCoords, otherShips)) {
-      ship.startCoordinate = newStartCoord;
+    if (this.canMoveShip(row, col, shipIndex)) {
+      const ship = this.ships[shipIndex];
+      ship.startCoordinate = { row, col };
       return true;
     }
     return false;
