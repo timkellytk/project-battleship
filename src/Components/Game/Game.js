@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import styled from 'styled-components';
 import Player from '../../Game/Player/Player';
 import Computer from '../../Game/Player/Computer';
+
 const _ = require('lodash');
 
 const StyledWrapper = styled.div`
@@ -103,7 +104,7 @@ const Game = () => {
     const result = computer.attack(player);
     const updatedGameboard = _.cloneDeep(player.gameboard.getGameboard());
     setGameboard(updatedGameboard);
-    if (result !== 'MISS') {
+    if (result === 'HIT' || result === 'SUNK') {
       if (player.gameboard.gameover()) {
         return setWinner('computer');
       }
