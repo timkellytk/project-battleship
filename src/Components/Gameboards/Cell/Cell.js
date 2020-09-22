@@ -16,10 +16,10 @@ const StyledCell = styled.div`
   height: ${cellDimensions - 2}px;
   width: ${cellDimensions - 2}px;
   background-color: ${(props) => {
-    if (props.canDrop && props.isOver) {
+    if (props.canDrop && props.isOver && !props.computer) {
       return 'rgba(340, 100, 51, 0.6)';
     }
-    if (props.canDrop) {
+    if (props.canDrop && !props.computer) {
       return 'rgba(51, 170, 51, 0.2)';
     }
     return backgroundColour;
