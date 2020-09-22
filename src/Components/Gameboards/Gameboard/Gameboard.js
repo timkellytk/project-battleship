@@ -4,6 +4,7 @@ import Ship from '../Ship/Ship';
 import { v4 as uuidv4 } from 'uuid';
 import { borderColour } from '../../Constants/Constants';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledGameboard = styled.div`
   position: relative;
@@ -27,16 +28,11 @@ const Gameboard = (props) => {
           computer={props.computer}
           startGame={props.startGame}
           moveShip={props.moveShip}
-          canMoveShip={props.canMoveShip}
-          clicked={() => {
-            if (props.computer && props.winner === false) {
-              return props.handleClick(rowIndex, colIndex);
-            }
-            if (!props.startGame) {
-              return props.moveShip(rowIndex, colIndex);
-            }
-            return null;
-          }}
+          clicked={() =>
+            props.computer && props.winner === false
+              ? props.handleClick(rowIndex, colIndex)
+              : null
+          }
         />
       );
 
@@ -62,7 +58,6 @@ const Gameboard = (props) => {
               row={rowIndex}
               col={colIndex}
               moveShip={props.moveShip}
-              canMoveShip={props.canMoveShip}
               hit={col}
               startGame={props.startGame}
             >
@@ -84,6 +79,17 @@ const Gameboard = (props) => {
   );
 
   return <StyledGameboard>{cells}</StyledGameboard>;
+};
+
+Gameboard.propTypes = {
+  startGame: PropTypes.bool.isRequired,
+  gameboard: PropTypes.array.isRequired,
+  ships: PropTypes.array,
+  moveShip: PropTypes.func,
+  toggleShip: PropTypes.func,
+  handleClick: PropTypes.func,
+  winner: PropTypes.oneOf([false, 'player', 'computer']),
+  computer: PropTypes.bool,
 };
 
 export default Gameboard;
