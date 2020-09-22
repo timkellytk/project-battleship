@@ -7,6 +7,7 @@ This project is a complete rebuild of the [classic battleship game](http://en.ba
 - The project is built using test-driven development, writing unit tests in Jest
 - The game logic was written in an object-oriented programming style with ship, gameboard, player and computer objects
 - The game state is managed by React Hooks
+- The drag and drop to move ships is built using React DnD
 - The UI elements are from the Ant Design React Component library
 - The gameboard, cells and ships are built using CSS and styled components
 
@@ -16,9 +17,16 @@ This project is a complete rebuild of the [classic battleship game](http://en.ba
 
 - React
 - React Hooks
+- React DnD
 - Jest
 - Ant Design Component Library
 - Styled Components
+
+## Gameplay
+
+[![battleship preview](./gameplay1.png)](https://timkellytk.github.io/project-battleship/)
+[![battleship preview](./gameplay2.png)](https://timkellytk.github.io/project-battleship/)
+[![battleship preview](./gameplay3.png)](https://timkellytk.github.io/project-battleship/)
 
 ## How To Play
 
