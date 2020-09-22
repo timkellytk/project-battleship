@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import shipImage from './ship-image.png';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { boardDimensions, ItemTypes } from '../../Constants/Constants';
+import PropTypes from 'prop-types';
 
 const ShipBlock = styled.div`
   position: ${[(props) => (props.showcase ? 'relative' : 'absolute')]};
@@ -40,13 +41,24 @@ const Ship = (props) => {
     <>
       <DragPreviewImage connect={preview} src={shipImage} />
       <ShipBlock
-        {...props}
-        onClick={props.toggleShip}
         ref={drag}
+        length={props.length}
+        orientation={props.orientation}
+        showcase={props.showcase}
+        sunk={props.sunk}
         isDragging={isDragging}
+        onClick={props.toggleShip}
       />
     </>
   );
+};
+
+Ship.propTypes = {
+  length: PropTypes.number.isRequired,
+  shipIndex: PropTypes.number,
+  toggleShip: PropTypes.func,
+  orientation: PropTypes.bool,
+  sunk: PropTypes.bool,
 };
 
 export default Ship;

@@ -7,6 +7,7 @@ import {
 import { canMoveShip } from '../../Game/Game';
 import { useDrop } from 'react-dnd';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledCell = styled.div`
   position: relative;
@@ -84,6 +85,16 @@ const Cell = (props) => {
     result = <ClickedCell sunk>{props.children}</ClickedCell>;
   }
   return result;
+};
+
+Cell.propTypes = {
+  startGame: PropTypes.bool.isRequired,
+  row: PropTypes.number.isRequired,
+  col: PropTypes.number.isRequired,
+  hit: PropTypes.oneOf(['', 'MISS', 'HIT', 'SUNK']).isRequired,
+  clicked: PropTypes.func,
+  computer: PropTypes.bool,
+  children: PropTypes.element,
 };
 
 export default Cell;
