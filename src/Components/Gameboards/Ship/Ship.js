@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { boardDimensions } from '../../Constants/Constants';
+import shipImage from './ship-image.png';
+import { useDrag, DragPreviewImage } from 'react-dnd';
+import { boardDimensions, ItemTypes } from '../../Constants/Constants';
 
 const ShipBlock = styled.div`
   position: ${[(props) => (props.showcase ? 'relative' : 'absolute')]};
@@ -31,7 +33,23 @@ const ShipBlock = styled.div`
 `;
 
 const Ship = (props) => {
-  return <ShipBlock {...props} onClick={props.setCurrentShip} />;
+  const [{ isDragging }, drag, preview] = useDrag({
+    item: { type: ItemTypes.SHIP, index: props.shipIndex },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+  return (
+    <>
+      <DragPreviewImage connect={preview} src={shipImage} />
+      <ShipBlock
+        {...props}
+        onClick={props.toggleShip}
+        ref={drag}
+        isDragging={isDragging}
+      />
+    </>
+  );
 };
 
 export default Ship;

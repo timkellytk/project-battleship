@@ -1,5 +1,11 @@
 import React from 'react';
-import { cellDimensions, backgroundColour } from '../../Constants/Constants';
+import {
+  cellDimensions,
+  backgroundColour,
+  ItemTypes,
+} from '../../Constants/Constants';
+import { canMoveShip } from '../../Game/Game';
+import { useDrop } from 'react-dnd';
 import styled from 'styled-components';
 
 const StyledCell = styled.div`
@@ -9,7 +15,8 @@ const StyledCell = styled.div`
   align-items: center;
   height: ${cellDimensions - 2}px;
   width: ${cellDimensions - 2}px;
-  background-color: ${backgroundColour};
+  background-color: ${(props) =>
+    props.canDrop ? 'rgba(51, 170, 51, 0.2)' : backgroundColour};
   :hover {
     border: ${(props) =>
       props.startGame && props.computer ? '2px solid green;' : null};
@@ -34,8 +41,19 @@ const StyledEmptyHit = styled.div`
 `;
 
 const Cell = (props) => {
+  const [{ isOver, canDrop }, drop] = useDrop({
+    accept: ItemTypes.SHIP,
+    canDrop: (item) => canMoveShip(props.row, props.col, item.index),
+    drop: (item) => props.moveShip(props.row, props.col, item.index),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
+    }),
+  });
   let result = (
     <StyledCell
+      ref={drop}
+      canDrop={canDrop}
       computer={props.computer}
       onClick={props.clicked}
       startGame={props.startGame}

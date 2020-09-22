@@ -12,6 +12,8 @@ const Gameboards = (props) => {
             gameboard={props.player}
             ships={props.ships}
             moveShip={props.moveShip}
+            toggleShip={props.toggleShip}
+            canMoveShip={props.canMoveShip}
             currentShipIndex={props.currentShipIndex}
             setCurrentShip={props.setCurrentShip}
             startGame={props.startGame}

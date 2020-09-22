@@ -21,6 +21,14 @@ const StyledWrapper = styled.div`
 let player;
 let computer;
 
+export const canMoveShip = (row, col, currentShipIndex) => {
+  console.log('handleCanMoveShip');
+  if (player.gameboard.canMoveShip(row, col, currentShipIndex)) {
+    return true;
+  }
+  return false;
+};
+
 const Game = () => {
   const [gameboard, setGameboard] = useState([]);
   const [ships, setShips] = useState([]);
@@ -68,17 +76,25 @@ const Game = () => {
     setCurrentShipIndex(shipIndex);
   };
 
-  const handleMoveShip = (row, col) => {
+  const handleMoveShip = (row, col, currentShipIndex) => {
     if (player.gameboard.moveShip(row, col, currentShipIndex)) {
       setShips(_.cloneDeep(player.gameboard.getShips()));
       handleSetCurrentShip(currentShipIndex);
-      return true;
+      return;
     }
     message.warning('Ships need to be surrounded by empty cells');
+    return;
+  };
+
+  const handleCanMoveShip = (row, col, currentShipIndex) => {
+    console.log('handleCanMoveShip');
+    if (player.gameboard.canMoveShip(row, col, currentShipIndex)) {
+      return true;
+    }
     return false;
   };
 
-  const handleToggleShip = () => {
+  const handleToggleShip = (currentShipIndex) => {
     if (player.gameboard.toggleShip(currentShipIndex)) {
       setShips(_.cloneDeep(player.gameboard.getShips()));
       handleSetCurrentShip(currentShipIndex);
@@ -146,6 +162,8 @@ const Game = () => {
             player={gameboard}
             ships={ships}
             moveShip={handleMoveShip}
+            canMoveShip={handleCanMoveShip}
+            toggleShip={handleToggleShip}
             currentShipIndex={currentShipIndex}
             computer={attackGameboard}
             setCurrentShip={handleSetCurrentShip}

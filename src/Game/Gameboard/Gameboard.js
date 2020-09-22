@@ -128,6 +128,17 @@ class Gameboard {
     }
     return false;
   }
+  canMoveShip(row, col, shipIndex) {
+    const ship = this.ships[shipIndex];
+    const newStartCoord = { row, col };
+    const newCoords = ship.getCoordinates(newStartCoord);
+    const otherShips = allOtherShips(this.ships, shipIndex);
+
+    if (validCoordinates(newCoords) && noShipExists(newCoords, otherShips)) {
+      return true;
+    }
+    return false;
+  }
   toggleShip(shipIndex) {
     const ship = this.ships[shipIndex];
     const newCoords = ship.getCoordinates(

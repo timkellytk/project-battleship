@@ -20,10 +20,14 @@ const Gameboard = (props) => {
     row.map((col, colIndex) => {
       const emptyCell = (
         <Cell
+          row={rowIndex}
+          col={colIndex}
           hit={col}
           key={uuidv4()}
           computer={props.computer}
           startGame={props.startGame}
+          moveShip={props.moveShip}
+          canMoveShip={props.canMoveShip}
           clicked={() => {
             if (props.computer && props.winner === false) {
               return props.handleClick(rowIndex, colIndex);
@@ -53,11 +57,21 @@ const Gameboard = (props) => {
               ship.startCoordinate.col === colIndex
           );
           shipCell = (
-            <Cell key={uuidv4()} hit={col} startGame={props.startGame}>
+            <Cell
+              key={uuidv4()}
+              row={rowIndex}
+              col={colIndex}
+              moveShip={props.moveShip}
+              canMoveShip={props.canMoveShip}
+              hit={col}
+              startGame={props.startGame}
+            >
               <Ship
                 orientation={shipStartsOnCell.orientation}
                 length={shipStartsOnCell.length}
                 coordinates={shipStartsOnCell.getCoordinates()}
+                shipIndex={shipIndexOnCell}
+                toggleShip={() => props.toggleShip(shipIndexOnCell)}
                 isCurrentShip={shipIndexOnCell === props.currentShipIndex}
                 setCurrentShip={() => props.setCurrentShip(shipIndexOnCell)}
                 startGame={props.startGame}
