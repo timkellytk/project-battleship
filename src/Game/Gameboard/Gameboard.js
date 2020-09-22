@@ -154,12 +154,14 @@ class Gameboard {
 
     if (ship) {
       ship.hit();
+
       if (ship.isSunk()) {
         ship.getCoordinates().forEach(({ row, col }) => {
           updateBoardSunkShip(row, col, this.board);
         });
         return 'SUNK';
       }
+
       this.board[row][col] = 'HIT';
       return 'HIT';
     }
