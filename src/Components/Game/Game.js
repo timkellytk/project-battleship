@@ -35,7 +35,6 @@ const Game = () => {
   const [computerShips, setComputerShips] = useState([]);
   const [attackGameboard, setAttackGameboard] = useState([]);
   const [start, setStart] = useState(false);
-  const [playerTurn, setPlayerTurn] = useState(true);
   const [winner, setWinner] = useState(false);
 
   const initialiseGame = () => {
@@ -50,7 +49,6 @@ const Game = () => {
     setComputerShips(computer.gameboard.getShips());
 
     setStart(false);
-    setPlayerTurn(true);
     setWinner(false);
   };
 
@@ -95,7 +93,6 @@ const Game = () => {
       }
       return;
     }
-    setPlayerTurn(false);
     handleComputerAttack();
     return;
   };
@@ -110,7 +107,6 @@ const Game = () => {
       }
       return handleComputerAttack();
     }
-    setPlayerTurn(true);
     return;
   };
 
@@ -124,24 +120,21 @@ const Game = () => {
         <Space direction="vertical" size="large" align="center">
           <Header
             startGame={start}
-            playerTurn={playerTurn}
             winner={winner}
             ships={computerShips}
-            toggleShip={handleToggleShip}
-            moveShip={handleMoveShip}
             setStartGame={handleStartGame}
             randomiseShips={handleRandomiseShips}
             playAgain={initialiseGame}
           />
           <Gameboards
             startGame={start}
+            winner={winner}
             player={gameboard}
             ships={ships}
+            computer={attackGameboard}
             moveShip={handleMoveShip}
             toggleShip={handleToggleShip}
-            computer={attackGameboard}
             attackComputer={handlePlayerAttack}
-            winner={winner}
           />
           <Footer />
         </Space>
