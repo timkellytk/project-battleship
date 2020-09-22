@@ -50,7 +50,8 @@ const StyledEmptyHit = styled.div`
 const Cell = (props) => {
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.SHIP,
-    canDrop: (item) => canMoveShip(props.row, props.col, item.index),
+    canDrop: (item) =>
+      props.startGame ? false : canMoveShip(props.row, props.col, item.index),
     drop: (item) => props.moveShip(props.row, props.col, item.index),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
