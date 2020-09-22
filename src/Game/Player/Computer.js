@@ -1,6 +1,12 @@
 import Player from './Player';
 import { getRandomInt, validCoordinate } from '../utils';
 
+const getRandomCoord = (emptyCoordinates) => {
+  const randomIndex = getRandomInt(0, emptyCoordinates.length - 1);
+  const { row, col } = emptyCoordinates[randomIndex];
+  return { row, col };
+};
+
 const getRandomCoordinate = (gameboard) => {
   const emptyCoordinates = gameboard.board.reduce(
     (accumulatorArray, row, rowIndex) => {
@@ -18,9 +24,7 @@ const getRandomCoordinate = (gameboard) => {
     },
     []
   );
-  const randomIndex = getRandomInt(0, emptyCoordinates.length - 1);
-  const { row, col } = emptyCoordinates[randomIndex];
-  return { row, col };
+  return getRandomCoord(emptyCoordinates);
 };
 
 const emptyCoordinate = (row, col, gameboard) =>
@@ -41,12 +45,7 @@ const getSurroundingEmptyCoordinate = (hitShipArray, gameboard) => {
     ({ row, col }) =>
       validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
   );
-  const randomIndex = getRandomInt(0, emptySurroundingCoords.length - 1);
-  const { row, col } = emptySurroundingCoords[randomIndex];
-  return {
-    row,
-    col,
-  };
+  return getRandomCoord(emptySurroundingCoords);
 };
 
 const getVerticalCoordinate = (hitShipArray, gameboard) => {
@@ -60,12 +59,7 @@ const getVerticalCoordinate = (hitShipArray, gameboard) => {
     ({ row, col }) =>
       validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
   );
-  const randomIndex = getRandomInt(0, verticalCoordinates.length - 1);
-  const { row, col } = verticalCoordinates[randomIndex];
-  return {
-    row,
-    col,
-  };
+  return getRandomCoord(verticalCoordinates);
 };
 
 const getHorizontalCoordinate = (hitShipArray, gameboard) => {
@@ -79,12 +73,7 @@ const getHorizontalCoordinate = (hitShipArray, gameboard) => {
     ({ row, col }) =>
       validCoordinate(row, col) && emptyCoordinate(row, col, gameboard)
   );
-  const randomIndex = getRandomInt(0, horizontalCoordinates.length - 1);
-  const { row, col } = horizontalCoordinates[randomIndex];
-  return {
-    row,
-    col,
-  };
+  return getRandomCoord(horizontalCoordinates);
 };
 
 const getComputerCoordinate = (gameboard) => {
@@ -106,7 +95,7 @@ class Computer extends Player {
     const { row, col } = getComputerCoordinate(enemy.gameboard);
     const result = enemy.gameboard.receiveAttack(row, col);
     if (result === 'HIT') {
-      hitShipArray.unshift({ row, col });
+      hitShipArray.push({ row, col });
     }
     if (result === 'SUNK') {
       hitShipArray = [];
