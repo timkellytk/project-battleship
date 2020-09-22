@@ -28,7 +28,9 @@ describe('Player', () => {
 
     // Remove randomness by excluding tests when moveShip is not possible
     if (enemy.gameboard.moveShip(col, row, shipIndex)) {
-      expect(player.attack(col, row, enemy)).toEqual('SUNK' || 'HIT');
+      expect(player.attack(col, row, enemy)).toMatch(
+        new RegExp('(?:HIT|SUNK)')
+      );
       expect(enemy.gameboard.getShips()[shipIndex].hitCount).toEqual(1);
       expect(enemy.gameboard.getGameboard()[col][row]).toEqual(expectedResult);
     }
